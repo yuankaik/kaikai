@@ -1,0 +1,272 @@
+{
+  "day": "Day5",
+  "title": "Day5-巨枪乌贼的回炉海域",
+  "mode": "web-first",
+  "focus": "Day4错题回炉 + 除法陷阱强化 + 期末基础抢分",
+  "source_session": "2026-06-06-Day4",
+  "points": {
+    "current": 1903,
+    "goal": 3500
+  },
+  "knowledge_fish": {
+    "current": 3,
+    "goal": 93
+  },
+  "practice_policy": {
+    "target_minutes": "20-30",
+    "target_questions": "18-24",
+    "mode": "普通日",
+    "reason": "6月底先从50追到65-70，15周追到85-90；每日需要稳定触碰基础、错题变式、核心Boss和课堂同步。"
+  },
+  "sections": [
+    {
+      "title": "Normal Rod - 5分钟热身",
+      "hint": "先把基础分捞稳",
+      "questions": [
+        {
+          "id": "D5-W1",
+          "source": "Day5网页练习",
+          "subject": "数学",
+          "knowledge": "除法计算与运算顺序",
+          "kind": "practice",
+          "prompt": "720 ÷ 9 + 420 ÷ 7 = ____",
+          "answer": "140",
+          "difficulty": 1,
+          "unlock_reward": "热身鱼"
+        },
+        {
+          "id": "D5-W2",
+          "source": "Day5网页练习",
+          "subject": "数学",
+          "knowledge": "两位数退位减法",
+          "kind": "practice",
+          "prompt": "72 - 38 = ____",
+          "answer": "34",
+          "difficulty": 1,
+          "unlock_reward": "退位鱼"
+        },
+        {
+          "id": "D5-W3",
+          "source": "Day5网页练习",
+          "subject": "数学",
+          "knowledge": "小数加减",
+          "kind": "practice",
+          "prompt": "0.291 + 0.309 = ____",
+          "answer": "0.6",
+          "difficulty": 1,
+          "unlock_reward": "小数鱼"
+        },
+        {
+          "id": "D5-W4",
+          "source": "Day5网页练习",
+          "subject": "数学",
+          "knowledge": "容量单位换算",
+          "kind": "practice",
+          "prompt": "4升80ml = ____ml",
+          "answer": "4080ml",
+          "difficulty": 1,
+          "unlock_reward": "容量鱼"
+        },
+        {
+          "id": "D5-W5",
+          "source": "Day5网页练习",
+          "subject": "数学",
+          "knowledge": "商的变化规律",
+          "kind": "practice",
+          "prompt": "A÷B=6，A乘10，B除以10，商变成____。",
+          "answer": "600",
+          "difficulty": 2,
+          "unlock_reward": "规律鱼"
+        }
+      ]
+    },
+    {
+      "title": "Monster Rod - Day4错题回炉",
+      "hint": "昨天没咬牢的点，今天换题型再抓一次",
+      "questions": [
+        {
+          "id": "D5-R1",
+          "source": "Day4错题回炉",
+          "subject": "数学",
+          "knowledge": "除法陷阱",
+          "kind": "review",
+          "prompt": "360÷6 + 360÷4 = ____。能不能写成 360÷(6+4)？",
+          "answer": "150；不能",
+          "difficulty": 2,
+          "unlock_reward": "回炉鳞片"
+        },
+        {
+          "id": "D5-R2",
+          "source": "Day4错题回炉",
+          "subject": "数学",
+          "knowledge": "费曼解释",
+          "kind": "review",
+          "prompt": "用一句话解释：为什么 300÷5 + 300÷10 不能写成 300÷15？",
+          "answer": "因为这是两次分，除数代表每次怎么分，不能合并。",
+          "difficulty": 3,
+          "unlock_reward": "费曼贝壳"
+        },
+        {
+          "id": "D5-R3",
+          "source": "Day4错题回炉",
+          "subject": "数学",
+          "knowledge": "容量单位换算和有余数除法",
+          "kind": "review",
+          "prompt": "3升600ml = ____ml；每瓶300ml，可装满____瓶。",
+          "answer": "3600ml；12瓶",
+          "difficulty": 2,
+          "unlock_reward": "容量回炉鱼"
+        },
+        {
+          "id": "D5-R4",
+          "source": "期中卷错题回炉",
+          "subject": "数学",
+          "knowledge": "小数位值",
+          "kind": "review",
+          "prompt": "7.63的小数点去掉后，比原数大多少？",
+          "answer": "755.37",
+          "difficulty": 2,
+          "unlock_reward": "位值鱼"
+        },
+        {
+          "id": "D5-R5",
+          "source": "期中卷错题回炉",
+          "subject": "数学",
+          "knowledge": "应用题答句和单位",
+          "kind": "review",
+          "prompt": "计划每天250个，12天完成；提前2天完成，实际每天多少个？",
+          "answer": "300个",
+          "difficulty": 2,
+          "unlock_reward": "单位答句鱼"
+        }
+      ]
+    },
+    {
+      "title": "Super Rod - 今日核心技能",
+      "hint": "不是题海，每题都打一个明确技能点",
+      "questions": [
+        {
+          "id": "D5-C1",
+          "source": "Day5核心训练",
+          "subject": "数学",
+          "knowledge": "除法陷阱",
+          "kind": "practice",
+          "prompt": "判断：500÷5 + 500÷20 = 500÷25。 [ ]对 [ ]错",
+          "answer": "错",
+          "difficulty": 2,
+          "unlock_reward": "陷阱雷达"
+        },
+        {
+          "id": "D5-C2",
+          "source": "Day5核心训练",
+          "subject": "数学",
+          "knowledge": "除法陷阱",
+          "kind": "practice",
+          "prompt": "500÷5 + 500÷20 = ____。能不能写成500÷25？",
+          "answer": "125；不能",
+          "difficulty": 2,
+          "unlock_reward": "陷阱牙齿"
+        },
+        {
+          "id": "D5-C3",
+          "source": "Day5核心训练",
+          "subject": "数学",
+          "knowledge": "商和余数变化规律",
+          "kind": "practice",
+          "prompt": "a÷b商12余8，a、b都乘100后，商____，余数____。",
+          "answer": "12；800",
+          "difficulty": 2,
+          "unlock_reward": "余数鱼"
+        },
+        {
+          "id": "D5-C4",
+          "source": "Day5核心训练",
+          "subject": "数学",
+          "knowledge": "钱数转移应用题",
+          "kind": "practice",
+          "prompt": "小胖给小亚0.55元后，比小亚少0.25元，原来小胖比小亚多____元。",
+          "answer": "0.85",
+          "difficulty": 3,
+          "unlock_reward": "关系图鱼"
+        },
+        {
+          "id": "D5-C5",
+          "source": "Day5核心训练",
+          "subject": "数学",
+          "knowledge": "括号与混合运算",
+          "kind": "practice",
+          "prompt": "[4200 - (25 + 75×12)] ÷ 25 = ____",
+          "answer": "131",
+          "difficulty": 2,
+          "unlock_reward": "括号鱼"
+        },
+        {
+          "id": "D5-C6",
+          "source": "Day5核心训练",
+          "subject": "数学",
+          "knowledge": "纯小数大小比较",
+          "kind": "practice",
+          "prompt": "最大的一位纯小数和最小的两位纯小数相差____。",
+          "answer": "0.89",
+          "difficulty": 2,
+          "unlock_reward": "小数边界鱼"
+        }
+      ]
+    },
+    {
+      "title": "Legend Rod - 三科课堂雷达",
+      "hint": "语数外都要和学校课堂对齐",
+      "questions": [
+        {
+          "id": "D5-S1",
+          "source": "Day5课堂雷达",
+          "subject": "语文",
+          "knowledge": "课堂词语回忆",
+          "kind": "practice",
+          "prompt": "写出今天语文课你记住的一个词，并造一个短句。",
+          "answer": "开放题",
+          "difficulty": 1,
+          "unlock_reward": "语文贝壳"
+        },
+        {
+          "id": "D5-S2",
+          "source": "Day5课堂雷达",
+          "subject": "英语",
+          "knowledge": "课堂句子复述",
+          "kind": "practice",
+          "prompt": "写出今天英语课你记住的一句话。",
+          "answer": "开放题",
+          "difficulty": 1,
+          "unlock_reward": "英语贝壳"
+        },
+        {
+          "id": "D5-S3",
+          "source": "Day5课堂雷达",
+          "subject": "数学",
+          "knowledge": "课堂同步",
+          "kind": "practice",
+          "prompt": "今天数学课讲到哪里？写一个关键词。",
+          "answer": "开放题",
+          "difficulty": 1,
+          "unlock_reward": "课堂雷达"
+        },
+        {
+          "id": "D5-S4",
+          "source": "Day5课堂雷达",
+          "subject": "综合",
+          "knowledge": "费曼复盘",
+          "kind": "boss",
+          "prompt": "今天最像Boss的一题是哪一题？用一句话说你准备怎么避开它。",
+          "answer": "开放题",
+          "difficulty": 2,
+          "unlock_reward": "船长复盘章"
+        }
+      ]
+    }
+  ],
+  "feynman": {
+    "target": "除数不能合并",
+    "prompt": "请船长讲清楚：为什么同一个被除数拆成两次除法时，除数不能相加合并？",
+    "pass_rule": "能说出这是两次不同的分法；被除数可以拆开，除数不能合并。"
+  }
+}
