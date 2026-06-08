@@ -22,6 +22,9 @@ content/school_mistakes/
 # 整点备份
 _hourly/
 
+# 补给包生成目录
+travel-packs/
+
 # 临时文件
 *.tmp
 *.log
