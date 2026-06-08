@@ -9,6 +9,8 @@ from typing import Any
 from urllib.parse import parse_qs, unquote, urlparse
 
 from app.captain_renderer import render_captain_day, render_home
+from app.captain_dashboard import render_dashboard
+from engine.auto_grader import entry_test_questions, grade_session, save_grading_log
 from engine.learning_store import LearningStore
 from engine.mistake_review import read_recent_mistakes
 from engine.school_mistake_pipeline import read_school_mistake_drafts
@@ -42,6 +44,9 @@ class LocalTutorHandler(BaseHTTPRequestHandler):
                 return
             self._send_captain_spec(spec, str(spec.get("day") or "today"))
             return
+        if path == "/captain/dashboard":
+            self._send_html(render_dashboard(self.server.root))
+            return
         if path.startswith("/captain/"):
             day = path.removeprefix("/captain/").strip("/")
             spec = _find_spec(self.server.root, day)
@@ -59,6 +64,9 @@ class LocalTutorHandler(BaseHTTPRequestHandler):
         parsed = urlparse(self.path)
         if parsed.path == "/api/result":
             self._handle_result()
+            return
+        if parsed.path == "/api/auto-grade":
+            self._handle_auto_grade()
             return
         if parsed.path == "/api/recording":
             self._handle_recording(parse_qs(parsed.query))
@@ -91,6 +99,59 @@ class LocalTutorHandler(BaseHTTPRequestHandler):
                 _load_specs(self.server.root),
             )
         )
+
+    def _handle_auto_grade(self) -> None:
+        try:
+            payload = json.loads(self._read_body().decode("utf-8"))
+            day = str(payload.get("day") or "today")
+            questions = payload.get("questions") or []
+            answers = payload.get("answers") or {}
+            
+            # Generate entry test if needed
+            entry = []
+            if payload.get("include_entry_test"):
+                recent_mistakes = read_recent_mistakes(self.server.root, limit=6)
+                mistake_knowledges = [m.knowledge if hasattr(m, 'knowledge') else str(m.get('knowledge', '')) 
+                                      for m in recent_mistakes[:3]]
+                entry = entry_test_questions(mistake_knowledges)
+            
+            all_questions = entry + questions
+            report = grade_session(day, all_questions, answers)
+            
+            # Save to grading log
+            log_path = save_grading_log(self.server.root, report)
+            
+            # Award points
+            from tutor_core.points import award_report_points
+            settlement = award_report_points(
+                self.server.root, day, report.total_points,
+                report.ok_count, report.total_questions,
+            )
+            
+            self._send_json({
+                "ok": True,
+                "day": day,
+                "report": {
+                    "total": report.total_questions,
+                    "ok": report.ok_count,
+                    "review": report.review_count,
+                    "bad": report.bad_count,
+                    "points": report.total_points,
+                    "items": report.items,
+                    "recovered_fish": report.recovered_fish,
+                    "escaped_fish": report.escaped_fish,
+                    "new_fish": report.new_knowledge_fish,
+                },
+                "points": {
+                    "session": settlement.session,
+                    "previous": settlement.previous,
+                    "delta": settlement.delta,
+                    "current": settlement.current,
+                },
+                "entry_test": entry,
+            })
+        except Exception as exc:
+            self._send_json({"ok": False, "error": str(exc)}, HTTPStatus.BAD_REQUEST)
 
     def _handle_result(self) -> None:
         try:

@@ -656,6 +656,11 @@ def render_captain_day(
 <body>
   <div class="sea">
     <div class="shell">
+      <nav style="display:flex;gap:12px;margin-bottom:22px">
+        <a href="/captain/today" style="color:var(--ink);text-decoration:none;padding:8px 14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:8px;font-weight:800;font-size:14px">今日出海</a>
+        <a href="/captain/dashboard" style="color:var(--ink);text-decoration:none;padding:8px 14px;background:rgba(94,234,212,.18);border:1px solid var(--cyan);border-radius:8px;font-weight:800;font-size:14px">航海图</a>
+        <a href="/" style="color:var(--ink);text-decoration:none;padding:8px 14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:8px;font-weight:800;font-size:14px">历史</a>
+      </nav>
       <header class="hero">
         <section class="panel mission">
           <p class="eyebrow">{day} 今日海域</p>
@@ -675,34 +680,46 @@ def render_captain_day(
       {_rod_panel(rod)}
       {_growth_modals(spec, points, fish, rod, mistakes or _fallback_mistakes(), school_stats, school_uploads or [], school_drafts or [], practice_history or [])}
       <main>
+        <section class="panel" style="padding:22px;margin-bottom:18px;background:linear-gradient(135deg,rgba(28,74,132,.92),rgba(12,18,33,.98));border-color:rgba(255,209,102,.35)">
+          <h2 style="margin:0 0 8px">进门测（1分钟）</h2>
+          <p class="tiny" style="margin:0 0 16px">先看昨天学的是否还记得，做完再下海。</p>
+          <div id="entryTestArea">
+            <p class="tiny" style="color:var(--muted)">正在生成进门测题目…</p>
+          </div>
+          <button type="button" id="gradeEntryTest" style="display:none;margin-top:12px">提交进门测</button>
+          <p class="toast" id="entryTestStatus"></p>
+        </section>
         {_question_sections(spec)}
         <section class="panel finish">
-          <h2>船长复盘</h2>
-          <p class="tiny">可以说 20-30 秒：今天哪一题像 Boss？哪里突然想明白了？</p>
+          <h2>费曼讲题 · 船长教大副</h2>
+          <p class="tiny" style="color:var(--gold);font-weight:800">🗣️ 每节必做：选一道今天最难的题，用自己的话讲给大副听。</p>
           <div class="voice-grid">
             <div class="voice-card">
-              <h3>今日课堂</h3>
-              <p class="tiny">说一说今天语数外上到哪里。</p>
+              <h3>🎤 费曼讲解录音</h3>
+              <p class="tiny">讲清楚"这道题为什么这样做"，10秒就行。</p>
               <div class="actions">
-                <button type="button" data-voice-start="classroom">开始说话</button>
-                <button type="button" class="secondary" data-voice-stop="classroom" disabled>结束并上传</button>
+                <button type="button" data-voice-start="feynman">开始讲题</button>
+                <button type="button" class="secondary" data-voice-stop="feynman" disabled>结束并上传</button>
               </div>
-              <p class="toast" data-voice-status="classroom"></p>
+              <p class="toast" data-voice-status="feynman"></p>
             </div>
             <div class="voice-card">
-              <h3>Boss 讲给我听</h3>
-              <p class="tiny">用自己的话讲今天最重要的知识点。</p>
-              <div class="actions">
-                <button type="button" data-voice-start="boss">开始说话</button>
-                <button type="button" class="secondary" data-voice-stop="boss" disabled>结束并上传</button>
-              </div>
-              <p class="toast" data-voice-status="boss"></p>
+              <h3>大副勾选</h3>
+              <label style="display:block;margin-bottom:8px">
+                <input type="radio" name="feynman-result" value="pass" /> 讲清楚了 ✅
+              </label>
+              <label style="display:block;margin-bottom:8px">
+                <input type="radio" name="feynman-result" value="weak" /> 部分讲清 🟡
+              </label>
+              <label style="display:block">
+                <input type="radio" name="feynman-result" value="fail" /> 没讲清楚，明天回炉 🔄
+              </label>
             </div>
           </div>
           <label>今天的感觉
             <textarea data-self-check="feeling" placeholder="例如：今天有点累，但 Boss 被我抓住了。"></textarea>
           </label>
-          <button type="button" id="submitResult">完成今日出海</button>
+          <button type="button" id="submitResult">⚓ 完成今日出海（提交并批改）</button>
           <p class="toast" id="submitStatus"></p>
           <section class="instant-report" id="instantReport" aria-live="polite"></section>
         </section>
@@ -1154,46 +1171,170 @@ def render_captain_day(
       }};
     }}
 
-    async function submitResult() {{
-      const status = document.getElementById('submitStatus');
-      const report = buildFeedbackReport();
-      renderFeedbackReport(report);
-      status.textContent = '反馈报告已生成，正在保存今日出海...';
+    async function loadEntryTest() {{
       try {{
-        const response = await fetch('/api/result', {{
+        const response = await fetch('/api/auto-grade', {{
           method: 'POST',
           headers: {{ 'Content-Type': 'application/json' }},
-          body: JSON.stringify(buildResult(report))
+          body: JSON.stringify({{ day: spec.day, questions: [], answers: {{}}, include_entry_test: true }})
+        }});
+        const data = await response.json();
+        if (data.entry_test && data.entry_test.length) {{
+          const area = document.getElementById('entryTestArea');
+          area.innerHTML = data.entry_test.map((q, i) => `
+            <div style="margin-bottom:12px">
+              <p style="margin:0 0 4px;font-weight:800">${{i+1}}. ${{htmlEscape(q.prompt)}}</p>
+              <input data-answer-for="${{q.id}}" placeholder="写下答案" style="background:rgba(255,255,255,.1)" />
+            </div>
+          `).join('');
+          document.getElementById('gradeEntryTest').style.display = '';
+        }} else {{
+          document.getElementById('entryTestArea').innerHTML = '<p class="tiny" style="color:var(--ok)">暂无错题需要进门测，直接下海吧！</p>';
+        }}
+      }} catch (e) {{
+        document.getElementById('entryTestArea').innerHTML = '<p class="tiny">进门测题目加载失败，可直接开始练习。</p>';
+      }}
+    }}
+    loadEntryTest();
+
+    function htmlEscape(text) {{
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }}
+
+    async function submitResult() {{
+      const status = document.getElementById('submitStatus');
+      const reportEl = document.getElementById('instantReport');
+      status.textContent = '正在批改今日出海…';
+
+      // Collect all answers
+      const answers = {{}};
+      document.querySelectorAll('[data-answer-for]').forEach((input) => {{
+        answers[input.dataset.answerFor] = input.value;
+      }});
+
+      // Build questions list
+      const questions = allQuestions().map(q => ({{
+        id: q.id, subject: q.subject, knowledge: q.knowledge,
+        kind: q.kind, prompt: q.prompt, answer: q.answer, difficulty: q.difficulty
+      }}));
+
+      // Get feynman result
+      const feynmanRadio = document.querySelector('input[name="feynman-result"]:checked');
+      const feynmanResult = feynmanRadio ? feynmanRadio.value : null;
+
+      try {{
+        const response = await fetch('/api/auto-grade', {{
+          method: 'POST',
+          headers: {{ 'Content-Type': 'application/json' }},
+          body: JSON.stringify({{ day: spec.day, questions, answers }})
         }});
         if (!response.ok) throw new Error(await response.text());
         const data = await response.json();
+        
+        // Update points display
         if (data.points && Number.isInteger(data.points.current)) {{
           document.querySelectorAll('[data-current-points]').forEach(node => {{
             node.textContent = String(data.points.current);
           }});
         }}
-        let nextText = '';
-        try {{
-          const nextResponse = await fetch('/api/next-day', {{
-            method: 'POST',
-            headers: {{ 'Content-Type': 'application/json' }},
-            body: JSON.stringify({{ completed_day: spec.day, result_id: data.id }})
-          }});
-          const nextData = await nextResponse.json();
-          if (nextResponse.ok && nextData.ok) {{
-            nextText = ` 下一日练习已准备：${{nextData.day}}。固定入口 /captain/today 会自动打开最新练习。`;
-          }}
-        }} catch (nextError) {{
-          nextText = ' 下一日练习暂未自动生成，大副稍后再处理。';
+
+        // Render feedback report
+        const report = data.report;
+        const cards = report.items.map((item) => {{
+          const stateClass = item.state === 'ok' ? 'ok' : item.state === 'review' ? 'review' : 'bad';
+          const emoji = item.state === 'ok' ? '🎯' : item.state === 'review' ? '🪝' : '🐟';
+          return `
+            <article class="report-card ${{stateClass}}">
+              <div class="report-title">
+                <span>${{emoji}} ${{item.id}} · ${{htmlEscape(item.knowledge)}}</span>
+                <span>${{htmlEscape(item.label)}} +${{item.points}}</span>
+              </div>
+              <p><b>船长答案：</b>${{htmlEscape(item.student_answer || '未作答')}}</p>
+              <p><b>正确方向：</b>${{htmlEscape(item.expected)}}</p>
+              <p>${{htmlEscape(item.reason)}}</p>
+              ${{item.caution ? '<p><b>注意：</b>' + htmlEscape(item.caution) + '</p>' : ''}}
+              <div class="report-next">${{htmlEscape(item.next || '')}}</div>
+            </article>
+          `;
+        }}).join('');
+
+        reportEl.innerHTML = `
+          <div class="report-head">
+            <div>
+              <h2>今日即时反馈报告</h2>
+              <p>命中 ${{report.ok}} 题，待精批 ${{report.review}} 题，需要回炉 ${{report.bad}} 题。</p>
+              ${{report.recovered_fish.length ? '<p style="color:var(--ok);margin-top:4px">🏆 追回的逃脱鱼：' + report.recovered_fish.map(f => htmlEscape(f)).join('、') + '</p>' : ''}}
+              ${{report.escaped_fish.length ? '<p style="color:var(--bad);margin-top:4px">🐟 新逃脱鱼：' + report.escaped_fish.map(f => htmlEscape(f)).join('、') + '</p>' : ''}}
+            </div>
+            <div class="report-score">+${{report.points}} 渔币</div>
+          </div>
+          <div class="report-grid">${{cards}}</div>
+        `;
+        reportEl.classList.add('open');
+        reportEl.scrollIntoView({{ behavior: 'smooth', block: 'start' }});
+
+        // Feynman warning
+        if (!feynmanResult) {{
+          status.textContent = '已保存！⚠️ 别忘了让船长讲一道Boss题（费曼教学），大副勾选讲题结果。';
+        }} else if (feynmanResult === 'fail') {{
+          status.textContent = '已保存！🔄 费曼未通过，明天同知识点自动变式回炉。';
+        }} else {{
+          status.textContent = '已保存！' + (data.points ? ' 本次 +' + data.points.delta + ' 渔币。' : '') + ' 去看看航海图 /captain/dashboard！';
         }}
-        const settledDelta = data.points ? data.points.delta : report.points;
-        const repeatText = data.points && data.points.already_settled ? '这一天的奖励之前已入账，本次不重复加分。' : `本次即时奖励 +${{settledDelta}} 渔币。`;
-        status.textContent = `已保存，第 ${{data.id}} 次出海记录。${{repeatText}}${{nextText}}`;
+
+        // Try generate next day
+        try {{
+          const nextResp = await fetch('/api/next-day', {{
+            method: 'POST', headers: {{ 'Content-Type': 'application/json' }},
+            body: JSON.stringify({{ completed_day: spec.day }})
+          }});
+          const nextData = await nextResp.json();
+          if (nextResp.ok && nextData.ok) {{
+            status.textContent += ' 明日练习已自动生成：' + nextData.day + '。';
+          }}
+        }} catch (e) {{}}
       }} catch (error) {{
-        status.textContent = '反馈报告已生成；本地服务没有响应，答案仍已保存在浏览器。';
+        status.textContent = '批改失败：服务器未响应。答案已保存在浏览器，请稍后再试。';
       }}
     }}
     document.getElementById('submitResult').addEventListener('click', submitResult);
+
+    // Entry test grade button
+    const entryBtn = document.getElementById('gradeEntryTest');
+    if (entryBtn) {{
+      entryBtn.addEventListener('click', async () => {{
+        const status = document.getElementById('entryTestStatus');
+        const allInputs = document.querySelectorAll('#entryTestArea [data-answer-for]');
+        const answers = {{}};
+        allInputs.forEach(input => {{ answers[input.dataset.answerFor] = input.value; }});
+        try {{
+          const resp = await fetch('/api/auto-grade', {{
+            method: 'POST',
+            headers: {{ 'Content-Type': 'application/json' }},
+            body: JSON.stringify({{ day: spec.day + '-entry', questions: [], answers, include_entry_test: true }})
+          }});
+          const data = await resp.json();
+          if (data.report) {{
+            const ok = data.report.ok || 0;
+            const bad = data.report.bad || 0;
+            if (bad === 0) {{
+              status.textContent = '✅ 进门测通过！今天可以正常推进。';
+              status.style.color = 'var(--ok)';
+            }} else if (bad <= 1) {{
+              status.textContent = '🟡 有1个知识点还不稳，今天练习里自动加入回炉题。';
+              status.style.color = 'var(--gold)';
+            }} else {{
+              status.textContent = '🔴 建议今天以回炉为主，先追回' + bad + '条逃脱鱼。';
+              status.style.color = 'var(--bad)';
+            }}
+          }}
+        }} catch (e) {{
+          status.textContent = '进门测提交失败，可直接开始练习。';
+        }}
+      }});
+    }}
 
     document.querySelectorAll('[data-upload-school-mistakes]').forEach((button) => {{
       button.addEventListener('click', async () => {{
