@@ -1,0 +1,355 @@
+{
+  "day": "Day8",
+  "title": "Day8-深海巨鱿的试炼场",
+  "mode": "web-first",
+  "focus": "除法陷阱Boss + 混合运算 + 英语语法 + 语文基础",
+  "source_session": "smart",
+  "points": {
+    "current": 2038,
+    "goal": 3500
+  },
+  "knowledge_fish": {
+    "current": 3,
+    "goal": 93
+  },
+  "sections": [
+    {
+      "title": "Normal Rod - 进门热身",
+      "hint": "先拿基础分",
+      "questions": [
+        {
+          "id": "Q0003",
+          "knowledge": "两位数退位减法",
+          "subject": "数学",
+          "kind": "practice",
+          "difficulty": 1,
+          "prompt": "回炉3. 44 - 18 = ______（个位不够，先退一十）",
+          "answer": "26",
+          "unlock_reward": "热身鱼",
+          "source": "混搭"
+        },
+        {
+          "id": "Q0009",
+          "knowledge": "除法计算与运算顺序",
+          "subject": "数学",
+          "kind": "practice",
+          "difficulty": 1,
+          "prompt": "÷ 8 + 360 ÷ 6 = ____",
+          "answer": "140",
+          "unlock_reward": "热身鱼",
+          "source": "混搭"
+        },
+        {
+          "id": "Q10240",
+          "knowledge": "长度单位换算",
+          "subject": "数学",
+          "kind": "practice",
+          "difficulty": 1,
+          "prompt": "如图，求下面梯形中的未知量。 （1）（2） S＝42cm2，求h。S＝120m2，求a。",
+          "answer": "75",
+          "unlock_reward": "热身鱼",
+          "source": "混搭"
+        },
+        {
+          "id": "Q0649",
+          "knowledge": "除法计算与运算顺序",
+          "subject": "数学",
+          "kind": "practice",
+          "difficulty": 1,
+          "prompt": "直接写出得数． 470+120＝    130－70＝    63÷7+8＝       28-20÷5＝ 650-200=      200－129＝     800+900＝     2时-32分=",
+          "answer": "85",
+          "unlock_reward": "热身鱼",
+          "source": "混搭"
+        },
+        {
+          "id": "Q0595",
+          "knowledge": "竖式计算",
+          "subject": "数学",
+          "kind": "practice",
+          "difficulty": 1,
+          "prompt": "用竖式计算下列各题。 420＋390＝           634－186＝ 496＋285＝           604－439＝",
+          "answer": "78",
+          "unlock_reward": "热身鱼",
+          "source": "混搭"
+        }
+      ]
+    },
+    {
+      "title": "Monster Rod - Boss挑战",
+      "hint": "除法陷阱：为什么除数不能合并？",
+      "questions": [
+        {
+          "id": "Q0017",
+          "knowledge": "除法陷阱",
+          "subject": "数学",
+          "kind": "boss",
+          "difficulty": 2,
+          "prompt": "填空：被除数（可以/不可以）拆开；除数（可以/不可以）合并。",
+          "answer": "可以；不可以",
+          "unlock_reward": "Boss鳞片",
+          "source": "混搭"
+        },
+        {
+          "id": "Q0034",
+          "knowledge": "除法陷阱",
+          "subject": "数学",
+          "kind": "boss",
+          "difficulty": 2,
+          "prompt": "500÷5 + 500÷20 = ____。能不能写成500÷25？",
+          "answer": "125；不能",
+          "unlock_reward": "Boss鳞片",
+          "source": "混搭"
+        }
+      ]
+    },
+    {
+      "title": "Super Rod - 技能练习",
+      "hint": "每题打一个技能点",
+      "questions": [
+        {
+          "id": "Q0035",
+          "knowledge": "商和余数变化规律",
+          "subject": "数学",
+          "kind": "practice",
+          "difficulty": 2,
+          "prompt": "a÷b商12余8，a、b都乘100后，商____，余数____。",
+          "answer": "12；800",
+          "unlock_reward": "技能鱼",
+          "source": "混搭"
+        },
+        {
+          "id": "Q0037",
+          "knowledge": "括号与混合运算",
+          "subject": "数学",
+          "kind": "practice",
+          "difficulty": 2,
+          "prompt": "[4200 - (25 + 75×12)] ÷ 25 = ____",
+          "answer": "131",
+          "unlock_reward": "技能鱼",
+          "source": "混搭"
+        },
+        {
+          "id": "Q2950",
+          "knowledge": "除法计算与运算顺序",
+          "subject": "数学",
+          "kind": "practice",
+          "difficulty": 1,
+          "prompt": "递等式计算。 1051－149－251               46×18＋46×82 65＋35×102              230－368÷23                33×[24－（22－9）] 3635；214；363 （2）根据减法性质a－b－c＝a－（b＋c）进行计算； （3）根据乘法分配律进行计算； （4）把102写成（100＋2）形式，再根据乘法分配律进行计算。 ",
+          "answer": "7500000",
+          "unlock_reward": "技能鱼",
+          "source": "混搭"
+        },
+        {
+          "id": "Q0335",
+          "knowledge": "长度单位换算",
+          "subject": "数学",
+          "kind": "practice",
+          "difficulty": 2,
+          "prompt": "（本题2分）下面物品中，（    ）比1克轻。 A．一个西瓜\tB．一粒小米\tC．一杯果汁 1千克＝1000克。日常生活中一个西瓜大约有2千克；1克米大约有29至56粒；一杯果汁大约20克，据此判断即可。",
+          "answer": "456",
+          "unlock_reward": "技能鱼",
+          "source": "混搭"
+        }
+      ]
+    },
+    {
+      "title": "Legend Rod - 今日应用题",
+      "hint": "一天一道，读懂再算",
+      "questions": [
+        {
+          "id": "Q6888",
+          "knowledge": "除法计算与运算顺序",
+          "subject": "数学",
+          "kind": "boss",
+          "difficulty": 1,
+          "prompt": "（2021年五年级上·上海闵行·期中）一盒饼干连盒共重2.5千克，吃掉一半后，连盒共重1.3千克，盒重多少千克？下面列式错误的是（    ）。 A．（2.5－1.3）×2   B．1.3×2－2.5   C．（1.3－2.5÷2）×2  \tD．2.5－（2.5－1.3）×2",
+          "answer": "70",
+          "unlock_reward": "应用鱼",
+          "source": "混搭"
+        }
+      ]
+    },
+    {
+      "title": "English Rod - 词汇",
+      "hint": "每天几词",
+      "questions": [
+        {
+          "id": "Q0049",
+          "knowledge": "词汇记忆",
+          "subject": "英语",
+          "kind": "vocab",
+          "difficulty": 1,
+          "prompt": "读一读并写出中文：night",
+          "answer": "夜晚",
+          "unlock_reward": "单词贝壳",
+          "source": "混搭"
+        },
+        {
+          "id": "Q0051",
+          "knowledge": "词汇记忆",
+          "subject": "英语",
+          "kind": "vocab",
+          "difficulty": 1,
+          "prompt": "读一读并写出中文：tomorrow",
+          "answer": "明天",
+          "unlock_reward": "单词贝壳",
+          "source": "混搭"
+        },
+        {
+          "id": "Q8413",
+          "knowledge": "人称代词与物主代词",
+          "subject": "英语",
+          "kind": "vocab",
+          "difficulty": 1,
+          "prompt": "—Where’s Grandma? —She ______ (be) in the garden ten minutes ago. Oh, she ______ (cook) in the kitchen now!",
+          "answer": "4",
+          "unlock_reward": "单词贝壳",
+          "source": "混搭"
+        },
+        {
+          "id": "Q8223",
+          "knowledge": "词汇记忆",
+          "subject": "英语",
+          "kind": "vocab",
+          "difficulty": 1,
+          "prompt": "______ grow vegetables for people.",
+          "answer": "9",
+          "unlock_reward": "单词贝壳",
+          "source": "混搭"
+        }
+      ]
+    },
+    {
+      "title": "English Rod - 语法",
+      "hint": "三单/进行时/be动词",
+      "questions": [
+        {
+          "id": "Q0053",
+          "knowledge": "三单",
+          "subject": "英语",
+          "kind": "practice",
+          "difficulty": 2,
+          "prompt": "He ____ (like) fishing after school.",
+          "answer": "likes",
+          "unlock_reward": "语法鱼",
+          "source": "混搭"
+        },
+        {
+          "id": "Q0054",
+          "knowledge": "现在进行时",
+          "subject": "英语",
+          "kind": "practice",
+          "difficulty": 2,
+          "prompt": "Look! The boy is ____ (run).",
+          "answer": "running",
+          "unlock_reward": "语法鱼",
+          "source": "混搭"
+        },
+        {
+          "id": "Q0055",
+          "knowledge": "be动词",
+          "subject": "英语",
+          "kind": "practice",
+          "difficulty": 1,
+          "prompt": "I ____ happy. You ____ my friend.",
+          "answer": "am；are",
+          "unlock_reward": "语法鱼",
+          "source": "混搭"
+        }
+      ]
+    },
+    {
+      "title": "Chinese Rod - 语文基础",
+      "hint": "看拼音写词 / 改病句",
+      "questions": [
+        {
+          "id": "Q5692",
+          "knowledge": "课堂词语回忆",
+          "subject": "语文",
+          "kind": "practice",
+          "difficulty": 1,
+          "prompt": "看拼音，写词语。 mò shēng(          )           yōu shì(          )",
+          "answer": "5",
+          "unlock_reward": "汉字贝壳",
+          "source": "混搭"
+        },
+        {
+          "id": "Q5685",
+          "knowledge": "修改病句",
+          "subject": "语文",
+          "kind": "practice",
+          "difficulty": 1,
+          "prompt": "（19-20四年级下·上海杨浦·期末）按要求，写句子。 （1）耸着尾巴的雄鸡，在场地上大踏步地走来走去。（缩句） （2）草地上有几只数不清的小鸡在悠闲地散步。（修改病句）",
+          "answer": "4",
+          "unlock_reward": "汉字贝壳",
+          "source": "混搭"
+        }
+      ]
+    },
+    {
+      "title": "课堂雷达",
+      "hint": "三科同步",
+      "questions": [
+        {
+          "id": "R1",
+          "knowledge": "课堂词语回忆",
+          "subject": "语文",
+          "kind": "practice",
+          "difficulty": 1,
+          "prompt": "写出今天语文课记住的一个词，并造一个短句。",
+          "answer": "开放题",
+          "unlock_reward": "语文贝壳",
+          "source": ""
+        },
+        {
+          "id": "R2",
+          "knowledge": "课堂句子复述",
+          "subject": "英语",
+          "kind": "practice",
+          "difficulty": 1,
+          "prompt": "写出今天英语课记住的一句话。",
+          "answer": "开放题",
+          "unlock_reward": "英语贝壳",
+          "source": ""
+        },
+        {
+          "id": "R3",
+          "knowledge": "课堂同步",
+          "subject": "数学",
+          "kind": "practice",
+          "difficulty": 1,
+          "prompt": "今天数学课讲到哪里？写关键词。",
+          "answer": "开放题",
+          "unlock_reward": "课堂雷达",
+          "source": ""
+        }
+      ]
+    }
+  ],
+  "feynman": {
+    "target": "除法陷阱",
+    "prompt": "任选一道Boss题，讲清楚为什么除数不能合并。",
+    "pass_rule": "说出关键规则即可"
+  },
+  "total_questions": 24,
+  "classroom_radar": [
+    "语文___",
+    "数学___",
+    "英语___"
+  ],
+  "voice_intake": {
+    "folder": "",
+    "accepted_files": [],
+    "requested_clips": [],
+    "fallback": ""
+  },
+  "parent_card": {
+    "title": "大副卡",
+    "headline": "",
+    "before": [],
+    "during": [],
+    "after": [],
+    "inputs": [],
+    "outputs": []
+  }
+}

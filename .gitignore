@@ -39,3 +39,5 @@ desktop.ini
 # 环境 / 密钥
 .env
 *.key
+data/raw_exams/
+data/question_bank.json
