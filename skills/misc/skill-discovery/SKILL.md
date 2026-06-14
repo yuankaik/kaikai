@@ -62,6 +62,28 @@ curl -s "https://api.github.com/search/repositories?q=stars:%3E1&sort=stars&orde
 - 100-300 名：每 2-3 页合并展示
 - 300+：一次 30-40 个批量翻，只标亮点
 - 用户说"继续"就翻，说"这个不错"就停下来分析
+- **GitHub Search API 限制 1000 条**，约覆盖 ⭐32K 以上。更深需用特定关键词搜索
+- **100/页模式**：用户赶时间时用 `per_page=100`，一次翻 300-400 个，只输出名字+星标
+
+### 快速姓名模式（用户赶时间时）
+
+```bash
+for p in N M; do
+  curl -s "https://api.github.com/search/repositories?q=stars:%3E1&sort=stars&order=desc&per_page=100&page=$p" \
+    | python3 -c "
+import json,sys
+for r in json.load(sys.stdin).get('items',[]):
+    print(f'{r[\"stargazers_count\"]:>7,}  {r[\"full_name\"]}')
+"
+done
+```
+
+### API 限制
+
+- `total_count` 显示总数，但最多只返回 1000 条
+- `stars:>40000` 约 800 个，全在可翻范围
+- 翻到底部后用 `total_count` 确认是否还有剩余
+- 如需更深搜索，用特定关键词：`agent+skill`、`claude+code+skill` 等
 
 ### 评估可迁移性
 
@@ -185,6 +207,51 @@ browser_console(expression="document.body.innerText")
 使用国内镜像：
 ```bash
 pip install -i https://pypi.tuna.tsinghua.edu.cn/simple <package>
+```
+
+### npm 代理问题
+
+当 git 代理 127.0.0.1:56666 但 npm 连接被拒时：
+```bash
+npm install -g <pkg> --proxy http://127.0.0.1:56666
+```
+
+## 6. GStack 安装模式
+
+GStack（YC CEO Garry Tan 的虚拟工程团队）原生支持 Hermes：
+
+```bash
+git clone --depth 1 https://github.com/garrytan/gstack.git ~/.hermes/skills/gstack
+cd ~/.hermes/skills/gstack && ./setup --host hermes
+```
+
+如果 setup 需要 bun 但系统没有：
+```bash
+npm install -g bun --proxy http://127.0.0.1:56666
+cd ~/.hermes/skills/gstack && bun run gen:skill-docs --host hermes
+```
+
+生成 55 个 gstack-* 技能到 `~/.hermes/skills/`。
+
+## 7. 安装 + 创建技能并行模式
+
+用户选中的技能应同时进行：
+- `pip install` 或 `git clone` 放后台 (`background=true`)
+- 同时 `skill_manage create` 创建文档技能
+- 不等安装完成就开始翻下一页
+
+## 8. 技能备份到 GitHub
+
+每次新增技能后同步：
+```bash
+cd ~/kaikai && rsync -aq --delete ~/.hermes/skills/ skills/
+git add -A && git commit -m "📦 描述" && git push origin main
+```
+
+恢复用：
+```bash
+git clone https://github.com/yuankaik/kaikai.git
+cp -r kaikai/skills/* ~/.hermes/skills/
 ```
 
 ## 参考脚本
