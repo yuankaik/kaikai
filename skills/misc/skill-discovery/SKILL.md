@@ -15,17 +15,53 @@ description: 从外部来源发现和迁移技能——GitHub 星标排名搜索
 
 ## 1. GitHub 星标排名搜索
 
-### 发现热门项目
+### 快速翻页模式（推荐）
+
+用户通常想看大量排名（30-50 个）快速扫货。用批量翻页：
 
 ```bash
-# 分页获取 Top 仓库（不需要 token）
-curl -s "https://api.github.com/search/repositories?q=stars:%3E1&sort=stars&order=desc&per_page=10&page=1" \
-  | python3 -c "import json,sys; [print(f'{i}. ⭐ {r[\"stargazers_count\"]:,}  {r[\"full_name\"]}\n   {r.get(\"description\",\"\")[:100]}') for i,r in enumerate(json.load(sys.stdin)['items'],1)]"
+# 一次翻 3-4 页，简洁格式
+for p in 1 2 3; do
+  curl -s "https://api.github.com/search/repositories?q=stars:%3E1&sort=stars&order=desc&per_page=10&page=$p" \
+    | python3 -c "
+import json,sys
+start = 1 + ($p-1)*10
+data=json.load(sys.stdin)
+for i,r in enumerate(data.get('items',[]), start):
+    s=r['stargazers_count']; n=r['full_name']
+    d=(r.get('description') or 'N/A')[:100]
+    print(f'{i:3}. {r[\"stargazers_count\"]:>6,}  {r[\"full_name\"]}')
+    print(f'     {d}'); print()
+"
+done
 ```
 
-- 每页 10 个，逐页翻看（`page=1,2,3...`）
-- 不需要 GitHub token（搜索 API 公开可用）
-- 可加 `language:python` 等筛选
+### 逐页翻（用户看一页评一页）
+
+```bash
+curl -s "https://api.github.com/search/repositories?q=stars:%3E1&sort=stars&order=desc&per_page=10&page=N" \
+  | python3 -c "import json,sys; ..."
+```
+
+- 每页 10 个，不需要 GitHub token
+- 可加 `+language:python` 筛选语言
+
+### 向用户展示时的标注
+
+| 标记 | 含义 |
+|------|------|
+| 🔥 / 📦 | 值得安装 |
+| ✅ | 已有技能，直接跳过 |
+| ⚡ | 可做技能但需适配 |
+| ❌ | 不适合做成技能（纯文档/闭源/商业服务） |
+| 默认无标记 | 工具/框架/不相关 |
+
+### 翻页节奏
+
+- 前 100 名：逐页翻，每页重点标记
+- 100-300 名：每 2-3 页合并展示
+- 300+：一次 30-40 个批量翻，只标亮点
+- 用户说"继续"就翻，说"这个不错"就停下来分析
 
 ### 评估可迁移性
 

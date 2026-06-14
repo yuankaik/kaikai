@@ -4,8 +4,29 @@
 
 ## 排名浏览
 
+### 快翻模式（kai哥偏好：一次 30 个）
+
 ```bash
-# 每页 10 个，从第 N 页开始
+# 快翻：一次 3 页，一行输出
+for p in $PAGE $((PAGE+1)) $((PAGE+2)); do
+  curl -s "https://api.github.com/search/repositories?q=stars:%3E1&sort=stars&order=desc&per_page=10&page=$p" \
+    | python3 -c "
+import json,sys
+start = $START + ($p-$PAGE)*10
+data=json.load(sys.stdin)
+for i,r in enumerate(data.get('items',[]), start):
+    s=r['stargazers_count']
+    n=r['full_name']
+    d=(r.get('description') or 'N/A')[:95]
+    print(f'{s:>6,}  {n}     {d}')
+"
+done
+```
+
+### 精准模式（需要 description 时）
+
+```bash
+# 用 python3 -c 脚本完整输出
 curl -s "https://api.github.com/search/repositories?q=stars:%3E1&sort=stars&order=desc&per_page=10&page=$PAGE" \
   | python3 -c "
 import json, sys
@@ -47,8 +68,23 @@ browser_navigate("https://github.com/user/repo/tree/main/skills")
 
 1. **分析** → 用 delegate_task 并行探索多个仓库
 2. **提取** → 抓取 README、SKILL.md、关键代码
-3. **创建** → `skill_manage(action='create', ...)` 写入 ~/.hermes/skills/
-4. **备份** → 推送到 GitHub 仓库作为持久备份
+3. **判断** → 问三个问题：
+   - 这是技能还是独立应用？（独立应用如 langflow 需要 Docker，不直接迁移）
+   - 已有技能覆盖了吗？（如 crawl4ai vs firecrawl 功能重叠，但互补装）
+   - 用户真有这需求吗？（如 scrapy 太重，跳过）
+4. **创建** → `skill_manage(action='create', ...)` 写入 ~/.hermes/skills/
+5. **备份** → `rsync + git push` 推送到 GitHub 仓库
+
+## 拒绝模式（kai哥的决策习惯）
+
+| 类型 | 示例 | 理由 |
+|------|------|------|
+| 学习项目 | nanoGPT | 教学用，不是日常技能 |
+| 太重框架 | Scrapy | 工程级，AI Agent 有更轻替代 |
+| 功能重叠 | crawl4ai vs firecrawl | 已有同类，除非互补 |
+| 独立应用 | langflow, MoneyPrinterTurbo | 需 Docker/独立环境 |
+| 纯文档 | HowToCook, free-programming-books | 无程序化价值 |
+| 不是技能 | DigitalPlatDev/FreeDomain | 域名服务文档站 |
 
 ## 本会话已迁移的技能
 
@@ -66,6 +102,9 @@ browser_navigate("https://github.com/user/repo/tree/main/skills")
 | 139 | punkpeye/awesome-mcp-servers | awesome-mcp-servers |
 | 153 | karpathy/autoresearch | autoresearch |
 | 170 | thedotmack/claude-mem | claude-mem |
+| 250 | unclecode/crawl4ai | crawl4ai |
+| 342 | mem0ai/mem0 | mem0 |
+| 415 | NanmiCoder/MediaCrawler | mediacrawler |
 
 ## GStack 原生安装模式
 
