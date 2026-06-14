@@ -74,6 +74,21 @@ git add -A && git commit -m "📦 同步技能" && git push origin main
 - 付费墙：中国教育网站（道客巴巴、百度文库）基本都有付费墙，免费内容有限
 - 40K 星以下纯工具区：Agent 技能很少
 - API 限制：GitHub Search 最多返回 1000 条结果
+- **内容上传前确认**：生成的文件（如试卷）默认不同步到 GitHub，等用户明确说"上传"再 push
+- **技能匹配提示**：用户问"怎么用这些技能"时，用具体场景举例（"你说X→我调Y"），不要列清单
+
+## 批量内容生成模式
+
+当需要大量 MD 文件时，用 `execute_code` + Python 批量 `write_file`：
+
+```python
+from hermes_tools import write_file
+papers = {"path/file.md": "content", ...}
+for path, content in papers.items():
+    write_file(f"{base}/{path}", content)
+```
+
+这比逐个 `skill_manage create` 或 terminal `cat heredoc` 快 10 倍。
 
 ## 技能安装并行模式
 
