@@ -1,6 +1,8 @@
 # Python
 __pycache__/
 *.py[cod]
+*.pyc
+*.pyo
 *.so
 *.egg-info/
 dist/
@@ -21,14 +23,47 @@ npm-debug.log*
 # OS
 .DS_Store
 Thumbs.db
+desktop.ini
 
 # Env
 .env
 .env.local
 *.local
+*.key
 
 # Hermes
 .hermes/
 
 # Logs
 *.log
+*.err.log
+*.out.log
+
+# 数据库 / 隐私数据
+data/learning.db
+records/grading-log.csv
+records/points-ledger.csv
+records/switch2_points.txt
+records/mood-log.csv
+records/ebbinghaus-tracker.csv
+records/study-log.csv
+records/knowledge-matrix.csv
+records/school-mistake-drafts.csv
+袁佳乐错题本.xlsx
+
+# 语音录音（含隐私）
+content/voice/
+content/school_mistakes/
+
+# 整点备份
+_hourly/
+
+# 补给包生成目录
+travel-packs/
+
+# 临时文件
+*.tmp
+
+# 原始数据
+data/raw_exams/
+data/question_bank.json

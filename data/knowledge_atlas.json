@@ -1,0 +1,2296 @@
+{
+  "version": "2.0",
+  "description": "王牌钓手知识点图谱 — 93知识鱼完整版（沪教版四年级）",
+  "total": 122,
+  "stats": {
+    "数学": 57,
+    "英语": 32,
+    "语文": 30,
+    "通用": 3
+  },
+  "knowledge_points": [
+    {
+      "id": "M-CALC-001",
+      "subject": "数学",
+      "category": "数与运算",
+      "name": "除法陷阱",
+      "alias": "除数不能合并",
+      "description": "理解被除数可以拆分分别除，但除数不能合并相加",
+      "grade": "四年级下",
+      "difficulty_range": [
+        2,
+        3
+      ],
+      "prerequisites": [
+        "M-CALC-002"
+      ],
+      "status": "unlocked",
+      "fish_value": 2
+    },
+    {
+      "id": "M-CALC-002",
+      "subject": "数学",
+      "category": "数与运算",
+      "name": "除法计算与运算顺序",
+      "alias": "多步除法",
+      "description": "掌握多步除法混合运算的顺序，先估后算",
+      "grade": "四年级上",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [],
+      "status": "unlocked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-CALC-003",
+      "subject": "数学",
+      "category": "数与运算",
+      "name": "两位数退位减法",
+      "alias": "退位借一",
+      "description": "掌握个位不够减时从十位退一当十",
+      "grade": "三年级复习",
+      "difficulty_range": [
+        1,
+        1
+      ],
+      "prerequisites": [],
+      "status": "unlocked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-CALC-004",
+      "subject": "数学",
+      "category": "数与运算",
+      "name": "括号与混合运算",
+      "alias": "中括号脱括号",
+      "description": "含中括号和小括号的四则混合运算顺序",
+      "grade": "四年级下",
+      "difficulty_range": [
+        2,
+        3
+      ],
+      "prerequisites": [
+        "M-CALC-002"
+      ],
+      "status": "unlocked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-CALC-005",
+      "subject": "数学",
+      "category": "数与运算",
+      "name": "商和余数变化规律",
+      "alias": "商不变余数变",
+      "description": "被除数和除数同时乘/除同一个数，商不变但余数同步变化",
+      "grade": "四年级上",
+      "difficulty_range": [
+        2,
+        3
+      ],
+      "prerequisites": [
+        "M-CALC-002"
+      ],
+      "status": "unlocked",
+      "fish_value": 2
+    },
+    {
+      "id": "M-CALC-006",
+      "subject": "数学",
+      "category": "数与运算",
+      "name": "商的变化规律",
+      "alias": "乘除变化",
+      "description": "被除数/除数变化时商的变化规律",
+      "grade": "四年级上",
+      "difficulty_range": [
+        2,
+        2
+      ],
+      "prerequisites": [
+        "M-CALC-002"
+      ],
+      "status": "unlocked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-CALC-007",
+      "subject": "数学",
+      "category": "数与运算",
+      "name": "小数加减",
+      "alias": "小数加减法",
+      "description": "小数加减法计算，注意对齐小数点",
+      "grade": "四年级下",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [],
+      "status": "unlocked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-CALC-008",
+      "subject": "数学",
+      "category": "数与运算",
+      "name": "小数巧算与运算顺序",
+      "alias": "小数混合运算",
+      "description": "小数四则混合运算，含巧算技巧",
+      "grade": "四年级下",
+      "difficulty_range": [
+        2,
+        3
+      ],
+      "prerequisites": [
+        "M-CALC-007"
+      ],
+      "status": "unlocked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-CALC-009",
+      "subject": "数学",
+      "category": "数与运算",
+      "name": "小数位值",
+      "alias": "小数意义",
+      "description": "小数的位值含义，小数点移动引起的数值变化",
+      "grade": "四年级下",
+      "difficulty_range": [
+        2,
+        3
+      ],
+      "prerequisites": [
+        "M-CALC-007"
+      ],
+      "status": "unlocked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-CALC-010",
+      "subject": "数学",
+      "category": "数与运算",
+      "name": "纯小数大小比较",
+      "alias": "小数比较",
+      "description": "纯小数的大小比较，最大/最小纯小数的概念",
+      "grade": "四年级下",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [
+        "M-CALC-007"
+      ],
+      "status": "unlocked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-CALC-011",
+      "subject": "数学",
+      "category": "数与运算",
+      "name": "整数四则运算",
+      "alias": "加减乘除",
+      "description": "万以内整数的加减乘除运算基础",
+      "grade": "四年级上",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-CALC-012",
+      "subject": "数学",
+      "category": "数与运算",
+      "name": "乘法分配律与结合律",
+      "alias": "运算律",
+      "description": "a×(b+c)=a×b+a×c，(a×b)×c=a×(b×c)",
+      "grade": "四年级上",
+      "difficulty_range": [
+        2,
+        2
+      ],
+      "prerequisites": [
+        "M-CALC-011"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-CALC-013",
+      "subject": "数学",
+      "category": "数与运算",
+      "name": "分数的初步认识",
+      "alias": "分数基础",
+      "description": "认识几分之一、几分之几，分数的大小比较",
+      "grade": "四年级上",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-CALC-014",
+      "subject": "数学",
+      "category": "数与运算",
+      "name": "分数加减法",
+      "alias": "同分母加减",
+      "description": "同分母分数的加减法计算",
+      "grade": "四年级下",
+      "difficulty_range": [
+        2,
+        2
+      ],
+      "prerequisites": [
+        "M-CALC-013"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-CALC-015",
+      "subject": "数学",
+      "category": "数与运算",
+      "name": "小数乘法",
+      "alias": "小数×整数",
+      "description": "小数乘以整数的计算方法",
+      "grade": "四年级下",
+      "difficulty_range": [
+        2,
+        3
+      ],
+      "prerequisites": [
+        "M-CALC-007"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-CALC-016",
+      "subject": "数学",
+      "category": "数与运算",
+      "name": "小数除法",
+      "alias": "小数÷整数",
+      "description": "小数除以整数的计算方法",
+      "grade": "四年级下",
+      "difficulty_range": [
+        2,
+        3
+      ],
+      "prerequisites": [
+        "M-CALC-007",
+        "M-CALC-002"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-CALC-017",
+      "subject": "数学",
+      "category": "数与运算",
+      "name": "近似数与估算",
+      "alias": "四舍五入",
+      "description": "用四舍五入法求近似数，进行估算判断",
+      "grade": "四年级上",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [
+        "M-CALC-011"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-CALC-018",
+      "subject": "数学",
+      "category": "数与运算",
+      "name": "运算律综合应用",
+      "alias": "巧算综合",
+      "description": "灵活运用交换律、结合律、分配律进行简便计算",
+      "grade": "四年级下",
+      "difficulty_range": [
+        2,
+        3
+      ],
+      "prerequisites": [
+        "M-CALC-012"
+      ],
+      "status": "locked",
+      "fish_value": 2
+    },
+    {
+      "id": "M-CALC-019",
+      "subject": "数学",
+      "category": "数与运算",
+      "name": "简易方程初步",
+      "alias": "用字母表示数",
+      "description": "用字母表示数，理解简单的等量关系",
+      "grade": "四年级下",
+      "difficulty_range": [
+        2,
+        3
+      ],
+      "prerequisites": [
+        "M-CALC-011"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-CALC-020",
+      "subject": "数学",
+      "category": "数与运算",
+      "name": "负数的初步认识",
+      "alias": "零下温度",
+      "description": "认识负数，理解温度计、海拔等情境中的负数",
+      "grade": "四年级下",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-MEAS-001",
+      "subject": "数学",
+      "category": "图形与几何",
+      "name": "容量单位换算",
+      "alias": "升与毫升",
+      "description": "升(L)与毫升(ml)的换算：1L=1000ml",
+      "grade": "四年级上",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [],
+      "status": "unlocked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-MEAS-002",
+      "subject": "数学",
+      "category": "图形与几何",
+      "name": "容量单位换算和有余数除法",
+      "alias": "容量+除法综合",
+      "description": "容量换算结合有余数除法，求可装满瓶数和余量",
+      "grade": "四年级上",
+      "difficulty_range": [
+        2,
+        3
+      ],
+      "prerequisites": [
+        "M-MEAS-001",
+        "M-CALC-002"
+      ],
+      "status": "unlocked",
+      "fish_value": 2
+    },
+    {
+      "id": "M-MEAS-003",
+      "subject": "数学",
+      "category": "图形与几何",
+      "name": "长度单位换算",
+      "alias": "km/m/dm/cm/mm",
+      "description": "千米、米、分米、厘米、毫米之间的换算",
+      "grade": "四年级上",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-MEAS-004",
+      "subject": "数学",
+      "category": "图形与几何",
+      "name": "重量单位换算",
+      "alias": "t/kg/g",
+      "description": "吨、千克、克之间的换算",
+      "grade": "四年级上",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-MEAS-005",
+      "subject": "数学",
+      "category": "图形与几何",
+      "name": "面积单位换算",
+      "alias": "km²/m²/dm²/cm²",
+      "description": "平方千米、平方米、平方分米、平方厘米换算",
+      "grade": "四年级下",
+      "difficulty_range": [
+        2,
+        2
+      ],
+      "prerequisites": [
+        "M-MEAS-003"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-MEAS-006",
+      "subject": "数学",
+      "category": "图形与几何",
+      "name": "时间单位换算",
+      "alias": "年月日时分秒",
+      "description": "年/月/日/时/分/秒的换算和计算",
+      "grade": "四年级上",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-GEOM-001",
+      "subject": "数学",
+      "category": "图形与几何",
+      "name": "角的度量与分类",
+      "alias": "锐角直角钝角",
+      "description": "用量角器量角，区分锐角/直角/钝角/平角/周角",
+      "grade": "四年级上",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-GEOM-002",
+      "subject": "数学",
+      "category": "图形与几何",
+      "name": "平行与垂直",
+      "alias": "平行线垂线",
+      "description": "认识平行线和垂线，会画平行线和垂线",
+      "grade": "四年级上",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-GEOM-003",
+      "subject": "数学",
+      "category": "图形与几何",
+      "name": "三角形分类与性质",
+      "alias": "按角/边分类",
+      "description": "按角和边对三角形分类，理解三角形内角和=180°",
+      "grade": "四年级下",
+      "difficulty_range": [
+        2,
+        2
+      ],
+      "prerequisites": [
+        "M-GEOM-001"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-GEOM-004",
+      "subject": "数学",
+      "category": "图形与几何",
+      "name": "平行四边形与梯形",
+      "alias": "四边形",
+      "description": "认识平行四边形和梯形的特征和性质",
+      "grade": "四年级下",
+      "difficulty_range": [
+        2,
+        2
+      ],
+      "prerequisites": [
+        "M-GEOM-002"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-GEOM-005",
+      "subject": "数学",
+      "category": "图形与几何",
+      "name": "对称与平移",
+      "alias": "轴对称",
+      "description": "认识轴对称图形，画出对称轴；图形的平移",
+      "grade": "四年级上",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-GEOM-006",
+      "subject": "数学",
+      "category": "图形与几何",
+      "name": "长方形正方形周长",
+      "alias": "周长计算",
+      "description": "计算长方形和正方形的周长",
+      "grade": "四年级上",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [
+        "M-GEOM-002"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-GEOM-007",
+      "subject": "数学",
+      "category": "图形与几何",
+      "name": "长方形正方形面积",
+      "alias": "面积计算",
+      "description": "计算长方形和正方形的面积，理解面积公式",
+      "grade": "四年级上",
+      "difficulty_range": [
+        2,
+        2
+      ],
+      "prerequisites": [
+        "M-GEOM-006"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-STAT-001",
+      "subject": "数学",
+      "category": "统计与概率",
+      "name": "条形统计图",
+      "alias": "条形图",
+      "description": "读懂和绘制简单的条形统计图",
+      "grade": "四年级上",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-STAT-002",
+      "subject": "数学",
+      "category": "统计与概率",
+      "name": "折线统计图",
+      "alias": "折线图",
+      "description": "读懂和绘制简单的折线统计图，判断变化趋势",
+      "grade": "四年级下",
+      "difficulty_range": [
+        2,
+        2
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-STAT-003",
+      "subject": "数学",
+      "category": "统计与概率",
+      "name": "平均数",
+      "alias": "平均计算",
+      "description": "理解平均数的意义，计算简单数据的平均数",
+      "grade": "四年级下",
+      "difficulty_range": [
+        2,
+        2
+      ],
+      "prerequisites": [
+        "M-CALC-011"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-WORD-001",
+      "subject": "数学",
+      "category": "应用题与数量关系",
+      "name": "应用题答句和单位",
+      "alias": "完整答句",
+      "description": "解答应用题时写出完整答句并标注单位",
+      "grade": "四年级上",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [],
+      "status": "unlocked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-WORD-002",
+      "subject": "数学",
+      "category": "应用题与数量关系",
+      "name": "钱数转移应用题",
+      "alias": "差倍关系",
+      "description": "通过画关系图解决钱数转移类应用题",
+      "grade": "四年级下",
+      "difficulty_range": [
+        2,
+        3
+      ],
+      "prerequisites": [
+        "M-WORD-001"
+      ],
+      "status": "unlocked",
+      "fish_value": 2
+    },
+    {
+      "id": "M-WORD-003",
+      "subject": "数学",
+      "category": "应用题与数量关系",
+      "name": "归一问题",
+      "alias": "先求一份",
+      "description": "先求出单一量，再求总量或份数",
+      "grade": "四年级上",
+      "difficulty_range": [
+        2,
+        2
+      ],
+      "prerequisites": [
+        "M-CALC-011"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-WORD-004",
+      "subject": "数学",
+      "category": "应用题与数量关系",
+      "name": "归总问题",
+      "alias": "先求总数",
+      "description": "先求出总量，再求每份量或份数",
+      "grade": "四年级上",
+      "difficulty_range": [
+        2,
+        2
+      ],
+      "prerequisites": [
+        "M-WORD-003"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-WORD-005",
+      "subject": "数学",
+      "category": "应用题与数量关系",
+      "name": "行程问题",
+      "alias": "速度×时间=路程",
+      "description": "理解速度、时间、路程三者关系",
+      "grade": "四年级下",
+      "difficulty_range": [
+        2,
+        3
+      ],
+      "prerequisites": [
+        "M-CALC-011"
+      ],
+      "status": "locked",
+      "fish_value": 2
+    },
+    {
+      "id": "M-WORD-006",
+      "subject": "数学",
+      "category": "应用题与数量关系",
+      "name": "植树问题",
+      "alias": "间隔问题",
+      "description": "理解间隔数与棵数的关系（两端/一端/圆形）",
+      "grade": "四年级下",
+      "difficulty_range": [
+        2,
+        3
+      ],
+      "prerequisites": [
+        "M-CALC-011"
+      ],
+      "status": "locked",
+      "fish_value": 2
+    },
+    {
+      "id": "M-WORD-007",
+      "subject": "数学",
+      "category": "应用题与数量关系",
+      "name": "鸡兔同笼",
+      "alias": "假设法",
+      "description": "用假设法解决鸡兔同笼问题",
+      "grade": "四年级下",
+      "difficulty_range": [
+        3,
+        3
+      ],
+      "prerequisites": [
+        "M-CALC-011"
+      ],
+      "status": "locked",
+      "fish_value": 3
+    },
+    {
+      "id": "M-WORD-008",
+      "subject": "数学",
+      "category": "应用题与数量关系",
+      "name": "盈亏问题",
+      "alias": "盈亏分配",
+      "description": "理解盈亏问题的数量关系，用列表或算式求解",
+      "grade": "四年级下",
+      "difficulty_range": [
+        3,
+        3
+      ],
+      "prerequisites": [
+        "M-WORD-003"
+      ],
+      "status": "locked",
+      "fish_value": 3
+    },
+    {
+      "id": "E-VOCAB-001",
+      "subject": "英语",
+      "category": "词汇与拼写",
+      "name": "词汇记忆",
+      "alias": "英语单词",
+      "description": "每天5个新单词的认读和中文释义",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [],
+      "status": "unlocked",
+      "fish_value": 1
+    },
+    {
+      "id": "E-VOCAB-002",
+      "subject": "英语",
+      "category": "词汇与拼写",
+      "name": "名词单复数",
+      "alias": "可数/不可数",
+      "description": "可数名词复数+s/es的变化规则和不规则变化",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [
+        "E-VOCAB-001"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "E-VOCAB-003",
+      "subject": "英语",
+      "category": "词汇与拼写",
+      "name": "时间表达",
+      "alias": "几点几分",
+      "description": "会用What time/When提问，用at/on/in表达时间",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [
+        "E-VOCAB-001"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "E-VOCAB-004",
+      "subject": "英语",
+      "category": "词汇与拼写",
+      "name": "日期表达",
+      "alias": "月日星期",
+      "description": "会用月份、日期、星期的英文表达",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [
+        "E-VOCAB-001"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "E-VOCAB-005",
+      "subject": "英语",
+      "category": "词汇与拼写",
+      "name": "天气表达",
+      "alias": "天气问答",
+      "description": "用Whats the weather like?问答天气",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [
+        "E-VOCAB-001"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "E-GRAM-001",
+      "subject": "英语",
+      "category": "语法（词法）",
+      "name": "三单",
+      "alias": "第三人称单数",
+      "description": "一般现在时第三人称单数动词+s/es的变化规则",
+      "grade": "四年级",
+      "difficulty_range": [
+        2,
+        2
+      ],
+      "prerequisites": [
+        "E-VOCAB-001"
+      ],
+      "status": "unlocked",
+      "fish_value": 1
+    },
+    {
+      "id": "E-GRAM-002",
+      "subject": "英语",
+      "category": "语法（词法）",
+      "name": "现在进行时",
+      "alias": "be+V-ing",
+      "description": "现在进行时be+动词ing的结构和用法",
+      "grade": "四年级",
+      "difficulty_range": [
+        2,
+        2
+      ],
+      "prerequisites": [
+        "E-VOCAB-001"
+      ],
+      "status": "unlocked",
+      "fish_value": 1
+    },
+    {
+      "id": "E-GRAM-003",
+      "subject": "英语",
+      "category": "语法（词法）",
+      "name": "be动词",
+      "alias": "am/is/are",
+      "description": "be动词的三种形式和主谓搭配",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [
+        "E-VOCAB-001"
+      ],
+      "status": "unlocked",
+      "fish_value": 1
+    },
+    {
+      "id": "E-GRAM-004",
+      "subject": "英语",
+      "category": "语法（词法）",
+      "name": "人称代词与物主代词",
+      "alias": "I/my/me",
+      "description": "主格/宾格/形容词性物主代词/名词性物主代词",
+      "grade": "四年级",
+      "difficulty_range": [
+        2,
+        2
+      ],
+      "prerequisites": [
+        "E-VOCAB-001"
+      ],
+      "status": "locked",
+      "fish_value": 2
+    },
+    {
+      "id": "E-GRAM-005",
+      "subject": "英语",
+      "category": "语法（词法）",
+      "name": "冠词",
+      "alias": "a/an/the",
+      "description": "不定冠词a/an和定冠词the的用法",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [
+        "E-VOCAB-001"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "E-GRAM-006",
+      "subject": "英语",
+      "category": "语法（词法）",
+      "name": "情态动词",
+      "alias": "can/may/must",
+      "description": "can/may/must的用法和区别",
+      "grade": "四年级",
+      "difficulty_range": [
+        2,
+        2
+      ],
+      "prerequisites": [
+        "E-VOCAB-001"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "E-GRAM-007",
+      "subject": "英语",
+      "category": "语法（词法）",
+      "name": "形容词比较级",
+      "alias": "-er/than",
+      "description": "形容词比较级+er和than的基本用法",
+      "grade": "四年级",
+      "difficulty_range": [
+        2,
+        3
+      ],
+      "prerequisites": [
+        "E-VOCAB-001"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "E-GRAM-008",
+      "subject": "英语",
+      "category": "语法（词法）",
+      "name": "介词",
+      "alias": "in/on/at/under",
+      "description": "时间介词和地点介词in/on/at/under/beside/behind等",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [
+        "E-VOCAB-001"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "E-GRAM-009",
+      "subject": "英语",
+      "category": "语法（词法）",
+      "name": "疑问词",
+      "alias": "Wh-questions",
+      "description": "what/who/where/when/why/how特殊疑问句",
+      "grade": "四年级",
+      "difficulty_range": [
+        2,
+        2
+      ],
+      "prerequisites": [
+        "E-VOCAB-001"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "E-SYNX-001",
+      "subject": "英语",
+      "category": "语法（句法）",
+      "name": "There be句型",
+      "alias": "存在句",
+      "description": "There is/are表示某处有某物",
+      "grade": "四年级",
+      "difficulty_range": [
+        2,
+        2
+      ],
+      "prerequisites": [
+        "E-GRAM-003"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "E-SYNX-002",
+      "subject": "英语",
+      "category": "语法（句法）",
+      "name": "一般现在时",
+      "alias": "日常动作",
+      "description": "一般现在时表示习惯性动作和事实",
+      "grade": "四年级",
+      "difficulty_range": [
+        2,
+        2
+      ],
+      "prerequisites": [
+        "E-GRAM-001",
+        "E-GRAM-003"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "E-SYNX-003",
+      "subject": "英语",
+      "category": "语法（句法）",
+      "name": "一般过去时",
+      "alias": "was/were",
+      "description": "一般过去时的be动词变化和规则动词+ed",
+      "grade": "四年级",
+      "difficulty_range": [
+        2,
+        3
+      ],
+      "prerequisites": [
+        "E-GRAM-003"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "E-SYNX-004",
+      "subject": "英语",
+      "category": "语法（句法）",
+      "name": "一般将来时",
+      "alias": "will/be going to",
+      "description": "用will和be going to表达将来",
+      "grade": "四年级",
+      "difficulty_range": [
+        2,
+        3
+      ],
+      "prerequisites": [
+        "E-GRAM-003"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "E-SYNX-005",
+      "subject": "英语",
+      "category": "语法（句法）",
+      "name": "一般疑问句",
+      "alias": "Yes/No问句",
+      "description": "把be动词/助动词/情态动词提前构成一般疑问句",
+      "grade": "四年级",
+      "difficulty_range": [
+        2,
+        2
+      ],
+      "prerequisites": [
+        "E-GRAM-003"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "E-SYNX-006",
+      "subject": "英语",
+      "category": "语法（句法）",
+      "name": "祈使句",
+      "alias": "命令/请求",
+      "description": "用动词原形开头的祈使句表达命令或请求",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "E-SYNX-007",
+      "subject": "英语",
+      "category": "语法（句法）",
+      "name": "连词",
+      "alias": "and/but/or",
+      "description": "用and/but/or连接词、短语和句子",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "E-WRIT-001",
+      "subject": "英语",
+      "category": "写作基础",
+      "name": "句子书写",
+      "alias": "完整句子",
+      "description": "写出结构完整的简单句（主语+谓语+其他）",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [
+        "E-VOCAB-001",
+        "E-GRAM-003"
+      ],
+      "status": "unlocked",
+      "fish_value": 1
+    },
+    {
+      "id": "E-READ-001",
+      "subject": "英语",
+      "category": "阅读与理解",
+      "name": "课堂句子复述",
+      "alias": "课堂记忆",
+      "description": "回忆并写出英语课上记住的一句话",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        1
+      ],
+      "prerequisites": [],
+      "status": "unlocked",
+      "fish_value": 1
+    },
+    {
+      "id": "E-READ-002",
+      "subject": "英语",
+      "category": "阅读与理解",
+      "name": "日常对话",
+      "alias": "情景对话",
+      "description": "理解和完成简单的情景对话",
+      "grade": "四年级",
+      "difficulty_range": [
+        2,
+        2
+      ],
+      "prerequisites": [
+        "E-VOCAB-001"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "E-READ-003",
+      "subject": "英语",
+      "category": "阅读与理解",
+      "name": "短文阅读",
+      "alias": "阅读理答",
+      "description": "读3-5句英语短文，回答简单问题",
+      "grade": "四年级",
+      "difficulty_range": [
+        2,
+        3
+      ],
+      "prerequisites": [
+        "E-VOCAB-001",
+        "E-GRAM-003"
+      ],
+      "status": "locked",
+      "fish_value": 2
+    },
+    {
+      "id": "E-WRIT-002",
+      "subject": "英语",
+      "category": "写作基础",
+      "name": "英语小写作",
+      "alias": "3-5句短文",
+      "description": "用3-5个句子写一段话（自我介绍/描述图片等）",
+      "grade": "四年级",
+      "difficulty_range": [
+        2,
+        3
+      ],
+      "prerequisites": [
+        "E-WRIT-001",
+        "E-VOCAB-001"
+      ],
+      "status": "locked",
+      "fish_value": 2
+    },
+    {
+      "id": "C-VOCAB-001",
+      "subject": "语文",
+      "category": "字词基础",
+      "name": "课堂词语回忆",
+      "alias": "词语记忆",
+      "description": "回忆并写出语文课上记住的一个词语，并造句",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        1
+      ],
+      "prerequisites": [],
+      "status": "unlocked",
+      "fish_value": 1
+    },
+    {
+      "id": "C-VOCAB-002",
+      "subject": "语文",
+      "category": "字词基础",
+      "name": "多音字辨析",
+      "alias": "多音字",
+      "description": "根据语境辨析多音字的读音和用法",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "C-VOCAB-003",
+      "subject": "语文",
+      "category": "字词基础",
+      "name": "形近字辨析",
+      "alias": "形近字",
+      "description": "区分字形相近的汉字，避免写错",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "C-VOCAB-004",
+      "subject": "语文",
+      "category": "字词基础",
+      "name": "近义词与反义词",
+      "alias": "词义辨析",
+      "description": "掌握常见近义词和反义词",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "C-VOCAB-005",
+      "subject": "语文",
+      "category": "字词基础",
+      "name": "成语积累",
+      "alias": "成语",
+      "description": "积累课内和常见成语，理解意思并运用",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "C-VOCAB-006",
+      "subject": "语文",
+      "category": "字词基础",
+      "name": "关联词运用",
+      "alias": "关联词",
+      "description": "正确使用因果/转折/递进/条件等关联词",
+      "grade": "四年级",
+      "difficulty_range": [
+        2,
+        2
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "C-VOCAB-007",
+      "subject": "语文",
+      "category": "字词基础",
+      "name": "修辞手法",
+      "alias": "比喻拟人排比",
+      "description": "识别和简单运用比喻、拟人、排比等修辞",
+      "grade": "四年级",
+      "difficulty_range": [
+        2,
+        2
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "C-READ-001",
+      "subject": "语文",
+      "category": "阅读理解",
+      "name": "段落大意概括",
+      "alias": "概括段意",
+      "description": "用一句话概括自然段的大意",
+      "grade": "四年级",
+      "difficulty_range": [
+        2,
+        2
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "C-READ-002",
+      "subject": "语文",
+      "category": "阅读理解",
+      "name": "中心思想提炼",
+      "alias": "中心思想",
+      "description": "读懂文章的中心思想，说出/写出文章主旨",
+      "grade": "四年级",
+      "difficulty_range": [
+        2,
+        3
+      ],
+      "prerequisites": [
+        "C-READ-001"
+      ],
+      "status": "locked",
+      "fish_value": 2
+    },
+    {
+      "id": "C-READ-003",
+      "subject": "语文",
+      "category": "阅读理解",
+      "name": "记叙文阅读",
+      "alias": "写事读事",
+      "description": "阅读简短记叙文，理清时间地点人物事件",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "C-READ-004",
+      "subject": "语文",
+      "category": "阅读理解",
+      "name": "说明文阅读",
+      "alias": "科普文章",
+      "description": "阅读简短说明文，提取关键信息",
+      "grade": "四年级",
+      "difficulty_range": [
+        2,
+        3
+      ],
+      "prerequisites": [
+        "C-READ-001"
+      ],
+      "status": "locked",
+      "fish_value": 2
+    },
+    {
+      "id": "C-POEM-001",
+      "subject": "语文",
+      "category": "古诗文积累",
+      "name": "古诗词背诵",
+      "alias": "课内古诗",
+      "description": "背诵课内古诗词，理解大意",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "C-POEM-002",
+      "subject": "语文",
+      "category": "古诗文积累",
+      "name": "小古文阅读",
+      "alias": "文言文入门",
+      "description": "阅读简短小古文，借助注释理解大意",
+      "grade": "四年级",
+      "difficulty_range": [
+        2,
+        3
+      ],
+      "prerequisites": [
+        "C-POEM-001"
+      ],
+      "status": "locked",
+      "fish_value": 2
+    },
+    {
+      "id": "C-WRIT-001",
+      "subject": "语文",
+      "category": "写作表达",
+      "name": "看图写话",
+      "alias": "看图写文",
+      "description": "观察图片，用一段完整的话描述画面内容",
+      "grade": "四年级",
+      "difficulty_range": [
+        2,
+        2
+      ],
+      "prerequisites": [
+        "C-VOCAB-001"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "C-WRIT-002",
+      "subject": "语文",
+      "category": "写作表达",
+      "name": "日记写作",
+      "alias": "写日记",
+      "description": "用通顺的语言写一篇简短的日记",
+      "grade": "四年级",
+      "difficulty_range": [
+        2,
+        2
+      ],
+      "prerequisites": [
+        "C-WRIT-001"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "C-WRIT-003",
+      "subject": "语文",
+      "category": "写作表达",
+      "name": "书信格式",
+      "alias": "书信",
+      "description": "掌握书信的基本格式（称呼/正文/祝语/署名/日期）",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "C-WRIT-004",
+      "subject": "语文",
+      "category": "写作表达",
+      "name": "修改病句",
+      "alias": "病句修改",
+      "description": "识别并修改常见的病句类型",
+      "grade": "四年级",
+      "difficulty_range": [
+        2,
+        2
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "C-WRIT-005",
+      "subject": "语文",
+      "category": "写作表达",
+      "name": "标点符号",
+      "alias": "标点",
+      "description": "正确使用逗号、句号、问号、感叹号、引号、顿号等",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "G-FEYN-001",
+      "subject": "通用",
+      "category": "费曼教学",
+      "name": "费曼解释",
+      "alias": "讲给Boss听",
+      "description": "能用一句话讲清楚一道错题为什么错，核心规则是什么",
+      "grade": "通用",
+      "difficulty_range": [
+        2,
+        3
+      ],
+      "prerequisites": [],
+      "status": "unlocked",
+      "fish_value": 2
+    },
+    {
+      "id": "G-FEYN-002",
+      "subject": "通用",
+      "category": "费曼教学",
+      "name": "费曼复盘",
+      "alias": "Boss复盘",
+      "description": "每天识别最难的Boss题，用一句话说清避开策略",
+      "grade": "通用",
+      "difficulty_range": [
+        2,
+        2
+      ],
+      "prerequisites": [
+        "G-FEYN-001"
+      ],
+      "status": "unlocked",
+      "fish_value": 1
+    },
+    {
+      "id": "G-SYNC-001",
+      "subject": "通用",
+      "category": "课堂同步",
+      "name": "课堂同步",
+      "alias": "三科雷达",
+      "description": "每天记录语数英三科课堂进度，保持家校对齐",
+      "grade": "通用",
+      "difficulty_range": [
+        1,
+        1
+      ],
+      "prerequisites": [],
+      "status": "unlocked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-CALC-021",
+      "subject": "数学",
+      "category": "数与运算",
+      "name": "递等式计算",
+      "alias": "脱式计算",
+      "description": "用递等式（脱式）格式逐步写出计算过程",
+      "grade": "四年级上",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [
+        "M-CALC-011"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-CALC-022",
+      "subject": "数学",
+      "category": "数与运算",
+      "name": "竖式计算",
+      "alias": "列竖式",
+      "description": "用竖式格式进行乘除法计算，注意数位对齐",
+      "grade": "四年级上",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [
+        "M-CALC-011"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-CALC-023",
+      "subject": "数学",
+      "category": "数与运算",
+      "name": "综合算式",
+      "alias": "列综合式",
+      "description": "将多步应用题列成一个综合算式",
+      "grade": "四年级下",
+      "difficulty_range": [
+        2,
+        3
+      ],
+      "prerequisites": [
+        "M-CALC-011",
+        "M-CALC-004"
+      ],
+      "status": "locked",
+      "fish_value": 2
+    },
+    {
+      "id": "M-CALC-024",
+      "subject": "数学",
+      "category": "数与运算",
+      "name": "计数单位与数位",
+      "alias": "数位顺序表",
+      "description": "理解个十百千万十万百万千万亿等计数单位和数位",
+      "grade": "四年级上",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [
+        "M-CALC-011"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-CALC-025",
+      "subject": "数学",
+      "category": "数与运算",
+      "name": "数的读写与改写",
+      "alias": "大数读写",
+      "description": "大数的读法、写法以及用万/亿改写",
+      "grade": "四年级上",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [
+        "M-CALC-024"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-GEOM-008",
+      "subject": "数学",
+      "category": "图形与几何",
+      "name": "直线射线线段",
+      "alias": "线的认识",
+      "description": "区分直线、射线、线段的特点和表示方法",
+      "grade": "四年级上",
+      "difficulty_range": [
+        1,
+        1
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-CALC-026",
+      "subject": "数学",
+      "category": "数与运算",
+      "name": "加法交换律",
+      "alias": "交换律",
+      "description": "a+b=b+a，理解并运用加法交换律",
+      "grade": "四年级上",
+      "difficulty_range": [
+        1,
+        1
+      ],
+      "prerequisites": [
+        "M-CALC-011"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-CALC-027",
+      "subject": "数学",
+      "category": "数与运算",
+      "name": "减法运算性质",
+      "alias": "差不变",
+      "description": "a-b-c=a-(b+c)，理解减法运算性质",
+      "grade": "四年级下",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [
+        "M-CALC-011"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-WORD-009",
+      "subject": "数学",
+      "category": "应用题与数量关系",
+      "name": "工作效率问题",
+      "alias": "工时工效",
+      "description": "理解工作效率×工作时间=工作量的关系，解决工程问题",
+      "grade": "四年级上",
+      "difficulty_range": [
+        2,
+        3
+      ],
+      "prerequisites": [
+        "M-CALC-011"
+      ],
+      "status": "locked",
+      "fish_value": 2
+    },
+    {
+      "id": "M-GEOM-009",
+      "subject": "数学",
+      "category": "图形与几何",
+      "name": "圆的初步认识",
+      "alias": "圆的认识",
+      "description": "认识圆心、半径、直径，用圆规画圆",
+      "grade": "四年级上",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-CALC-028",
+      "subject": "数学",
+      "category": "数与运算",
+      "name": "五舍六入",
+      "alias": "上海近似法",
+      "description": "掌握上海教材特有的五舍六入近似方法（与四舍五入的区别）",
+      "grade": "四年级下",
+      "difficulty_range": [
+        2,
+        2
+      ],
+      "prerequisites": [
+        "M-CALC-017"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "M-WORD-010",
+      "subject": "数学",
+      "category": "应用题与数量关系",
+      "name": "计算比赛场次",
+      "alias": "组合初步",
+      "description": "用列举或连线法计算比赛场次数，组合数学初步",
+      "grade": "四年级下",
+      "difficulty_range": [
+        2,
+        3
+      ],
+      "prerequisites": [
+        "M-CALC-011"
+      ],
+      "status": "locked",
+      "fish_value": 2
+    },
+    {
+      "id": "M-GEOM-010",
+      "subject": "数学",
+      "category": "图形与几何",
+      "name": "位置的表示方法",
+      "alias": "数对坐标",
+      "description": "用数对（列,行）表示平面上点的位置，坐标初步",
+      "grade": "四年级下",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "C-READ-005",
+      "subject": "语文",
+      "category": "阅读理解",
+      "name": "提问策略阅读",
+      "alias": "边读边问",
+      "description": "阅读时学会从不同角度提问（内容/写法/生活），理解提问促进深度阅读",
+      "grade": "四年级上",
+      "difficulty_range": [
+        2,
+        3
+      ],
+      "prerequisites": [
+        "C-READ-003"
+      ],
+      "status": "locked",
+      "fish_value": 2
+    },
+    {
+      "id": "C-READ-006",
+      "subject": "语文",
+      "category": "阅读理解",
+      "name": "神话与寓言",
+      "alias": "文体识别",
+      "description": "认识神话和寓言的特点，能区分不同类型的故事文体",
+      "grade": "四年级上",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [
+        "C-READ-003"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "C-ORAL-001",
+      "subject": "语文",
+      "category": "写作表达",
+      "name": "口语交际",
+      "alias": "倾听表达",
+      "description": "学会倾听他人发言，清晰有条理地表达自己的观点",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "C-READ-007",
+      "subject": "语文",
+      "category": "阅读理解",
+      "name": "课外阅读习惯",
+      "alias": "快乐读书吧",
+      "description": "培养每天课外阅读的习惯，能复述所读内容",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        1
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "C-WRIT-006",
+      "subject": "语文",
+      "category": "写作表达",
+      "name": "观察日记写作",
+      "alias": "连续观察",
+      "description": "学习连续观察并记录，用准确生动的语言写观察日记",
+      "grade": "四年级上",
+      "difficulty_range": [
+        2,
+        3
+      ],
+      "prerequisites": [
+        "C-WRIT-002"
+      ],
+      "status": "locked",
+      "fish_value": 2
+    },
+    {
+      "id": "E-VOCAB-006",
+      "subject": "英语",
+      "category": "词汇与拼写",
+      "name": "情绪表达",
+      "alias": "情感词汇",
+      "description": "掌握happy/sad/hungry/thirsty/tired等情绪形容词表达",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [
+        "E-VOCAB-001"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "E-VOCAB-007",
+      "subject": "英语",
+      "category": "词汇与拼写",
+      "name": "运动与活动",
+      "alias": "运动词汇",
+      "description": "掌握play+运动、常见运动项目的英文表达",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [
+        "E-VOCAB-001"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "E-VOCAB-008",
+      "subject": "英语",
+      "category": "词汇与拼写",
+      "name": "动物与宠物",
+      "alias": "动物描述",
+      "description": "掌握常见动物名称及简单描述（颜色/大小/食物）",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [
+        "E-VOCAB-001"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "E-VOCAB-009",
+      "subject": "英语",
+      "category": "词汇与拼写",
+      "name": "家居与房间",
+      "alias": "房间词汇",
+      "description": "掌握bedroom/living room/bathroom/kitchen等房间词汇",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [
+        "E-VOCAB-001"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "E-VOCAB-010",
+      "subject": "英语",
+      "category": "词汇与拼写",
+      "name": "感官描述",
+      "alias": "五感词汇",
+      "description": "掌握rough/smooth/hard/soft/loud/quiet等感官描述词",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [
+        "E-VOCAB-001"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "E-GRAM-010",
+      "subject": "英语",
+      "category": "语法（词法）",
+      "name": "have/has用法",
+      "alias": "拥有表达",
+      "description": "区分have和has的使用（第三人称单数用has）",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [
+        "E-GRAM-001",
+        "E-GRAM-003"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "C-POEM-003",
+      "subject": "语文",
+      "category": "古诗文积累",
+      "name": "古诗默写",
+      "alias": "默写填空",
+      "description": "能正确默写课内古诗词，不写错别字",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [
+        "C-POEM-001"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "C-READ-008",
+      "subject": "语文",
+      "category": "阅读理解",
+      "name": "词语理解",
+      "alias": "联系上下文解词",
+      "description": "联系上下文理解文中关键词语的意思",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [
+        "C-READ-003"
+      ],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "C-READ-009",
+      "subject": "语文",
+      "category": "阅读理解",
+      "name": "句子赏析",
+      "alias": "修辞表达效果",
+      "description": "体会文中优美语句的表达效果，说出用了什么修辞手法",
+      "grade": "四年级",
+      "difficulty_range": [
+        2,
+        3
+      ],
+      "prerequisites": [
+        "C-VOCAB-007",
+        "C-READ-003"
+      ],
+      "status": "locked",
+      "fish_value": 2
+    },
+    {
+      "id": "C-WRIT-007",
+      "subject": "语文",
+      "category": "写作表达",
+      "name": "记事作文",
+      "alias": "写一件事",
+      "description": "按顺序写清楚一件事的起因经过结果",
+      "grade": "四年级",
+      "difficulty_range": [
+        2,
+        3
+      ],
+      "prerequisites": [
+        "C-WRIT-001"
+      ],
+      "status": "locked",
+      "fish_value": 2
+    },
+    {
+      "id": "C-WRIT-008",
+      "subject": "语文",
+      "category": "写作表达",
+      "name": "想象作文",
+      "alias": "童话续写",
+      "description": "展开合理想象写故事，如我和XX过一天",
+      "grade": "四年级上",
+      "difficulty_range": [
+        2,
+        3
+      ],
+      "prerequisites": [
+        "C-WRIT-001"
+      ],
+      "status": "locked",
+      "fish_value": 2
+    },
+    {
+      "id": "C-VOCAB-008",
+      "subject": "语文",
+      "category": "字词基础",
+      "name": "看拼音写词语",
+      "alias": "拼音写词",
+      "description": "根据拼音正确写出对应的词语，不写错别字",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        1
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    },
+    {
+      "id": "C-WRIT-009",
+      "subject": "语文",
+      "category": "写作表达",
+      "name": "句式转换",
+      "alias": "把字句被字句",
+      "description": "掌握把字句与被字句的转换、陈述句与反问句的转换",
+      "grade": "四年级",
+      "difficulty_range": [
+        1,
+        2
+      ],
+      "prerequisites": [],
+      "status": "locked",
+      "fish_value": 1
+    }
+  ],
+  "categories": {
+    "数学": {
+      "数与运算": [
+        "M-CALC-001",
+        "M-CALC-002",
+        "M-CALC-003",
+        "M-CALC-004",
+        "M-CALC-005",
+        "M-CALC-006",
+        "M-CALC-007",
+        "M-CALC-008",
+        "M-CALC-009",
+        "M-CALC-010",
+        "M-CALC-011",
+        "M-CALC-012",
+        "M-CALC-013",
+        "M-CALC-014",
+        "M-CALC-015",
+        "M-CALC-016",
+        "M-CALC-017",
+        "M-CALC-018",
+        "M-CALC-019",
+        "M-CALC-020",
+        "M-CALC-021",
+        "M-CALC-022",
+        "M-CALC-023",
+        "M-CALC-024",
+        "M-CALC-025",
+        "M-CALC-026",
+        "M-CALC-027",
+        "M-CALC-028"
+      ],
+      "图形与几何": [
+        "M-MEAS-001",
+        "M-MEAS-002",
+        "M-MEAS-003",
+        "M-MEAS-004",
+        "M-MEAS-005",
+        "M-MEAS-006",
+        "M-GEOM-001",
+        "M-GEOM-002",
+        "M-GEOM-003",
+        "M-GEOM-004",
+        "M-GEOM-005",
+        "M-GEOM-006",
+        "M-GEOM-007",
+        "M-GEOM-008",
+        "M-GEOM-009",
+        "M-GEOM-010"
+      ],
+      "统计与概率": [
+        "M-STAT-001",
+        "M-STAT-002",
+        "M-STAT-003"
+      ],
+      "应用题与数量关系": [
+        "M-WORD-001",
+        "M-WORD-002",
+        "M-WORD-003",
+        "M-WORD-004",
+        "M-WORD-005",
+        "M-WORD-006",
+        "M-WORD-007",
+        "M-WORD-008",
+        "M-WORD-009",
+        "M-WORD-010"
+      ]
+    },
+    "英语": {
+      "词汇与拼写": [
+        "E-VOCAB-001",
+        "E-VOCAB-002",
+        "E-VOCAB-003",
+        "E-VOCAB-004",
+        "E-VOCAB-005",
+        "E-VOCAB-006",
+        "E-VOCAB-007",
+        "E-VOCAB-008",
+        "E-VOCAB-009",
+        "E-VOCAB-010"
+      ],
+      "语法（词法）": [
+        "E-GRAM-001",
+        "E-GRAM-002",
+        "E-GRAM-003",
+        "E-GRAM-004",
+        "E-GRAM-005",
+        "E-GRAM-006",
+        "E-GRAM-007",
+        "E-GRAM-008",
+        "E-GRAM-009",
+        "E-GRAM-010"
+      ],
+      "语法（句法）": [
+        "E-SYNX-001",
+        "E-SYNX-002",
+        "E-SYNX-003",
+        "E-SYNX-004",
+        "E-SYNX-005",
+        "E-SYNX-006",
+        "E-SYNX-007"
+      ],
+      "阅读与理解": [
+        "E-READ-001",
+        "E-READ-002",
+        "E-READ-003"
+      ],
+      "写作基础": [
+        "E-WRIT-001",
+        "E-WRIT-002"
+      ]
+    },
+    "语文": {
+      "字词基础": [
+        "C-VOCAB-001",
+        "C-VOCAB-002",
+        "C-VOCAB-003",
+        "C-VOCAB-004",
+        "C-VOCAB-005",
+        "C-VOCAB-006",
+        "C-VOCAB-007",
+        "C-VOCAB-008"
+      ],
+      "阅读理解": [
+        "C-READ-001",
+        "C-READ-002",
+        "C-READ-003",
+        "C-READ-004",
+        "C-READ-005",
+        "C-READ-006",
+        "C-READ-007",
+        "C-READ-008",
+        "C-READ-009"
+      ],
+      "古诗文积累": [
+        "C-POEM-001",
+        "C-POEM-002",
+        "C-POEM-003"
+      ],
+      "写作表达": [
+        "C-WRIT-001",
+        "C-WRIT-002",
+        "C-WRIT-003",
+        "C-WRIT-004",
+        "C-WRIT-005",
+        "C-ORAL-001",
+        "C-WRIT-006",
+        "C-WRIT-007",
+        "C-WRIT-008",
+        "C-WRIT-009"
+      ]
+    },
+    "通用": {
+      "费曼教学": [
+        "G-FEYN-001",
+        "G-FEYN-002"
+      ],
+      "课堂同步": [
+        "G-SYNC-001"
+      ]
+    }
+  }
+}

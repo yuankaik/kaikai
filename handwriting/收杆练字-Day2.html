@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>收杆练字 - Day2</title>
+<style>
+  @page { size: A4; margin: 14mm; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    color: #1f2933;
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    background: #fff;
+  }
+  .sheet { max-width: 180mm; margin: 0 auto; }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid #1f2933;
+    padding-bottom: 8px;
+    margin-bottom: 14px;
+  }
+  h1 { font-size: 24px; margin: 0; letter-spacing: 0; }
+  .source { font-size: 14px; color: #52616b; }
+  .note {
+    font-size: 13px;
+    line-height: 1.7;
+    margin: 0 0 12px;
+    color: #334e68;
+  }
+  .word-row {
+    display: grid;
+    grid-template-columns: 20mm repeat(6, 20mm);
+    gap: 5mm;
+    align-items: center;
+    margin: 9mm 0;
+  }
+  .word-label {
+    font-size: 18px;
+    font-family: "STXingkai", "华文行楷", "KaiTi", "楷体", serif;
+    text-align: center;
+  }
+  .cell {
+    position: relative;
+    width: 20mm;
+    height: 20mm;
+    border: 1.4px solid #394b59;
+    background-color: #fff;
+  }
+  .cell::before,
+  .cell::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+  }
+  .cell::before {
+    left: 50%; top: 0; bottom: 0;
+    border-left: 1px dashed #9fb3c8;
+  }
+  .cell::after {
+    top: 50%; left: 0; right: 0;
+    border-top: 1px dashed #9fb3c8;
+  }
+  .demo span {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "STXingkai", "华文行楷", "KaiTi", "楷体", serif;
+    font-size: 42px;
+    line-height: 1;
+    z-index: 1;
+  }
+  .practice { background: #fff; }
+  footer {
+    margin-top: 12mm;
+    border-top: 1px solid #cbd5e1;
+    padding-top: 8px;
+    font-size: 13px;
+    color: #52616b;
+  }
+</style>
+</head>
+<body>
+  <main class="sheet">
+    <header>
+      <h1>收杆练字</h1>
+      <div class="source">Day2 · 宿新市徐公店</div>
+    </header>
+    <p class="note">每个字先看示范格，再写后面5格。今天只求结构稳，不返工、不加写。</p>
+    
+        <section class="word-row">
+          <div class="word-label">宿</div>
+          <div class="cell demo"><span>宿</span></div>
+          <div class="cell practice"></div><div class="cell practice"></div><div class="cell practice"></div><div class="cell practice"></div><div class="cell practice"></div>
+        </section>
+        <section class="word-row">
+          <div class="word-label">新</div>
+          <div class="cell demo"><span>新</span></div>
+          <div class="cell practice"></div><div class="cell practice"></div><div class="cell practice"></div><div class="cell practice"></div><div class="cell practice"></div>
+        </section>
+        <section class="word-row">
+          <div class="word-label">疏</div>
+          <div class="cell demo"><span>疏</span></div>
+          <div class="cell practice"></div><div class="cell practice"></div><div class="cell practice"></div><div class="cell practice"></div><div class="cell practice"></div>
+        </section>
+    <footer>大副只圈一个“最稳的一竿”：_______</footer>
+  </main>
+</body>
+</html>

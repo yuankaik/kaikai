@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Day3-海王龙的逆向追踪</title>
+  <style>
+    :root {
+      --ink: #1d1d1f;
+      --muted: #6e6e73;
+      --line: #d2d2d7;
+      --paper: #ffffff;
+      --wash: #f5f5f7;
+      --blue: #0071e3;
+      --green: #248a3d;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--wash);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+      letter-spacing: 0;
+    }
+    .shell { max-width: 1040px; margin: 0 auto; padding: 28px 22px; }
+    header {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 18px;
+      align-items: stretch;
+      margin-bottom: 20px;
+    }
+    .hero, .status-panel, .question-card {
+      background: var(--paper);
+      border: 1px solid rgba(0, 0, 0, .08);
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, .03);
+    }
+    .hero { padding: 28px; overflow: hidden; }
+    .hero h1 { margin: 0 0 10px; font-size: 42px; line-height: 1.12; font-weight: 700; }
+    .subtitle { color: var(--muted); font-size: 18px; margin: 0 0 18px; }
+    .ocean-art { width: 100%; height: auto; display: block; border-radius: 8px; }
+    .status-panel { padding: 24px; display: grid; gap: 16px; align-content: start; }
+    .meter-label { display: flex; justify-content: space-between; font-weight: 700; }
+    .meter { height: 10px; border-radius: 999px; background: #e8e8ed; overflow: hidden; }
+    .meter span { display: block; height: 100%; background: var(--blue); }
+    .rule { color: var(--muted); line-height: 1.5; margin: 4px 0 0; }
+    nav { display: flex; gap: 10px; margin: 0 0 18px; flex-wrap: wrap; }
+    nav a, button {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 11px 14px;
+      background: #ffffff;
+      color: var(--ink);
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      font-size: 15px;
+    }
+    nav a { color: var(--blue); border-color: transparent; background: transparent; }
+    button { background: var(--ink); border-color: var(--ink); color: #fff; }
+    button.ghost { background: #ffffff; }
+    button.ghost { color: var(--blue); border-color: #c7d8ef; }
+    .layout { display: grid; grid-template-columns: 1fr; gap: 16px; }
+    .panel { padding: 0; }
+    .panel h2, .section-heading h2 { margin: 0; font-size: 25px; font-weight: 700; }
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: end;
+      border-bottom: 2px solid var(--line);
+      padding: 20px 2px 10px;
+      color: var(--ink);
+    }
+    .section-heading span { color: var(--muted); font-size: 15px; }
+    .question-card { padding: 22px; display: grid; gap: 14px; margin-top: 14px; }
+    .card-top { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tag { padding: 5px 9px; border-radius: 999px; background: #f5f5f7; color: var(--blue); font-size: 13px; font-weight: 700; }
+    .tag.muted { background: #f5f5f7; color: var(--muted); }
+    .tag.kind { background: #f5f5f7; color: var(--ink); }
+    .prompt { font-size: 26px; line-height: 1.55; margin: 0; }
+    .answer-label { display: grid; gap: 8px; font-size: 14px; color: var(--muted); font-weight: 700; }
+    input, textarea {
+      width: 100%;
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      padding: 13px;
+      font: inherit;
+      background: #fff;
+      color: var(--ink);
+    }
+    input:focus, textarea:focus { border-color: var(--blue); outline: 3px solid rgba(0, 113, 227, .16); }
+    input { font-size: 20px; }
+    textarea { resize: vertical; min-height: 64px; }
+    .card-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .question-card.done { border-color: #86efac; background: #fbfffc; }
+    .answer { margin: 0; padding: 12px; border-radius: 8px; background: #f5f5f7; color: var(--green); font-weight: 800; }
+    .radar-grid { display: grid; gap: 12px; margin-top: 14px; }
+    .radar-line { display: grid; gap: 8px; color: var(--muted); font-weight: 700; }
+    .audio-row { display: grid; gap: 10px; grid-template-columns: 1fr 1fr; }
+    .clip { border: 1px solid rgba(0, 0, 0, .08); border-radius: 8px; padding: 16px; background: #fff; }
+    .clip h3 { margin: 0 0 8px; }
+    .footer-space { height: 28px; }
+    @media (max-width: 760px) {
+      header { grid-template-columns: 1fr; }
+      .prompt { font-size: 21px; }
+      .audio-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <section class="hero">
+        <h1>Day3-海王龙的逆向追踪</h1>
+        <p class="subtitle">船长练习 · 回炉版 · 除法陷阱 + Day2三条逃脱鱼回炉</p>
+        
+    <svg class="ocean-art" viewBox="0 0 900 180" role="img" aria-label="简约海面">
+      <defs>
+        <linearGradient id="sea" x1="0" x2="1">
+          <stop offset="0%" stop-color="#eef2ff"/>
+          <stop offset="50%" stop-color="#f5f5f7"/>
+          <stop offset="100%" stop-color="#e0f2fe"/>
+        </linearGradient>
+      </defs>
+      <rect width="900" height="180" rx="18" fill="url(#sea)"/>
+      <path d="M0 110 C80 80 150 140 230 110 S380 80 470 112 S640 145 740 105 S850 80 900 112 L900 180 L0 180 Z" fill="#ffffff" opacity=".76"/>
+      <g fill="#0071e3" opacity=".78">
+        <path d="M145 72 l42 -20 c18 12 18 28 0 40 z"/>
+        <circle cx="179" cy="72" r="4" fill="#1d1d1f"/>
+        <path d="M612 98 l50 -24 c20 15 20 33 0 48 z"/>
+        <circle cx="651" cy="98" r="5" fill="#1d1d1f"/>
+      </g>
+      <path d="M746 35 C787 28 815 54 817 91" fill="none" stroke="#1d1d1f" stroke-width="4" stroke-linecap="round"/>
+      <line x1="817" y1="91" x2="817" y2="129" stroke="#1d1d1f" stroke-width="2"/>
+      <circle cx="817" cy="137" r="8" fill="#ff9f0a"/>
+    </svg>
+    
+      </section>
+      <aside class="status-panel">
+        <div>
+          <div class="meter-label"><span>Switch2</span><span>1876/3500</span></div>
+          <div class="meter"><span style="width:53.6%"></span></div>
+          <p class="rule">Switch2 1876/3500</p>
+        </div>
+        <div>
+          <div class="meter-label"><span>知识鱼</span><span>2/93</span></div>
+          <div class="meter"><span style="width:2.2%"></span></div>
+        </div>
+        <p class="rule">规则：做完收工。鱼币由系统结算，不让船长现场计算。</p>
+      </aside>
+    </header>
+    <nav>
+      <a href="#practice">船长练习</a>
+      <a href="#mate">大副提交</a>
+      <a href="#progress">今日反馈</a>
+    </nav>
+    <main class="layout">
+      <section id="practice" class="panel">
+        <h2>船长练习</h2>
+        <section class="section-heading"><h2>Normal Rod - 进门回测</h2><span>只测昨天跑掉的鱼，不加新难点</span></section>
+
+                <article class="question-card" data-question-id="D3-R1">
+                  <div class="card-top">
+                    <span class="tag">D3-R1</span>
+                    <span class="tag muted">除法计算与运算顺序</span>
+                    <span class="tag kind">practice</span>
+                  </div>
+                  <p class="prompt">回炉1. 752 ÷ 8 + 406 ÷ 7 = ______（先估一估，再按顺序算）</p>
+                  <label class="answer-label">
+                    船长答案
+                    <input data-answer-for="D3-R1" type="text" autocomplete="off" placeholder="写最终答案；草稿仍可写在纸上" />
+                  </label>
+                  <div class="card-actions">
+                    <button type="button" data-complete="D3-R1">标记完成</button>
+                    <button type="button" class="ghost" data-answer-toggle="D3-R1">大副看答案</button>
+                  </div>
+                  <p class="answer" id="answer-D3-R1" hidden>152</p>
+                </article>
+                
+
+                <article class="question-card" data-question-id="D3-R2">
+                  <div class="card-top">
+                    <span class="tag">D3-R2</span>
+                    <span class="tag muted">容量单位换算和有余数除法</span>
+                    <span class="tag kind">practice</span>
+                  </div>
+                  <p class="prompt">回炉2. 2升40ml = ____ml；分装 200ml 瓶，可装满____瓶，剩____ml。</p>
+                  <label class="answer-label">
+                    船长答案
+                    <input data-answer-for="D3-R2" type="text" autocomplete="off" placeholder="写最终答案；草稿仍可写在纸上" />
+                  </label>
+                  <div class="card-actions">
+                    <button type="button" data-complete="D3-R2">标记完成</button>
+                    <button type="button" class="ghost" data-answer-toggle="D3-R2">大副看答案</button>
+                  </div>
+                  <p class="answer" id="answer-D3-R2" hidden>2040ml；10瓶，剩40ml</p>
+                </article>
+                
+
+                <article class="question-card" data-question-id="D3-R3">
+                  <div class="card-top">
+                    <span class="tag">D3-R3</span>
+                    <span class="tag muted">两位数退位减法</span>
+                    <span class="tag kind">practice</span>
+                  </div>
+                  <p class="prompt">回炉3. 44 - 18 = ______（个位不够，先退一十）</p>
+                  <label class="answer-label">
+                    船长答案
+                    <input data-answer-for="D3-R3" type="text" autocomplete="off" placeholder="写最终答案；草稿仍可写在纸上" />
+                  </label>
+                  <div class="card-actions">
+                    <button type="button" data-complete="D3-R3">标记完成</button>
+                    <button type="button" class="ghost" data-answer-toggle="D3-R3">大副看答案</button>
+                  </div>
+                  <p class="answer" id="answer-D3-R3" hidden>26</p>
+                </article>
+                
+<section class="section-heading"><h2>Monster Rod - 补做 Boss 战</h2><span>补 Day2 第2页核心理解</span></section>
+
+                <article class="question-card" data-question-id="D3-B1">
+                  <div class="card-top">
+                    <span class="tag">D3-B1</span>
+                    <span class="tag muted">除法陷阱</span>
+                    <span class="tag kind">boss</span>
+                  </div>
+                  <p class="prompt">Boss1. 480÷4 + 480÷6 = ______。能不能写成 480÷(4+6)？[  ]能 [  ]不能</p>
+                  <label class="answer-label">
+                    船长答案
+                    <input data-answer-for="D3-B1" type="text" autocomplete="off" placeholder="写最终答案；草稿仍可写在纸上" />
+                  </label>
+                  <div class="card-actions">
+                    <button type="button" data-complete="D3-B1">标记完成</button>
+                    <button type="button" class="ghost" data-answer-toggle="D3-B1">大副看答案</button>
+                  </div>
+                  <p class="answer" id="answer-D3-B1" hidden>200；不能</p>
+                </article>
+                
+
+                <article class="question-card" data-question-id="D3-B2">
+                  <div class="card-top">
+                    <span class="tag">D3-B2</span>
+                    <span class="tag muted">除法陷阱</span>
+                    <span class="tag kind">boss</span>
+                  </div>
+                  <p class="prompt">Boss2. 判断：300÷5 + 300÷10 = 300÷(5+10)    [  ]对  [  ]错</p>
+                  <label class="answer-label">
+                    船长答案
+                    <input data-answer-for="D3-B2" type="text" autocomplete="off" placeholder="写最终答案；草稿仍可写在纸上" />
+                  </label>
+                  <div class="card-actions">
+                    <button type="button" data-complete="D3-B2">标记完成</button>
+                    <button type="button" class="ghost" data-answer-toggle="D3-B2">大副看答案</button>
+                  </div>
+                  <p class="answer" id="answer-D3-B2" hidden>错</p>
+                </article>
+                
+
+                <article class="question-card" data-question-id="D3-B3">
+                  <div class="card-top">
+                    <span class="tag">D3-B3</span>
+                    <span class="tag muted">除法陷阱</span>
+                    <span class="tag kind">boss</span>
+                  </div>
+                  <p class="prompt">Boss3. 填空：被除数（  ）拆开，除数（  ）拆开。</p>
+                  <label class="answer-label">
+                    船长答案
+                    <input data-answer-for="D3-B3" type="text" autocomplete="off" placeholder="写最终答案；草稿仍可写在纸上" />
+                  </label>
+                  <div class="card-actions">
+                    <button type="button" data-complete="D3-B3">标记完成</button>
+                    <button type="button" class="ghost" data-answer-toggle="D3-B3">大副看答案</button>
+                  </div>
+                  <p class="answer" id="answer-D3-B3" hidden>可以；不能</p>
+                </article>
+                
+<section class="section-heading"><h2>Super Rod - 轻量变式</h2><span>做完就收工，不追加</span></section>
+
+                <article class="question-card" data-question-id="D3-V1">
+                  <div class="card-top">
+                    <span class="tag">D3-V1</span>
+                    <span class="tag muted">容量单位换算和有余数除法</span>
+                    <span class="tag kind">practice</span>
+                  </div>
+                  <p class="prompt">变式1. 3升120ml 分装 240ml 瓶，可装满____瓶，剩____ml。</p>
+                  <label class="answer-label">
+                    船长答案
+                    <input data-answer-for="D3-V1" type="text" autocomplete="off" placeholder="写最终答案；草稿仍可写在纸上" />
+                  </label>
+                  <div class="card-actions">
+                    <button type="button" data-complete="D3-V1">标记完成</button>
+                    <button type="button" class="ghost" data-answer-toggle="D3-V1">大副看答案</button>
+                  </div>
+                  <p class="answer" id="answer-D3-V1" hidden>13瓶，剩0ml</p>
+                </article>
+                
+
+                <article class="question-card" data-question-id="D3-V2">
+                  <div class="card-top">
+                    <span class="tag">D3-V2</span>
+                    <span class="tag muted">两位数退位减法</span>
+                    <span class="tag kind">practice</span>
+                  </div>
+                  <p class="prompt">变式2. 52 - 27 = ______</p>
+                  <label class="answer-label">
+                    船长答案
+                    <input data-answer-for="D3-V2" type="text" autocomplete="off" placeholder="写最终答案；草稿仍可写在纸上" />
+                  </label>
+                  <div class="card-actions">
+                    <button type="button" data-complete="D3-V2">标记完成</button>
+                    <button type="button" class="ghost" data-answer-toggle="D3-V2">大副看答案</button>
+                  </div>
+                  <p class="answer" id="answer-D3-V2" hidden>25</p>
+                </article>
+                
+      </section>
+      <section id="mate" class="panel">
+        <h2>大副提交</h2>
+        <p class="rule">大副只做三件事：计时、鼓励、收集证据。不加题，不讲长课。</p>
+        <div class="radar-grid">
+          
+            <label class="radar-line">
+              <span>语文今天讲到：________________  我记得一个词：________________</span>
+              <textarea data-radar="1" rows="2" placeholder="可以只写关键词"></textarea>
+            </label>
+            
+
+            <label class="radar-line">
+              <span>数学今天讲到：________________  我觉得：[ ]会 [ ]半会 [ ]不会</span>
+              <textarea data-radar="2" rows="2" placeholder="可以只写关键词"></textarea>
+            </label>
+            
+
+            <label class="radar-line">
+              <span>英语今天讲到：________________  我记得一句：________________</span>
+              <textarea data-radar="3" rows="2" placeholder="可以只写关键词"></textarea>
+            </label>
+            
+
+            <label class="radar-line">
+              <span>大副补充：老师强调/作业/测验：____________________________</span>
+              <textarea data-radar="4" rows="2" placeholder="可以只写关键词"></textarea>
+            </label>
+            
+        </div>
+        <h2 style="margin-top:22px">费曼 Boss 录音</h2>
+        <p class="prompt">请船长讲清楚：为什么 480÷4 + 480÷6 不能写成 480÷(4+6)？</p>
+        <div class="audio-row">
+          <div class="clip">
+            <h3>classroom-brief</h3>
+            <p>请爸爸或袁佳乐说：今天语文、数学、英语分别讲到哪里，老师强调了什么。</p>
+            <input type="file" accept="audio/*" />
+          </div>
+          <div class="clip">
+            <h3>feynman-boss</h3>
+            <p>请袁佳乐讲：为什么 480÷4 + 480÷6 不能写成 480÷(4+6)。</p>
+            <input type="file" accept="audio/*" />
+          </div>
+        </div>
+      </section>
+      <section id="progress" class="panel">
+        <h2>今日反馈</h2>
+        <p class="prompt">今天不是开新海域，而是追回昨天跑掉的鱼。完成后解锁：除数不能合并 Boss 识别。</p>
+      </section>
+    </main>
+    <div class="footer-space"></div>
+  </div>
+  <script type="application/json" id="practice-spec">{"day": "Day3", "title": "Day3-海王龙的逆向追踪", "mode": "回炉版", "focus": "除法陷阱 + Day2三条逃脱鱼回炉", "source_session": "2026-06-04-Day2", "points": {"current": 1876, "goal": 3500}, "knowledge_fish": {"current": 2, "goal": 93}, "decision_basis": {"graded_items": 16, "wrong_or_redo": 3, "missing_modules": ["Day2第2页Boss战", "家校雷达", "费曼教学", "课堂语音反馈"], "weak_knowledge": ["两位数退位减法", "容量单位换算和有余数除法", "除法计算与运算顺序"]}, "sections": [{"title": "Normal Rod - 进门回测", "hint": "只测昨天跑掉的鱼，不加新难点", "questions": [{"id": "D3-R1", "source": "Day2错题回炉", "subject": "数学", "knowledge": "除法计算与运算顺序", "kind": "practice", "prompt": "回炉1. 752 ÷ 8 + 406 ÷ 7 = ______（先估一估，再按顺序算）", "answer": "152"}, {"id": "D3-R2", "source": "Day2错题回炉", "subject": "数学", "knowledge": "容量单位换算和有余数除法", "kind": "practice", "prompt": "回炉2. 2升40ml = ____ml；分装 200ml 瓶，可装满____瓶，剩____ml。", "answer": "2040ml；10瓶，剩40ml"}, {"id": "D3-R3", "source": "Day2错题回炉", "subject": "数学", "knowledge": "两位数退位减法", "kind": "practice", "prompt": "回炉3. 44 - 18 = ______（个位不够，先退一十）", "answer": "26"}]}, {"title": "Monster Rod - 补做 Boss 战", "hint": "补 Day2 第2页核心理解", "questions": [{"id": "D3-B1", "source": "Day2 Boss补验", "subject": "数学", "knowledge": "除法陷阱", "kind": "boss", "prompt": "Boss1. 480÷4 + 480÷6 = ______。能不能写成 480÷(4+6)？[  ]能 [  ]不能", "answer": "200；不能"}, {"id": "D3-B2", "source": "Day2 Boss补验", "subject": "数学", "knowledge": "除法陷阱", "kind": "boss", "prompt": "Boss2. 判断：300÷5 + 300÷10 = 300÷(5+10)    [  ]对  [  ]错", "answer": "错"}, {"id": "D3-B3", "source": "Day2 Boss补验", "subject": "数学", "knowledge": "除法陷阱", "kind": "boss", "prompt": "Boss3. 填空：被除数（  ）拆开，除数（  ）拆开。", "answer": "可以；不能"}]}, {"title": "Super Rod - 轻量变式", "hint": "做完就收工，不追加", "questions": [{"id": "D3-V1", "source": "同型检查", "subject": "数学", "knowledge": "容量单位换算和有余数除法", "kind": "practice", "prompt": "变式1. 3升120ml 分装 240ml 瓶，可装满____瓶，剩____ml。", "answer": "13瓶，剩0ml"}, {"id": "D3-V2", "source": "同型检查", "subject": "数学", "knowledge": "两位数退位减法", "kind": "practice", "prompt": "变式2. 52 - 27 = ______", "answer": "25"}]}], "feynman": {"target": "除数不能合并", "prompt": "请船长讲清楚：为什么 480÷4 + 480÷6 不能写成 480÷(4+6)？", "pass_rule": "能说出这是两次分，不是一次按10分；除数不能随便合并。", "voice_option": "可以现场勾选，也可以录一段30-60秒语音放进本次 submissions 文件夹。"}, "parent_card": {"title": "大副今日操作卡", "headline": "不用打开电脑，照这张纸执行。", "before": ["准备铅笔、橡皮、计时器，先看状态：绿/黄/红。", "告诉袁佳乐：今天只追昨天逃脱的鱼，不额外加题。"], "during": ["先做进门回测，再做 Boss，不会就跳过标星。", "费曼环节只问“为什么”，少讲答案，让孩子讲给你听。"], "after": ["拍第1页、第2页做题区，放入今日作业文件夹。", "录课堂反馈和 Boss 讲题两段短语音，完成即收工。"], "inputs": ["做题照片", "课堂反馈语音", "Boss讲题语音"], "outputs": ["Day4练习", "掌握度更新", "袁佳乐进度反馈"]}, "classroom_radar": ["语文今天讲到：________________  我记得一个词：________________", "数学今天讲到：________________  我觉得：[ ]会 [ ]半会 [ ]不会", "英语今天讲到：________________  我记得一句：________________", "大副补充：老师强调/作业/测验：____________________________"], "voice_intake": {"folder": "submissions/2026-06-05-Day3/", "accepted_files": [".m4a", ".mp3", ".wav", ".aac", ".ogg"], "requested_clips": [{"name": "classroom-brief", "duration": "30-90秒", "prompt": "请爸爸或袁佳乐说：今天语文、数学、英语分别讲到哪里，老师强调了什么。"}, {"name": "feynman-boss", "duration": "30-60秒", "prompt": "请袁佳乐讲：为什么 480÷4 + 480÷6 不能写成 480÷(4+6)。"}], "fallback": "如果今晚不方便录音，就在家庭教师操作台里写三句话。"}}</script>
+  <script>
+    const storageKey = 'yuanjiale-practice-' + JSON.parse(document.getElementById('practice-spec').textContent).day;
+    const saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
+    document.querySelectorAll('[data-answer-for]').forEach((input) => {
+      const id = input.dataset.answerFor;
+      input.value = saved['answer:' + id] || '';
+      input.addEventListener('input', () => {
+        saved['answer:' + id] = input.value;
+        localStorage.setItem(storageKey, JSON.stringify(saved));
+      });
+    });
+    document.querySelectorAll('[data-complete]').forEach((button) => {
+      const id = button.dataset.complete;
+      const card = document.querySelector(`[data-question-id="${id}"]`);
+      if (saved['done:' + id]) card.classList.add('done');
+      button.addEventListener('click', () => {
+        saved['done:' + id] = !saved['done:' + id];
+        card.classList.toggle('done', saved['done:' + id]);
+        localStorage.setItem(storageKey, JSON.stringify(saved));
+      });
+    });
+    document.querySelectorAll('[data-answer-toggle]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const answer = document.getElementById('answer-' + button.dataset.answerToggle);
+        answer.hidden = !answer.hidden;
+      });
+    });
+    document.querySelectorAll('[data-radar]').forEach((textarea) => {
+      const id = textarea.dataset.radar;
+      textarea.value = saved['radar:' + id] || '';
+      textarea.addEventListener('input', () => {
+        saved['radar:' + id] = textarea.value;
+        localStorage.setItem(storageKey, JSON.stringify(saved));
+      });
+    });
+  </script>
+</body>
+</html>

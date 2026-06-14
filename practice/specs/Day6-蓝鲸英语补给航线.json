@@ -1,0 +1,260 @@
+{
+  "day": "Day6",
+  "title": "Day6-蓝鲸英语补给航线",
+  "mode": "web-first",
+  "focus": "数学错题回炉 + 英语词汇句型加量 + 艾宾浩斯复习",
+  "source_session": "auto-after-completion",
+  "points": {
+    "current": 2038,
+    "goal": 3500
+  },
+  "knowledge_fish": {
+    "current": 3,
+    "goal": 93
+  },
+  "practice_policy": {
+    "target_questions": 22,
+    "english_minimum": "每天至少5个单词，2道句型，1道语法小Boss。",
+    "ebbinghaus": "艾宾浩斯节奏：新词当天读写；第1天、第3天、第7天、第15天回看。今天先复习 Day3-Day5 的英语词汇和句型。"
+  },
+  "sections": [
+    {
+      "title": "Normal Rod - 数学热身回炉",
+      "hint": "先稳住已暴露薄弱点，不追求难题堆量",
+      "questions": [
+        {
+          "id": "D6-M1",
+          "source": "Day6网页练习",
+          "subject": "数学",
+          "knowledge": "除法陷阱",
+          "kind": "review",
+          "prompt": "480÷6 + 480÷8 = ____。能不能写成480÷14？",
+          "answer": "140；不能",
+          "difficulty": 2,
+          "unlock_reward": "知识鱼"
+        },
+        {
+          "id": "D6-M2",
+          "source": "Day6网页练习",
+          "subject": "数学",
+          "knowledge": "括号与混合运算",
+          "kind": "review",
+          "prompt": "[3600-(20+80×10)]÷20 = ____",
+          "answer": "139",
+          "difficulty": 2,
+          "unlock_reward": "知识鱼"
+        },
+        {
+          "id": "D6-M3",
+          "source": "Day6网页练习",
+          "subject": "数学",
+          "knowledge": "小数巧算与运算顺序",
+          "kind": "practice",
+          "prompt": "0.406 + 0.194 = ____",
+          "answer": "0.6",
+          "difficulty": 1,
+          "unlock_reward": "知识鱼"
+        },
+        {
+          "id": "D6-M4",
+          "source": "Day6网页练习",
+          "subject": "数学",
+          "knowledge": "应用题答句和单位",
+          "kind": "practice",
+          "prompt": "计划每天180个，10天完成；提前1天完成，实际每天____个。",
+          "answer": "200个",
+          "difficulty": 2,
+          "unlock_reward": "知识鱼"
+        },
+        {
+          "id": "D6-M5",
+          "source": "Day6网页练习",
+          "subject": "数学",
+          "knowledge": "商和余数变化规律",
+          "kind": "practice",
+          "prompt": "a÷b商9余7，a、b都乘10后，商____，余数____。",
+          "answer": "9；70",
+          "difficulty": 2,
+          "unlock_reward": "知识鱼"
+        }
+      ]
+    },
+    {
+      "title": "English Rod - 5词补给",
+      "hint": "每天5词，不贪多；先会读、会认、会放进句子",
+      "questions": [
+        {
+          "id": "D6-E1",
+          "source": "Day6网页练习",
+          "subject": "英语",
+          "knowledge": "词汇记忆",
+          "kind": "vocab",
+          "prompt": "读一读并写出中文：evening",
+          "answer": "晚上",
+          "difficulty": 1,
+          "unlock_reward": "知识鱼"
+        },
+        {
+          "id": "D6-E2",
+          "source": "Day6网页练习",
+          "subject": "英语",
+          "knowledge": "词汇记忆",
+          "kind": "vocab",
+          "prompt": "读一读并写出中文：night",
+          "answer": "夜晚",
+          "difficulty": 1,
+          "unlock_reward": "知识鱼"
+        },
+        {
+          "id": "D6-E3",
+          "source": "Day6网页练习",
+          "subject": "英语",
+          "knowledge": "词汇记忆",
+          "kind": "vocab",
+          "prompt": "读一读并写出中文：today",
+          "answer": "今天",
+          "difficulty": 1,
+          "unlock_reward": "知识鱼"
+        },
+        {
+          "id": "D6-E4",
+          "source": "Day6网页练习",
+          "subject": "英语",
+          "knowledge": "词汇记忆",
+          "kind": "vocab",
+          "prompt": "读一读并写出中文：tomorrow",
+          "answer": "明天",
+          "difficulty": 1,
+          "unlock_reward": "知识鱼"
+        },
+        {
+          "id": "D6-E5",
+          "source": "Day6网页练习",
+          "subject": "英语",
+          "knowledge": "词汇记忆",
+          "kind": "vocab",
+          "prompt": "读一读并写出中文：weekend",
+          "answer": "周末",
+          "difficulty": 1,
+          "unlock_reward": "知识鱼"
+        }
+      ]
+    },
+    {
+      "title": "English Rod - 句型小Boss",
+      "hint": "围绕当前薄弱点：三单、进行时、句子完整性",
+      "questions": [
+        {
+          "id": "D6-E6",
+          "source": "Day6网页练习",
+          "subject": "英语",
+          "knowledge": "三单",
+          "kind": "practice",
+          "prompt": "He ____ (like) fishing after school.",
+          "answer": "likes",
+          "difficulty": 2,
+          "unlock_reward": "知识鱼"
+        },
+        {
+          "id": "D6-E7",
+          "source": "Day6网页练习",
+          "subject": "英语",
+          "knowledge": "现在进行时",
+          "kind": "practice",
+          "prompt": "Look! The boy is ____ (run).",
+          "answer": "running",
+          "difficulty": 2,
+          "unlock_reward": "知识鱼"
+        },
+        {
+          "id": "D6-E8",
+          "source": "Day6网页练习",
+          "subject": "英语",
+          "knowledge": "be动词",
+          "kind": "practice",
+          "prompt": "I ____ happy. You ____ my friend.",
+          "answer": "am；are",
+          "difficulty": 1,
+          "unlock_reward": "知识鱼"
+        },
+        {
+          "id": "D6-E9",
+          "source": "Day6网页练习",
+          "subject": "英语",
+          "knowledge": "句子书写",
+          "kind": "practice",
+          "prompt": "把句子补完整：I go to school in the ____.",
+          "answer": "morning",
+          "difficulty": 1,
+          "unlock_reward": "知识鱼"
+        },
+        {
+          "id": "D6-E10",
+          "source": "Day6网页练习",
+          "subject": "英语",
+          "knowledge": "艾宾浩斯复习",
+          "kind": "review",
+          "prompt": "复习 Day5 词汇：read / write / draw，任选2个造短句。",
+          "answer": "开放题",
+          "difficulty": 1,
+          "unlock_reward": "知识鱼"
+        }
+      ]
+    },
+    {
+      "title": "Monster Rod - 三科雷达",
+      "hint": "保持家校对齐，短句即可",
+      "questions": [
+        {
+          "id": "D6-S1",
+          "source": "Day6网页练习",
+          "subject": "语文",
+          "knowledge": "课堂词语回忆",
+          "kind": "practice",
+          "prompt": "写出今天语文课你记住的一个词，并造一个短句。",
+          "answer": "开放题",
+          "difficulty": 1,
+          "unlock_reward": "知识鱼"
+        },
+        {
+          "id": "D6-S2",
+          "source": "Day6网页练习",
+          "subject": "英语",
+          "knowledge": "课堂句子复述",
+          "kind": "practice",
+          "prompt": "写出今天英语课你记住的一句话。",
+          "answer": "开放题",
+          "difficulty": 1,
+          "unlock_reward": "知识鱼"
+        },
+        {
+          "id": "D6-S3",
+          "source": "Day6网页练习",
+          "subject": "数学",
+          "knowledge": "课堂同步",
+          "kind": "practice",
+          "prompt": "今天数学课讲到哪里？写一个关键词。",
+          "answer": "开放题",
+          "difficulty": 1,
+          "unlock_reward": "知识鱼"
+        },
+        {
+          "id": "D6-S4",
+          "source": "Day6网页练习",
+          "subject": "通用",
+          "knowledge": "艾宾浩斯计划",
+          "kind": "practice",
+          "prompt": "今天需要回看：Day3英语V-ing、Day4 There be、Day5不规则动词。勾选已看：[ ]",
+          "answer": "开放题",
+          "difficulty": 1,
+          "unlock_reward": "知识鱼"
+        }
+      ]
+    }
+  ],
+  "feynman": {
+    "target": "英语三单 + 数学除法陷阱",
+    "prompt": "请船长任选一道错题，用一句话讲清楚为什么错。",
+    "pass_rule": "能说出关键规则即可，不要求长篇解释。"
+  }
+}

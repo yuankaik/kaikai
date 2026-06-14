@@ -1,0 +1,145 @@
+{
+  "version": "2026-06-04",
+  "purpose": "袁佳乐四年级数学P0技能点题型模板。每个子级技能点按1-5题从入门到扩展验证。",
+  "templates": [
+    {
+      "skill_id": "M4B_ORDER_001",
+      "subject": "数学",
+      "domain": "数与运算",
+      "level1": "四则运算",
+      "level2": "整数四则混合",
+      "level3": "运算顺序与括号",
+      "priority": "P0",
+      "fish_name": "运算顺序鱼",
+      "stages": [
+        {
+          "stage": "入门",
+          "count": 1,
+          "prompt_pattern": "{a} + {b} × {c} = ______",
+          "answer_rule": "先乘后加",
+          "common_errors": ["从左到右直接算", "漏看乘号"]
+        },
+        {
+          "stage": "基础",
+          "count": 2,
+          "prompt_pattern": "{a} - {b} × {c} = ______；({a} - {b}) × {c} = ______",
+          "answer_rule": "比较有括号和无括号",
+          "common_errors": ["括号优先不稳定", "抄错符号"]
+        },
+        {
+          "stage": "变式",
+          "count": 1,
+          "prompt_pattern": "判断：{a} + {b} × {c} = ({a}+{b})×{c}  [ ]对 [ ]错",
+          "answer_rule": "错",
+          "common_errors": ["把不同结构当成一样"]
+        },
+        {
+          "stage": "费曼",
+          "count": 1,
+          "prompt_pattern": "给大副讲清楚：为什么没有括号时要先算乘除？",
+          "answer_rule": "能说出运算顺序规则和例子",
+          "common_errors": ["只背口诀，说不出例子"]
+        }
+      ]
+    },
+    {
+      "skill_id": "M4B_DIVISION_TRAP_001",
+      "subject": "数学",
+      "domain": "数与运算",
+      "level1": "四则运算",
+      "level2": "除法陷阱",
+      "level3": "除数不能合并",
+      "priority": "P0",
+      "fish_name": "巨齿鲨Boss",
+      "stages": [
+        {
+          "stage": "入门",
+          "count": 1,
+          "prompt_pattern": "{a}÷{b} + {a}÷{c} = ______",
+          "answer_rule": "分别计算后相加",
+          "common_errors": ["写成 a÷(b+c)", "把除数合并"]
+        },
+        {
+          "stage": "易错",
+          "count": 1,
+          "prompt_pattern": "判断：{a}÷{b} + {a}÷{c} = {a}÷({b}+{c})  [ ]对 [ ]错",
+          "answer_rule": "错",
+          "common_errors": ["认为同一个被除数就能合并"]
+        },
+        {
+          "stage": "对比",
+          "count": 1,
+          "prompt_pattern": "({a}+{d})÷{b} 能不能拆成 {a}÷{b}+{d}÷{b}？[ ]能 [ ]不能",
+          "answer_rule": "能，前提是被除数拆开且同除数",
+          "common_errors": ["把被除数可拆和除数可拆混淆"]
+        },
+        {
+          "stage": "费曼",
+          "count": 1,
+          "prompt_pattern": "给大副讲清楚：为什么两个除法不能把下面的数加起来？",
+          "answer_rule": "能说出两次分不是一次分，除数不能合并",
+          "common_errors": ["只说口诀，不说明意义"]
+        }
+      ]
+    },
+    {
+      "skill_id": "M4B_UNIT_VOLUME_REMAINDER_001",
+      "subject": "数学",
+      "domain": "量与计量",
+      "level1": "单位换算",
+      "level2": "容量单位",
+      "level3": "升和毫升 + 有余数除法",
+      "priority": "P0",
+      "fish_name": "容量瓶鱼",
+      "stages": [
+        {
+          "stage": "入门",
+          "count": 1,
+          "prompt_pattern": "{l}升{ml}ml = ______ml",
+          "answer_rule": "1升=1000ml",
+          "common_errors": ["只写零散毫升", "忘记乘1000"]
+        },
+        {
+          "stage": "基础",
+          "count": 1,
+          "prompt_pattern": "{l}升{ml}ml 分装 {bottle}ml 瓶，可装满____瓶，剩____ml。",
+          "answer_rule": "先统一成ml，再做有余数除法",
+          "common_errors": ["未统一单位", "余数漏写", "商和余数写反"]
+        },
+        {
+          "stage": "变式",
+          "count": 1,
+          "prompt_pattern": "已经装满{full}瓶，每瓶{bottle}ml，还剩{remain}ml，一共有多少ml？合多少升多少ml？",
+          "answer_rule": "逆向验算",
+          "common_errors": ["不会从结果反推", "升毫升转换错"]
+        }
+      ]
+    },
+    {
+      "skill_id": "M4B_SUBTRACTION_BORROW_001",
+      "subject": "数学",
+      "domain": "数与运算",
+      "level1": "加减法",
+      "level2": "两位数减法",
+      "level3": "退位减法",
+      "priority": "P0",
+      "fish_name": "退位小鱼",
+      "stages": [
+        {
+          "stage": "入门",
+          "count": 1,
+          "prompt_pattern": "{a} - {b} = ______",
+          "answer_rule": "个位不够，向十位借1",
+          "common_errors": ["借位后十位忘记少1", "个位直接小减大"]
+        },
+        {
+          "stage": "检查",
+          "count": 1,
+          "prompt_pattern": "用加法验算：{answer} + {b} = ______",
+          "answer_rule": "差+减数=被减数",
+          "common_errors": ["不会验算", "验算不回看原题"]
+        }
+      ]
+    }
+  ]
+}
