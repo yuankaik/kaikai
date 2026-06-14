@@ -94,6 +94,7 @@ Do NOT edit `~/.hermes/config.yaml` directly — the agent's file tools are bloc
 - `references/network-proxy-workarounds.md` — Network proxy configuration and workarounds for this environment: pip Tsinghua mirror, git proxy, aiohttp Python 3.14 compatibility fix, browser-as-fallback for curl failures.
 - `scripts/wechat_qr_login.py` — Standalone script to bypass the TUI wizard: fetches QR from iLink API, generates PNG to desktop, polls for scan, saves credentials and updates .env.
 - `scripts/batch_migrate.py` — Batch migrate skills from multiple agent directories (.local/skills, .agents/skills, superpowers, codex) into ~/.hermes/skills/. Handles category detection, name prefixing, and supporting file copy.
+- `references/skill-backup-to-github.md` — Skill library backup and restore: rsync → git → push to GitHub. For disaster recovery after system reinstall.
 
 ## TUI Workaround: Direct Script Approach
 

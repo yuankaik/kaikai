@@ -12,6 +12,10 @@ source: https://github.com/thedotmack/claude-mem
 
 ```bash
 npx claude-mem install
+
+# 如果 npx 超时（网络代理环境），加 proxy：
+npm_config_proxy=http://127.0.0.1:56666 npx claude-mem install
+
 curl http://localhost:37777/api/health  # 验证
 ```
 
