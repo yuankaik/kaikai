@@ -254,6 +254,26 @@ git clone https://github.com/yuankaik/kaikai.git
 cp -r kaikai/skills/* ~/.hermes/skills/
 ```
 
+## 9. 安装失败的常见陷阱
+
+| 包 | 失败原因 | 解决方案 |
+|----|----------|----------|
+| `langflow` | 依赖图太深，pip 解析超时 (`resolution-too-deep`) | 用 Docker：`docker run -p 7860:7860 langflowai/langflow` |
+| `crawl4ai` | lxml 在 Python 3.14 编译失败 | 用 firecrawl 替代，或等待上游修复 |
+| `claude-mem` / `gitnexus` | npm 代理不可用 | 等代理恢复后 `npm install -g --proxy` |
+| `mem0` | 需要 API key（默认 OpenAI embedding） | pip 安装成功，但首次调用需配 API key |
+| `MediaCrawler` | git clone 超时（大仓库） | 用 `--depth 1` 浅克隆，或代理恢复后重试 |
+
+## 10. 教育/考试内容爬取模式
+
+当用户要求搜索试卷/真题等教育内容时：
+
+1. **创建文件夹结构**：`~/shanghai-exams/{科目}/`
+2. **多轮搜索**：浏览器搜索 + delegate_task 并行
+3. **内容提取**：百度文库/道客巴巴/21世纪教育网需登录，提取预览内容
+4. **生成 MD**：每份试卷标准格式（题目 + 答案）
+5. **持续搜索**：用户说"不要放弃"时继续搜，不回来问
+
 ## 参考脚本
 
 迁移脚本保存在 `scripts/batch_migrate_skills.py` — 可从多个源目录批量复制 SKILL.md 到 `~/.hermes/skills/`。
