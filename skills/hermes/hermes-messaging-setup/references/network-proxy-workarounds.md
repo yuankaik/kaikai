@@ -33,9 +33,24 @@ git -c http.proxy= -c https.proxy= clone https://github.com/user/repo.git
 
 ### npm / bun / other HTTP tools
 ```bash
-# Usually time out. Workarounds:
+# npm can use the git proxy explicitly:
+npm install -g <package> --proxy http://127.0.0.1:56666
+
+# This was the key to installing bun without browser download:
+# npm install -g bun --proxy http://127.0.0.1:56666  ✓ worked
+
+# For other tools, fall back to:
 # 1. Download manually from Windows browser, place in /mnt/c/Users/admin/Desktop/
 # 2. Then copy from WSL: cp /mnt/c/Users/admin/Desktop/file.tar.gz /tmp/
+```
+
+### pip resolution failures
+```bash
+# Some packages (e.g., langflow) have dependency graphs too complex for pip.
+# Error: "resolution-too-deep" or infinite version backtracking.
+# Workaround: use Docker or pipx instead.
+pipx install langflow
+# Or: docker run ...
 ```
 
 ## Python Externally-Managed Environment
