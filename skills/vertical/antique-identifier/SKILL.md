@@ -11,6 +11,31 @@ description: 文玩鉴定助手——拍照/视频自动分析核桃、手串、
 
 用户微信发图/视频 → 自动加载本技能 → 返回鉴定报告。
 
+## 图片分析方案
+
+### 优先方案：Ollama 本地视觉模型（免费）
+
+已安装 `minicpm-v:8b`，Windows 后台运行中。
+```bash
+# 本地 AI 视觉分析（免费、离线）
+python3 scripts/ollama_vision.py /path/to/image.jpg
+```
+
+### 辅助方案：PIL 色彩检测
+
+```bash
+# 色彩/滤镜/高光分析
+python3 scripts/image_check.py /path/to/image.jpg
+```
+
+### 最佳流程
+```
+1. image_check.py → 检测仙图/滤镜（色彩分析）
+2. ollama_vision.py → AI 视觉分析（品类识别、特征判断）
+3. 对照 knowledge/ 知识库
+4. 输出红黄绿风险报告
+```
+
 ## 鉴定流程
 
 1. **仙图检测** → 先判断照片是否被灯光/滤镜处理过
