@@ -36,6 +36,11 @@ python3 scripts/image_check.py /path/to/image.jpg
 4. 输出红黄绿风险报告
 ```
 
+## ⚠️ 已知坑
+
+- **Ollama `/v1` 端点可能超时**：Hermes 内置的 `vision_analyze` 通过 OpenAI 兼容端点调用 Ollama 可能 362 秒超时。优先使用 `scripts/ollama_vision.py`（调用原生 `/api/chat`），不要依赖内置 vision_analyze 工具。
+- **Windows CPU 速度慢**：minicpm-v:8b 在 Windows 上每张图约 84 秒。建议用户发图后耐心等待，或用更小模型如 `llava:7b`。
+
 ## 鉴定流程
 
 1. **仙图检测** → 先判断照片是否被灯光/滤镜处理过

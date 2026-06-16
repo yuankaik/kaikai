@@ -61,6 +61,8 @@ WEIXIN_DM_POLICY=open
 | `errcode=-14` (session expired) | Re-run `hermes gateway setup` to scan new QR |
 | Bot doesn't respond to DMs | Check `WEIXIN_DM_POLICY` — if `allowlist`, sender must be in `WEIXIN_ALLOWED_USERS` |
 | `Another local Hermes gateway is already using this token` | Stop the other gateway instance first |
+| **Images not recognized** (English error in WeChat) | See `references/wechat-vision-ollama-fix.md` — DeepSeek lacks vision. Configure local Ollama as vision provider. |
+| **15-minute block / stopped responding after frequent questions** | iLink Bot server-side rate limiting (`errcode=-2`). Too many messages in a short time window. See `references/wechat-rate-limiting.md` for fix. |
 
 ## Post-Setup: Add Platform to Config, Enable Gateway Access, Restart
 
@@ -91,6 +93,7 @@ Do NOT edit `~/.hermes/config.yaml` directly — the agent's file tools are bloc
 ## Reference Files
 
 - `references/wechat-docs.md` — Full extracted WeChat (Weixin) documentation from hermes-agent.nousresearch.com, including all env vars, config options, CDN encryption details, and troubleshooting table.
+- `references/wechat-rate-limiting.md` — iLink Bot server-side rate limiting: symptom (15-min block), root cause (errcode=-2), adapter internals, env var fix (WEIXIN_SEND_CHUNK_DELAY_SECONDS), and investigation commands.
 - `references/network-proxy-workarounds.md` — Network proxy configuration and workarounds for this environment: pip Tsinghua mirror, git proxy, aiohttp Python 3.14 compatibility fix, browser-as-fallback for curl failures.
 - `scripts/wechat_qr_login.py` — Standalone script to bypass the TUI wizard: fetches QR from iLink API, generates PNG to desktop, polls for scan, saves credentials and updates .env.
 - `scripts/batch_migrate.py` — Batch migrate skills from multiple agent directories (.local/skills, .agents/skills, superpowers, codex) into ~/.hermes/skills/. Handles category detection, name prefixing, and supporting file copy.
@@ -129,8 +132,11 @@ When running in WSL and the user wants a QR image on their Windows desktop:
 
 - **Docs are SPA**: The docs site at hermes-agent.nousresearch.com uses client-side rendering. `curl` returns a 404 GitHub Pages page. Always use browser tools to navigate, then extract content with `browser_console(expression="document.querySelector('article').innerText")`.
 - **Only one gateway per token**: Weixin enforces a token lock — only one gateway instance can use a given token at a time.
+- **iLink frequency limit (15-min cooldown)**：微信频繁提问+长回复分段发送会触发 iLink 服务端频率限制（errcode=-2），导致 15 分钟冷却。缓解：在 ~/.hermes/.env 中设 `WEIXIN_SEND_CHUNK_DELAY_SECONDS=2.5` 和 `WEIXIN_SEND_CHUNK_RETRY_DELAY_SECONDS=2.0` 降低发送频率，然后 `hermes gateway restart`。
 - **Gateway-level allowlist blocks all users**: Even with per-platform `DM_POLICY=open`, the gateway enforces its own allowlist check. If the log shows "No user allowlists configured. All unauthorized users will be denied.", add `GATEWAY_ALLOW_ALL_USERS=true` to `~/.hermes/.env` and restart. Verify by checking `Channel directory built: N target(s)` — N=0 means the guard is still active.
 - **Group messages unlikely to work**: The iLink bot identity limitation means group chat typically won't work. Set expectations with the user upfront.
 - **aiohttp 3.7.x breaks on Python 3.14+**: Python 3.14 removed the `cgi` module. User-local aiohttp <=3.7.x fails with `ModuleNotFoundError: No module named 'cgi'`. Fix: `rm -rf ~/.local/lib/python3.14/site-packages/aiohttp*` so Python uses the system aiohttp (3.13+ at `/usr/lib/python3/dist-packages`).
 - **iLink API requires specific headers**: The WeChat iLink Bot API rejects requests without `iLink-App-Id: bot` and `iLink-App-ClientVersion: <encoded_version>` headers. The adapter reads responses as text first, then parses JSON — standard aiohttp `response.json()` may fail on `application/octet-stream` content types.
+- **Vision fails with 400 if Ollama not running first**: The most common cause of WeChat image recognition failing after a gateway restart is Ollama not running on the Windows host. The 400 error looks like model incompatibility (`unknown variant image_url`) but is actually Ollama being unreachable. Always verify `curl -s http://<windows-ip>:11434/api/tags` returns a model list before restarting the gateway. Full fix in `references/wechat-vision-ollama-fix.md`.
 - **Cannot edit config.yaml directly**: The agent's file tools (write_file, patch) are blocked from modifying `~/.hermes/config.yaml`. Use `hermes config set <key> '<json_value>'` instead. For nested keys like `platforms.weixin`, the tool auto-creates the path.
+- **iLink Bot server-side rate limiting (`errcode=-2`)**: Frequent messages through WeChat trigger a server-side cooldown (~15 minutes) where the bot cannot send any messages. The Hermes adapter retries with backoff at the chunk level (`BACKOFF_DELAY_SECONDS=30`), but server-imposed blocks cannot be bypassed by the client. Mitigation: increase message chunk send delays via `WEIXIN_SEND_CHUNK_DELAY_SECONDS` and `WEIXIN_SEND_CHUNK_RETRY_DELAY_SECONDS` in `~/.hermes/.env`. Full investigation and fix workflow in `references/wechat-rate-limiting.md`.
