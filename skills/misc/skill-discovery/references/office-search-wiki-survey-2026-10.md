@@ -81,8 +81,19 @@ research 19 / devops 17 / productivity 17 / web-development 14。
 
 - `misc/agents-office-productivity` 还引用 `libreoffice-*` 系列技能名，这些本体仍未落地；
   用户若要 LibreOffice 能力需另装或改指向。
-- 未评估：TapXWorld/ChinaTextbook（82K⭐，小初高 PDF 教材）、microsoft/markitdown（189K⭐）——
-  对教育需求可能有用，下次可单独看。
+
+### 后续已闭环（2026-10，同会话完成）
+
+- **TapXWorld/ChinaTextbook（82K⭐）已评估并落地** → 新技能 `education/china-textbook-pdf`。
+  82K⭐ 官方教科书 PDF 库（43.5GB，绝不能 clone）。关键：按需单文件下载走
+  contents API 拿 sha → blob API base64 解码（raw.githubusercontent 会 reset）。
+  实测已下载人教版数学四年级上册(21.68MB)、沪教版英语四年级上册(9MB) 到桌面。
+  **覆盖缺口**：上海数学**无沪教版**（小学/数学 下只有人教/冀教/北京/北师大/苏教/西南/青岛版）；
+  `小学（五•四学制）` 是山东五四制(青岛版/鲁科版)，**不是上海的**——别被误导。
+  上海有沪教版的只有：英语、美术、书法(沪科教版)。
+- **microsoft/markitdown（189K⭐）已落地依赖并验证**。`markitdown[all]` 装好后
+  docx/xlsx/pptx/pdf → 干净 markdown（表格保留）。用法已写入 `education/china-textbook-pdf`
+  的第三节；转扫描件需先 OCR（无文字层时只出图）。
 
 ## 迁移操作要点
 

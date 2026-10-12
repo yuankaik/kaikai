@@ -679,14 +679,14 @@
     "archived_at": null,
     "created_at": "2026-06-14T02:20:59.290779+00:00",
     "created_by": "agent",
-    "last_patched_at": "2026-10-12T02:20:32.219880+00:00",
-    "last_used_at": "2026-10-12T02:01:28.584607+00:00",
-    "last_viewed_at": "2026-10-12T02:01:28.579203+00:00",
-    "patch_count": 24,
+    "last_patched_at": "2026-10-12T02:35:55.025453+00:00",
+    "last_used_at": "2026-10-12T02:35:50.618871+00:00",
+    "last_viewed_at": "2026-10-12T02:35:50.613108+00:00",
+    "patch_count": 25,
     "pinned": false,
     "state": "active",
-    "use_count": 20,
-    "view_count": 20
+    "use_count": 22,
+    "view_count": 22
   },
   "somnet-vision-setup": {
     "archived_at": null,
@@ -792,30 +792,43 @@
     "use_count": 2,
     "view_count": 2
   },
+  "windows-disk-archive-survey": {
+    "archived_at": null,
+    "created_at": "2026-10-12T02:35:45.386492+00:00",
+    "created_by": "agent",
+    "last_patched_at": "2026-10-12T02:47:35.174510+00:00",
+    "last_used_at": "2026-10-12T02:47:12.542801+00:00",
+    "last_viewed_at": "2026-10-12T02:47:12.531828+00:00",
+    "patch_count": 5,
+    "pinned": false,
+    "state": "active",
+    "use_count": 2,
+    "view_count": 2
+  },
   "windows-power-diagnostics": {
     "archived_at": null,
     "created_at": "2026-08-13T00:59:05.455952+00:00",
     "created_by": "agent",
     "last_patched_at": null,
-    "last_used_at": "2026-08-13T05:21:41.793869+00:00",
-    "last_viewed_at": "2026-08-13T05:21:41.738888+00:00",
+    "last_used_at": "2026-10-12T02:35:28.844109+00:00",
+    "last_viewed_at": "2026-10-12T02:35:28.835119+00:00",
     "patch_count": 0,
     "pinned": false,
     "state": "stale",
-    "use_count": 2,
-    "view_count": 2
+    "use_count": 3,
+    "view_count": 3
   },
   "windows-startup-automation": {
     "archived_at": null,
     "created_at": "2026-08-13T02:39:04.821849+00:00",
     "created_by": "agent",
     "last_patched_at": "2026-08-14T01:38:54.631138+00:00",
-    "last_used_at": "2026-08-14T01:12:44.442906+00:00",
-    "last_viewed_at": "2026-08-14T01:12:44.437859+00:00",
+    "last_used_at": "2026-10-12T02:35:31.936984+00:00",
+    "last_viewed_at": "2026-10-12T02:35:31.927118+00:00",
     "patch_count": 4,
     "pinned": false,
     "state": "stale",
-    "use_count": 2,
-    "view_count": 2
+    "use_count": 3,
+    "view_count": 3
   }
 }
