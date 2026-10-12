@@ -272,6 +272,19 @@
     "use_count": 1,
     "view_count": 1
   },
+  "docx-authoring": {
+    "archived_at": null,
+    "created_at": "2026-10-12T04:15:39.797405+00:00",
+    "created_by": null,
+    "last_patched_at": null,
+    "last_used_at": "2026-10-12T04:15:39.801766+00:00",
+    "last_viewed_at": "2026-10-12T04:15:39.797418+00:00",
+    "patch_count": 0,
+    "pinned": false,
+    "state": "active",
+    "use_count": 1,
+    "view_count": 1
+  },
   "docx-print-author": {
     "archived_at": null,
     "created_at": "2026-07-01T02:51:37.089517+00:00",
@@ -446,13 +459,26 @@
     "created_at": "2026-06-14T00:17:37.264000+00:00",
     "created_by": "agent",
     "last_patched_at": "2026-10-12T03:35:54.159121+00:00",
-    "last_used_at": "2026-10-12T03:35:42.612168+00:00",
-    "last_viewed_at": "2026-10-12T03:35:42.560274+00:00",
+    "last_used_at": "2026-10-12T04:13:26.168446+00:00",
+    "last_viewed_at": "2026-10-12T04:13:26.162878+00:00",
     "patch_count": 75,
     "pinned": false,
     "state": "stale",
-    "use_count": 79,
-    "view_count": 79
+    "use_count": 80,
+    "view_count": 80
+  },
+  "hermes-multiagent-team-setup": {
+    "archived_at": null,
+    "created_at": "2026-10-12T04:13:40.907648+00:00",
+    "created_by": "agent",
+    "last_patched_at": "2026-10-12T04:13:48.677684+00:00",
+    "last_used_at": null,
+    "last_viewed_at": null,
+    "patch_count": 1,
+    "pinned": false,
+    "state": "active",
+    "use_count": 0,
+    "view_count": 0
   },
   "hermes-upgrade": {
     "archived_at": null,
@@ -466,6 +492,19 @@
     "state": "stale",
     "use_count": 4,
     "view_count": 4
+  },
+  "humanizer": {
+    "archived_at": null,
+    "created_at": "2026-10-12T04:14:17.902602+00:00",
+    "created_by": null,
+    "last_patched_at": null,
+    "last_used_at": "2026-10-12T04:14:17.902621+00:00",
+    "last_viewed_at": null,
+    "patch_count": 0,
+    "pinned": false,
+    "state": "active",
+    "use_count": 1,
+    "view_count": 0
   },
   "jiale-chinese-tracker": {
     "archived_at": null,
@@ -531,6 +570,32 @@
     "state": "active",
     "use_count": 1,
     "view_count": 1
+  },
+  "kanban-orchestrator": {
+    "archived_at": null,
+    "created_at": "2026-10-12T03:50:21.923507+00:00",
+    "created_by": null,
+    "last_patched_at": null,
+    "last_used_at": "2026-10-12T03:50:21.943050+00:00",
+    "last_viewed_at": "2026-10-12T03:50:21.923562+00:00",
+    "patch_count": 0,
+    "pinned": false,
+    "state": "active",
+    "use_count": 1,
+    "view_count": 1
+  },
+  "kanban-worker": {
+    "archived_at": null,
+    "created_at": "2026-10-12T04:12:59.226707+00:00",
+    "created_by": null,
+    "last_patched_at": null,
+    "last_used_at": "2026-10-12T04:13:09.899901+00:00",
+    "last_viewed_at": "2026-10-12T04:13:09.893851+00:00",
+    "patch_count": 0,
+    "pinned": false,
+    "state": "active",
+    "use_count": 2,
+    "view_count": 2
   },
   "listed-company-filings-research": {
     "archived_at": null,
@@ -687,6 +752,19 @@
     "state": "active",
     "use_count": 3,
     "view_count": 3
+  },
+  "requesting-code-review": {
+    "archived_at": null,
+    "created_at": "2026-10-12T04:03:29.597080+00:00",
+    "created_by": null,
+    "last_patched_at": null,
+    "last_used_at": "2026-10-12T04:04:15.441027+00:00",
+    "last_viewed_at": null,
+    "patch_count": 0,
+    "pinned": false,
+    "state": "active",
+    "use_count": 3,
+    "view_count": 0
   },
   "resume-tailoring-consultant": {
     "archived_at": null,

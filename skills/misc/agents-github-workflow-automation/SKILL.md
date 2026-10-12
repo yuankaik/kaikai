@@ -1,5 +1,5 @@
 ---
-name: github-workflow-automation
+name: agents-github-workflow-automation
 description: "Patterns for automating GitHub workflows with AI assistance, inspired by [Gemini CLI](https://github.com/google-gemini/gemini-cli) and modern DevOps practices."
 risk: critical
 source: community
