@@ -1,5 +1,5 @@
 ---
-name: gstack
+name: gstack-overview
 description: GStack — YC CEO Garry Tan 的虚拟工程团队 (110K⭐)。23 个 AI 专家角色（CEO→架构→设计→开发→QA→运维）+ 8 个超级工具。原生支持 Hermes。Think→Plan→Build→Review→Test→Ship→Reflect 完整冲刺流程。
 source: https://github.com/garrytan/gstack
 ---
