@@ -1,6 +1,6 @@
 ---
 name: hermes-messaging-setup
-description: Connect Hermes Agent to messaging platforms (WeChat, Telegram, Discord, etc.). Covers the general setup pattern, WeChat-specific configuration via iLink Bot API, and how to efficiently read Hermes docs (SPA site).
+description: Connect Hermes Agent to messaging platforms (WeChat, Feishu/Lark, Telegram, Discord, etc.). Covers the general setup pattern, WeChat-specific configuration via iLink Bot API, Feishu scan-to-create QR onboarding (websocket mode, no public URL), and how to efficiently read Hermes docs (SPA site).
 ---
 
 # Hermes Messaging Platform Setup
@@ -9,8 +9,9 @@ Connect Hermes to messaging platforms so users can interact with the agent from 
 
 ## Trigger Conditions
 
-- User asks to connect/configure a messaging platform (WeChat, Telegram, Discord, DingTalk, WeCom, QQ, etc.)
-- User says "连上微信", "连接 Telegram", "setup messaging", etc.
+- User asks to connect/configure a messaging platform (WeChat, Feishu/Lark, Telegram, Discord, DingTalk, WeCom, QQ, etc.)
+- User says "连上微信", "连接 Telegram", "关联飞书", "connect Feishu", "setup messaging", etc.
+- User asks whether Hermes can read/write Feishu docs or drive files (that's line ② of the Feishu section)
 
 ## General Setup Pattern
 
@@ -64,6 +65,96 @@ WEIXIN_DM_POLICY=open
 | **Images not recognized** (English error in WeChat) | See `references/wechat-vision-ollama-fix.md` — DeepSeek lacks vision. Configure local Ollama as vision provider. **base_url must end with /v1** (verified 2026-06-17). |
 | **15-minute block / stopped responding after frequent questions** | iLink Bot server-side rate limiting (`errcode=-2`). Too many messages in a short time window. See `references/wechat-rate-limiting.md` for fix. |
 | **`send_message` reports "No home channel set" but `WEIXIN_HOME_CHANNEL` IS configured** | ⚠️ MISLEADING ERROR — can mask 5 different root causes: (1) iLink rate-limit retry-loop, (2) HOME_CHANNEL in config.yaml not .env, (3) systemd not loading .env, (4) CLI process missing env var, (5) platforms.weixin JSON string hides token. **Do NOT change WEIXIN_HOME_CHANNEL — it's likely correct.** See `references/wechat-send-message-debug.md` for the complete 5-layer debug flow. |
+
+## Feishu / Lark Specifics (verified 2026-10)
+
+Two independent capabilities, **both driven by one app credential**:
+
+| Line | What it gives you | Env / toolset |
+|------|-------------------|---------------|
+| ① Chat | DM the bot; group needs @mention | `FEISHU_*` env + gateway |
+| ② Docs/Drive | Read Feishu docs, reply to doc comments | `feishu_doc` / `feishu_drive` toolsets + extra scopes |
+
+### Prerequisites
+```bash
+pip install --break-system-packages -i https://pypi.tuna.tsinghua.edu.cn/simple lark-oapi websockets
+# lark-oapi = Feishu SDK (required for websocket mode AND bot probe)
+# websockets = required by the websocket connection mode
+# aiohttp = only needed for webhook mode
+```
+
+### ⭐ Scan-to-create QR flow (NO manual developer console needed)
+Key discovery: Feishu onboarding uses a **device-code flow** — you call a `qr_register()` API
+that returns a `qr_url`; the user scans it with the Feishu mobile app and the app is
+auto-created with correct permissions + credentials saved. **No public HTTPS endpoint
+required** because the default mode is WebSocket (outbound connection).
+
+The adapter lives at `plugins/platforms/feishu/adapter.py` (NOT `gateway/platforms/` —
+Feishu was migrated into a bundled plugin, see the `# _setup_feishu moved to` comment in
+`hermes_cli/gateway.py`). Reusable functions:
+
+```python
+import sys; sys.path.insert(0, "/usr/local/lib/python3.14/dist-packages")
+from plugins.platforms.feishu import adapter as fad
+fad._init_registration("feishu")              # domain: "feishu" (CN) | "lark" (intl)
+begin = fad._begin_registration("feishu")     # -> {device_code, qr_url, user_code, interval, expire_in}
+# render qr_url as QR (see scripts/feishu_qr_register.py)
+res = fad._poll_registration(device_code=begin["device_code"], interval=begin["interval"],
+                             expire_in=begin["expire_in"], domain="feishu")
+# res -> {app_id, app_secret, domain, open_id}  (open_id = the scanning user, use for allowlist)
+```
+
+**⚠️ Pitfall — run poll as a long-lived background process, not a bounded execute_code call.**
+The device code is valid ~600s. `execute_code` has a 300s cap and a foreground `terminal`
+call can hit its timeout mid-poll, losing the result. Run the poll via
+`terminal(..., timeout=600)` or as a script; the QR/begin step is fast and can be
+`execute_code`.
+
+**⚠️ Pitfall — QR image beats terminal ASCII.** `qrcode.print_ascii` works but is
+awkward to scan in WSL terminals. Generate a PNG to the Windows desktop
+(`qrcode.make(url).save("/mnt/c/Users/<user>/Desktop/<name>.png")`) and ALSO print the
+raw URL so the user can open it directly in the mobile app.
+
+### Environment Variables (~/.hermes/.env)
+```
+FEISHU_APP_ID=cli_xxx
+FEISHU_APP_SECRET=***
+FEISHU_DOMAIN=feishu                    # feishu | lark
+FEISHU_CONNECTION_MODE=websocket        # websocket (no public URL) | webhook
+FEISHU_ALLOWED_USERS=ou_xxx             # white-list — REQUIRED in practice; default group policy rejects unknown humans
+```
+
+### Post-setup
+```bash
+hermes gateway restart
+journalctl --user -u hermes-gateway --since "1 minute ago" | grep -i lark
+# Success looks like:  [Lark] ... connected to wss://msg-frontier.feishu.cn/ws/v2 ...
+```
+If the journal warns `Installed gateway service definition is outdated`, run
+`hermes gateway restart` once more — it auto-refreshes the systemd unit.
+
+### Bot identity probe (verify credentials without the gateway)
+```python
+# tenant_access_token → GET /open-apis/bot/v3/info  returns bot.app_name + bot.open_id
+# activate_status: 2 = active. Full script in references/feishu-setup.md
+```
+
+### Line ② (Docs/Drive) needs extra scopes NOT granted by scan-to-create
+The scan-created app has chat scopes only. To let Hermes read docs and reply to doc
+comments, go to the developer console and add `docs:doc:readonly` + `drive:drive:readonly`,
+subscribe the `drive.notice.comment_add_v1` event, then publish a new app version.
+Personal (个人版) Feishu can self-approve; enterprise apps need an admin.
+
+### Feishu group policy
+`FEISHU_GROUP_POLICY` = `allowlist` (default) | `open` | `disabled`. The bot must be
+@mentioned in groups regardless. Default + empty allowlist = all human group messages
+rejected while DMs keep working.
+
+## Chinese Platforms — DingTalk / WeCom / QQ / Yuanbao
+
+Same scan-or-callback pattern as WeChat/Feishu. DingTalk has its own QR auth at
+`hermes_cli/dingtalk_auth.py` (auto-installs `qrcode`, 2-hour scan timeout). Read the
+platform adapter source before writing a bypass script — endpoint shapes differ.
 
 ## Post-Setup: Add Platform to Config, Enable Gateway Access, Restart
 
@@ -119,6 +210,8 @@ Do NOT edit `~/.hermes/config.yaml` directly — the agent's file tools are bloc
 
 ## Reference Files
 
+- `references/feishu-setup.md` — **Feishu / Lark full reference**: device-code QR onboarding (scan-to-create), websocket vs webhook modes, all `FEISHU_*` env vars, line ② (docs/drive) scopes, exact observed artifacts from a live WSL onboarding.
+- `scripts/feishu_qr_register.py` — Reusable Feishu onboarding script: `begin` (QR→desktop PNG + URL) / `poll` (long-lived, up to 600s) / `probe` (verify bot name). Bypasses the setup TUI.
 - `references/wechat-docs.md` — Full extracted WeChat (Weixin) documentation from hermes-agent.nousresearch.com, including all env vars, config options, CDN encryption details, and troubleshooting table.
 - `references/wechat-rate-limiting.md` — iLink Bot server-side rate limiting: symptom (15-min block), root cause (errcode=-2), adapter internals, env var fix (WEIXIN_SEND_CHUNK_DELAY_SECONDS), and investigation commands.
 - `references/wechat-no-home-channel-pitfall.md` — The "No home channel set" error masking iLink rate limiting: why it happens, diagnostic commands, fix workflow, and what NOT to do.

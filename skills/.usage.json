@@ -407,26 +407,26 @@
     "created_at": "2026-09-16T01:11:30.017165+00:00",
     "created_by": null,
     "last_patched_at": null,
-    "last_used_at": "2026-09-16T01:49:27.907719+00:00",
-    "last_viewed_at": "2026-09-16T01:49:27.904025+00:00",
+    "last_used_at": "2026-10-12T02:59:21.789819+00:00",
+    "last_viewed_at": "2026-10-12T02:59:21.742421+00:00",
     "patch_count": 0,
     "pinned": false,
     "state": "active",
-    "use_count": 2,
-    "view_count": 2
+    "use_count": 3,
+    "view_count": 3
   },
   "hermes-messaging-setup": {
     "archived_at": null,
     "created_at": "2026-06-14T00:17:37.264000+00:00",
     "created_by": "agent",
-    "last_patched_at": "2026-08-14T06:55:57.847254+00:00",
-    "last_used_at": "2026-08-14T06:55:19.538156+00:00",
-    "last_viewed_at": "2026-08-14T06:55:19.533411+00:00",
-    "patch_count": 66,
+    "last_patched_at": "2026-10-12T03:23:31.590533+00:00",
+    "last_used_at": "2026-10-12T03:22:48.711242+00:00",
+    "last_viewed_at": "2026-10-12T03:22:48.705271+00:00",
+    "patch_count": 72,
     "pinned": false,
     "state": "stale",
-    "use_count": 76,
-    "view_count": 76
+    "use_count": 77,
+    "view_count": 77
   },
   "hermes-upgrade": {
     "archived_at": null,
