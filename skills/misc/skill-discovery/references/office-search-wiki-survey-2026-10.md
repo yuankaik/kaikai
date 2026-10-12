@@ -48,12 +48,44 @@ AgriciDaniel/claude-obsidian 15.5K⭐ / SamurAIGPT/llm-wiki-agent 3.6K /
 Astro-Han/karpathy-llm-wiki 2.5K / sdyckjq-lab/llm-wiki-skill 2.5K /
 atomicstrata/llm-wiki-compiler 2.2K / NicholasSpisak/second-brain 738
 
-## 本机技能现状（510 个）
+## 本机技能现状（510 → 519 个）
 
 类别分布 Top：gh-edu 179 / gstack 58 / misc 47 / mlops 38 / creative 26 /
 research 19 / devops 17 / productivity 17 / web-development 14。
 
-**发现的缺陷**：`misc/agents-office-productivity` 只引用 `docx-official`/`xlsx-official`/
-`pptx-official`/`libreoffice-*` 等技能名，但**这些技能本体在本机不存在**（510 个技能里只有
-productivity/powerpoint、misc/xlsx 等）。该技能是"工作流骨架"却指向空引用——用户若要办公
-能力，实际落点应是 misc/xlsx、productivity/powerpoint、finance/excel-author 等真实存在的技能。
+### 本次实际落地（2026-10，已完成）
+
+用户选 C（A+B 都装），已落地并推送到 yuankaik/kaikai：
+
+**A. 办公包 —— office/ 分类，126 文件**（源自 tfriedel/claude-office-skills，Anthropic 官方级）
+- `office/docx-authoring` — Word：跟踪修订/批注/格式保留 + OOXML schema + python-docx 脚本
+- `office/xlsx-authoring` — Excel：公式/财务建模规范 + recalc.py 重算脚本
+- `office/pptx-authoring` — PPT：版式/备注/html2pptx + 缩略图/inventory/rearrange 脚本
+- `office/pdf-authoring` — PDF：提取/合并/拆分/表单填写 + pypdf 表单脚本
+
+**B. 深度研究包 —— research/ 分类，6 文件**（源自 Weizhena/Deep-Research-skills 中文版）
+- `research/deep-research-init` — /research <topic> → outline.yaml + fields.yaml
+- `research/deep-research-run` — /research-deep 多 agent 并行调研 → 结构化 JSON
+- `research/deep-research-report` — /research-report 汇总 markdown 报告
+- `research/deep-research-add-items` / `deep-research-add-fields` — 补充对象/字段
+
+**已修复**：`misc/agents-office-productivity` 的 7 处死链（`docx-official` 等不存在的技能名）
+已指向真实存在的 `office/docx-authoring` 等；Deep-Research 内 `~/.claude/...` 路径改为本机路径。
+
+**已装依赖**：python-pptx / pypdf / openpyxl / python-docx / markitdown
+（PEP 668 环境装时加 `--break-system-packages`）。
+
+**LLM Wiki 方向：确认不引入**（本机 llm-wiki v2.1.0 更完备，见上）。
+
+### 遗留
+
+- `misc/agents-office-productivity` 还引用 `libreoffice-*` 系列技能名，这些本体仍未落地；
+  用户若要 LibreOffice 能力需另装或改指向。
+- 未评估：TapXWorld/ChinaTextbook（82K⭐，小初高 PDF 教材）、microsoft/markitdown（189K⭐）——
+  对教育需求可能有用，下次可单独看。
+
+## 迁移操作要点
+
+这次踩到的三个坑（name 冲突 / `~/.claude` 硬编码路径 / 路由壳死链）及修复脚本，
+已写入本技能 SKILL.md 的 §3.5；落地后四步验证见 §3.6。**下次整包迁移直接照做，别再踩一遍。**
+

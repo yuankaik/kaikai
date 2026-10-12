@@ -268,6 +268,73 @@ hermes skills list        # 查看总数
 find ~/.hermes/skills -name "SKILL.md" | wc -l  # 计数
 ```
 
+### 3.5 整包迁移后的三个必做修复（实测踩坑，不做=技能残废）
+
+从 GitHub 整包拉下 SKILL.md 目录后，**不是复制完就完事**。以下三处不改，技能要么加载冲突、要么跑起来报错：
+
+#### ① name 字段冲突 —— 必须重写 frontmatter
+
+外来技能的 `name:` 常和本机已有技能重名（官方 office 包四个技能都叫 `docx`/`xlsx`/`pptx`/`pdf`，而本机已有 `pdf`、`xlsx`）。冲突会导致 `skills_list` 识别/覆盖异常。
+做法：`name` 加语义后缀（`docx-authoring`、`xlsx-authoring`），description 换成中文+明确触发条件：
+
+```python
+import os, re
+p = os.path.join(SKILLS, "office/docx-authoring", "SKILL.md")
+t = open(p, encoding="utf-8").read()
+m = re.match(r"^---\n.*?\n---\n", t, re.S)     # 剥掉旧 frontmatter
+open(p, "w", encoding="utf-8").write(
+    '---\nname: docx-authoring\ndescription: "..."\n---\n' + (t[m.end():] if m else t))
+```
+
+用 `m.end()` 定位切割，别用 sed 正则改 YAML（冒号/引号会炸）。
+
+#### ② 技能内硬编码的 `~/.claude/...` 路径 —— 必须改成本机路径
+
+外来技能正文常硬编码 `~/.claude/skills/...` 或 `~/.codex/...`，本机跑必 FileNotFound。迁移后全量扫描：
+
+```python
+import os, re
+for root, _, files in os.walk(SKILLS):
+    for f in files:
+        if not f.endswith((".md", ".py")): continue
+        fp = os.path.join(root, f); t = open(fp, encoding="utf-8").read()
+        hits = re.findall(r"[~/\w.]*\.(?:claude|codex)/[^\s`\)]+", t)
+        if hits: print(fp, set(hits))
+```
+
+替换前**先用 walk 找到脚本的真实落点**——迁移后目录布局往往变了，别照抄对方的相对路径。实例：`~/.claude/skills/research/validate_json.py` → `~/.hermes/skills/research/deep-research-init/validate_json.py`。
+
+#### ③ "路由壳技能" 引用的子技能本体可能根本不存在（死链）
+
+本机大量 `misc/agents-*` 类技能是从 Agents 生态迁来的**路由壳**：正文只写 "Skills to Invoke: `docx-official`, `xlsx-official`..."，而那些本体从未落地。实测 `agents-office-productivity` 引用的 4 个子技能在 510 个技能里一个都不存在。
+
+排查（拿 skills_list 结果对照）：
+```python
+names = {s["name"] for s in all_skills}
+print([r for r in ["docx-official","xlsx-official","pptx-official"] if r not in names])  # = 死链
+```
+
+修复时注意**两种写法都要替换**——带反引号的和裸列表：
+```python
+t = t.replace("`docx-official`", "`docx-authoring`")
+t = t.replace("Skills: docx-official, xlsx-official", "Skills: docx-authoring, xlsx-authoring")
+```
+
+### 3.6 迁移落地后的四步验证（"落了文件" ≠ "能用"）
+
+```bash
+hermes skills list | grep -iE "<新技能名1>|<新技能名2>"      # ① 被识别且 enabled
+find <新技能目录> -type f | wc -l                            # ② 文件数对得上
+python3 -c "import ast;ast.parse(open('<脚本>.py').read())"   # ③ 脚本语法正确
+# ④ 冒烟测试：真用技能生成一个产物并回读，证明能用而非只有文件
+```
+
+依赖一并装（本机 Python 外部管理，PEP 668 拦截，必须加 flag）：
+```bash
+pip install --break-system-packages -i https://pypi.tuna.tsinghua.edu.cn/simple \
+  python-pptx pypdf openpyxl python-docx markitdown
+```
+
 ## 4. 从单个 GitHub 仓库创建技能
 
 ### 直接转换（格式兼容时）
@@ -369,6 +436,106 @@ cp -r kaikai/skills/* ~/.hermes/skills/
 | `mem0` | 需要 API key（默认 OpenAI embedding） | pip 安装成功，但首次调用需配 API key |
 | `MediaCrawler` | git clone 超时（大仓库） | 用 `--depth 1` 浅克隆，或代理恢复后重试 |
 | opt- 前缀技能 | `skills_list` 列出但 `skill_view` 报 "not found" | SKILL.md 在 `opt-<category>-<name>/` 目录下，需手动复制到 `<category>/<name>/` 激活。例：`mkdir -p skills/web-development/page-agent && cp skills/web-development/opt-web-development-page-agent/SKILL.md skills/web-development/page-agent/SKILL.md` |
+| `raw.githubusercontent.com` | 连接被重置（Connection reset by peer） | **不要用 raw 抓单文件**，改用 codeload zip 整包下载（见下文 9.1） |
+| `pip install` 报 PEP 668 `externally-managed-environment` | Debian/WSL 系统 Python 受保护 | 加 `--break-system-packages`，例：`pip install --break-system-packages -i https://pypi.tuna.tsinghua.edu.cn/simple <pkg>` |
+
+### 9.1 迁移 SDK 技能库的三个必改点（实战踩坑，2026-10）
+
+从 Claude Code / 其他生态迁移成套技能库（如 tfriedel/claude-office-skills、Weizhena/Deep-Research-skills）时，**光复制文件不够，落盘后必须做三件事，否则技能是坏的**：
+
+**① 改写 frontmatter 的 name 字段（防冲突）**
+源技能的 `name: docx` / `name: xlsx` / `name: pdf` 会与本机已有同名技能**撞名**，`hermes skills list` 可能只显示一个或报错。落盘时给每个技能改唯一名 + 补中文 description：
+
+```python
+import re, os
+fixes = {"office/docx-authoring": ("docx-authoring", "Word .docx 全流程创作/编辑/分析…")}
+for rel,(nm,desc) in fixes.items():
+    p = os.path.expanduser(f"~/.hermes/skills/{rel}/SKILL.md")
+    t = open(p, encoding="utf-8").read()
+    m = re.match(r"^---\n.*?\n---\n", t, re.S)          # 吃掉旧 frontmatter
+    open(p,"w",encoding="utf-8").write(
+        f"---\nname: {nm}\ndescription: \"{desc}\"\n---\n" + (t[m.end():] if m else t))
+```
+
+**② 清理技能内的硬编码跨生态路径**
+Claude 生态的技能常写死 `~/.claude/skills/...`。落盘后全局搜并改成本机路径：
+
+```python
+import os, re
+SK = os.path.expanduser("~/.hermes/skills")
+for root,_,files in os.walk(SK):
+    for f in files:
+        if f != "SKILL.md": continue
+        p = os.path.join(root,f); t = open(p,encoding="utf-8").read()
+        if ".claude" in t:
+            t2 = t.replace("~/.claude/skills/", "~/.hermes/skills/")
+            open(p,"w",encoding="utf-8").write(t2)
+            print("fixed", p)
+```
+
+**③ 修复"路由壳技能"的死链**
+本机有些技能只是**路由壳**——正文里 `Skills to Invoke: docx-official, xlsx-official` 引用的子技能**在本机根本不存在**（死链）。迁移后要核对：引用的技能名是否真有对应目录？把死链指向新落地的真实技能：
+
+```python
+import os
+names = {d for d in os.listdir(f"{SK}/office")}   # 实际存在的技能
+# 对照壳技能正文里的引用，把 docx-official → docx-authoring 等替换掉
+```
+
+核对命令：`hermes skills list | grep <引用的技能名>` —— 查不到就是死链。
+
+### 9.2 落盘后用 codeload zip（替代 raw 抓单文件）
+
+```python
+import urllib.request, ssl, io, zipfile
+ctx = ssl.create_default_context(); ctx.check_hostname=False; ctx.verify_mode=ssl.CERT_NONE
+def gh_bytes(url, timeout=180):
+    req = urllib.request.Request(url, headers={"User-Agent":"Mozilla/5.0"})
+    with urllib.request.urlopen(req, timeout=timeout, context=ctx) as r:
+        return r.read()
+def get_zip(full):
+    for br in ("main","master"):
+        try: return zipfile.ZipFile(io.BytesIO(gh_bytes(f"https://codeload.github.com/{full}/zip/refs/heads/{br}"))), br
+        except Exception as e: last=e
+    raise last
+```
+
+按子目录选择性落盘（只取需要的技能，不要整包倒）：
+
+```python
+z, br = get_zip("tfriedel/claude-office-skills")
+prefix = f"claude-office-skills-{br}/"
+mapping = {"public/docx": "office/docx-authoring", "public/xlsx": "office/xlsx-authoring"}
+for src, dst in mapping.items():
+    for n in z.namelist():
+        if n.endswith("/") or not n.startswith(prefix+src+"/"): continue
+        rel = n[len(prefix+src+"/"):]
+        out = os.path.join(os.path.expanduser("~/.hermes/skills"), dst, rel)
+        os.makedirs(os.path.dirname(out), exist_ok=True)
+        open(out,"wb").write(z.read(n))
+```
+
+### 9.3 落地后必须冒烟测试（不能只验证文件存在）
+
+迁移 SDK 类技能（office 等）后，装齐依赖并**真实跑一遍**：
+
+```bash
+pip install --break-system-packages -i https://pypi.tuna.tsinghua.edu.cn/simple python-docx openpyxl python-pptx pypdf markitdown
+```
+
+```python
+# 生成 + 回读，证明技能真能用
+import docx, openpyxl, pptx
+d = docx.Document(); d.add_paragraph("smoke"); d.save("/tmp/t.docx")
+print(len(docx.Document("/tmp/t.docx").paragraphs))   # 回读成功才算过
+```
+
+验证清单：① `hermes skills list` 显示新技能 enabled ② 冒烟测试生成+回读成功 ③ 壳技能死链已修。
+
+**已知的 office/研究类高质量源（2026-10 实测）**：
+- `tfriedel/claude-office-skills` — docx/xlsx/pptx/pdf 四件套完整本体 + OOXML schema + 脚本（Anthropic 官方级质量）
+- `Weizhena/Deep-Research-skills` — 中文版 5 技能：research / research-deep / research-report / add-items / add-fields，含 validate_json.py
+- LLM Wiki 类（Astro-Han/karpathy-llm-wiki、sdyckjq-lab/llm-wiki-skill）：**本机 llm-wiki v2.1.0 已更强，不要引入**
 
 ## 10. 教育/考试内容爬取模式
 

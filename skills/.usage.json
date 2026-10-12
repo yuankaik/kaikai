@@ -64,18 +64,31 @@
     "use_count": 53,
     "view_count": 53
   },
+  "china-textbook-pdf": {
+    "archived_at": null,
+    "created_at": "2026-10-12T02:22:42.480270+00:00",
+    "created_by": null,
+    "last_patched_at": "2026-10-12T02:22:42.480284+00:00",
+    "last_used_at": null,
+    "last_viewed_at": null,
+    "patch_count": 1,
+    "pinned": false,
+    "state": "active",
+    "use_count": 0,
+    "view_count": 0
+  },
   "chinese-ebook-download": {
     "archived_at": null,
     "created_at": "2026-06-29T06:22:01.270155+00:00",
     "created_by": "agent",
     "last_patched_at": "2026-07-21T06:34:26.504231+00:00",
-    "last_used_at": "2026-07-21T06:34:14.080967+00:00",
-    "last_viewed_at": "2026-07-21T06:34:14.064678+00:00",
+    "last_used_at": "2026-10-12T02:22:04.136742+00:00",
+    "last_viewed_at": "2026-10-12T02:22:04.129795+00:00",
     "patch_count": 53,
     "pinned": false,
     "state": "stale",
-    "use_count": 34,
-    "view_count": 34
+    "use_count": 35,
+    "view_count": 35
   },
   "chinese-elementary-resources": {
     "archived_at": null,
@@ -666,14 +679,14 @@
     "archived_at": null,
     "created_at": "2026-06-14T02:20:59.290779+00:00",
     "created_by": "agent",
-    "last_patched_at": "2026-10-12T01:39:29.918932+00:00",
-    "last_used_at": "2026-10-12T01:39:09.769403+00:00",
-    "last_viewed_at": "2026-10-12T01:39:09.754078+00:00",
-    "patch_count": 21,
+    "last_patched_at": "2026-10-12T02:20:32.219880+00:00",
+    "last_used_at": "2026-10-12T02:01:28.584607+00:00",
+    "last_viewed_at": "2026-10-12T02:01:28.579203+00:00",
+    "patch_count": 24,
     "pinned": false,
     "state": "active",
-    "use_count": 18,
-    "view_count": 18
+    "use_count": 20,
+    "view_count": 20
   },
   "somnet-vision-setup": {
     "archived_at": null,
