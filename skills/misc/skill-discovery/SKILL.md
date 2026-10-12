@@ -426,6 +426,49 @@ git clone https://github.com/yuankaik/kaikai.git
 cp -r kaikai/skills/* ~/.hermes/skills/
 ```
 
+## 8.5 ★ 技能名冲突审计（库健康检查，随机炸弹）
+
+**症状**：任何按名加载技能的地方失败——
+- `hermes -s <name>` 报 `Ambiguous skill name '<name>': N skills match` 或 `Error: Unknown skill(s): <name>`
+- kanban/dispatcher spawn 的 worker 加载技能时 **exit code 1 崩溃**（连崩 2 次后 gave_up）——本机实测就是这个原因让 swarm 的 verifier 反复崩
+
+**根因**：两个 SKILL.md 的 frontmatter `name:` 完全相同。Hermes 无法判定用哪个 → 拒绝加载。
+（注意：**是 frontmatter 的 name 冲突，不是目录名冲突**；目录名可以和 name 不一致。）
+
+**最常见的三个来源**：
+1. 同生态多版本并存（Superpowers 的 `requesting-code-review` vs software-development 的 `requesting-code-review`）
+2. **嵌套仓库副本**——gstack 安装会把 `gstack/.hermes/skills/gstack-*/`（旧嵌套产物）和 `gstack/*/`（新版）两套都落盘，54 个技能名撞车
+3. 加 `opt-`/`agents-` 前缀目录时**没同步改 frontmatter name**
+
+**一次性扫描全库**（脚本已随本技能提供）：
+```bash
+python3 ~/.hermes/skills/misc/skill-discovery/scripts/audit_skill_name_collisions.py
+```
+实测：本机一次扫出 **60 个冲突**（54 gstack 嵌套 + 5 super-* + codex + gstack）。
+
+**修复模式 = 给重复项加来源前缀**（只改 frontmatter name，不动目录）：
+- `misc/super-*/SKILL.md` → `super-<name>`
+- `gstack/.hermes/skills/gstack-*/` → `gstack-legacy-<name>`
+- `autonomous-ai-agents/gstack` → `gstack-overview`
+
+**批量改名前先备份**（两版内容常不同，不是纯冗余——gstack 嵌套版反而更大，别直接删）：
+```python
+import shutil, os
+src = os.path.expanduser("~/.hermes/skills/gstack/.hermes/skills")
+shutil.copytree(src, os.path.expanduser(f"~/.hermes/gstack-nested-skills.bak-{__import__('datetime').date.today()}"))
+```
+
+改名后用 `m.end()` 方式重写 frontmatter（见 §3.5①，别用 sed 改 YAML）：
+```python
+import os, re
+def rename_skill(skill_md, new_name):
+    t = open(skill_md, encoding="utf-8").read()
+    t2 = re.sub(r"^name:\s*.+$", f"name: {new_name}", t, count=1, flags=re.M)
+    open(skill_md, "w", encoding="utf-8").write(t2)
+```
+
+**验证**：`hermes skills list | grep <name>` 应只剩 1 条；重跑扫描应输出 0 冲突。**改完必须验证**——只是改文件不等于 Hermes 已重扫。
+
 ## 9. 安装失败的常见陷阱
 
 | 包 | 失败原因 | 解决方案 |
@@ -549,7 +592,8 @@ print(len(docx.Document("/tmp/t.docx").paragraphs))   # 回读成功才算过
 
 ## 参考脚本
 
-迁移脚本保存在 `scripts/batch_migrate_skills.py` — 可从多个源目录批量复制 SKILL.md 到 `~/.hermes/skills/`。
+- `scripts/batch_migrate_skills.py` — 从多个源目录批量复制 SKILL.md 到 `~/.hermes/skills/`。
+- `scripts/audit_skill_name_collisions.py` — **库健康检查**：扫描全库 frontmatter name 冲突（§8.5），有冲突退出码 1，可直接用于定时检查。
 
 ## 参考文件
 

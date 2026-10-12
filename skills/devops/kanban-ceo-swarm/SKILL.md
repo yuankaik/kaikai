@@ -10,6 +10,87 @@ tags: [kanban, swarm, multi-agent, orchestration, feishu, ceo, 编排, 多智能
 用 Hermes 原生 Kanban Swarm 实现「CEO 接收任务 → 分派小组 → 逐层开发核对 → 汇总交付」。
 飞书/CLI 是 CEO 的入口，小组智能体=独立 profile，在 Hermes 内编排（不是飞书里多个机器人）。
 
+## ★ 自动拆解（内建 decomposer）—— 实现"CEO自动分配"
+
+Hermes **原生内建**了任务自动拆解器，不用装任何第三方。
+
+### 配置（~/.hermes/config.yaml 的 kanban 段）
+
+```yaml
+kanban:
+  auto_decompose: true          # 落到 triage 列的任务，dispatcher 每tick自动拆解
+  auto_decompose_per_tick: 3    # 每tick最多拆几个（防突发烧钱）
+  orchestrator_profile: default # 谁拥有编排/root任务（CEO）
+  default_assignee: w-data      # LLM选不出profile时的兜底
+  dispatch_in_gateway: true     # dispatcher 跑在 gateway 里
+  failure_limit: 2              # 连崩2次自动block
+```
+
+### ★ 关键前提：profile 必须有 description
+
+decomposer 靠 **profile 的 description** 决定分派给谁。没描述的 profile 只能按名字路由，不准。
+
+```bash
+hermes profile describe w-data --text "仓库运营数据处理专家。负责从Excel/CSV提取清洗统计数据..."
+hermes profile describe w-doc  --text "中文商务文档与报表产出专家..."
+hermes profile describe w-review --text "质检与审校专家。独立复核他人产出，发现问题打回..."
+# 也可 --auto 让 LLM 从技能的skill+model自动生成
+```
+
+### 实际效果（2026-10-12 实测）
+
+建 1 个 triage 任务：
+```bash
+hermes kanban create "把仓库9月KPI做成月报：整理数据+生成文档+核对无误" --assignee default --triage
+```
+dispatcher 自动拆成 3 个子任务并正确分派：
+```
+父任务(default)
+ ├─ w-data   "整理9月仓库KPI数据并计算指标"
+ ├─ w-doc    "撰写9月仓库KPI月报文档"
+ └─ w-review "独立核对月报数据与文档准确性"   ← 依赖前两个
+```
+**完全自动**：识别角色 → 按描述路由 → 建依赖链。
+
+### 手动控制（不想要自动拆解时）
+
+```bash
+hermes kanban decompose <id>   # 手动触发拆解
+hermes kanban specify <id>     # 只补规格不拆（单任务）
+# config: kanban.auto_decompose: false 关闭自动拆解
+```
+
+## 官方 9 大协作模式（Hermes 内建）
+
+| 模式 | 形态 | 例子 |
+|------|------|------|
+| P1 Fan-out | N个同角色并行 | "并行研究5个角度" |
+| P2 Pipeline | 角色链 scout→editor→writer | 每日简报 |
+| P3 Voting/quorum | N个+1聚合器 | 3研究员→1审核挑选 |
+| P4 Long-running journal | 同profile+共享目录+cron | 知识库 |
+| P5 Human-in-the-loop | worker block→用户评论→unblock | 模糊决策 |
+| P6 @mention | 散文里内联路由 | "@reviewer 看这个" |
+| P7 Thread-scoped | /kanban here 在线程 | 每项目一个线程 |
+| P8 Fleet farming | 1profile管N对象 | 50个社交账号 |
+| P9 Triage specifier | 粗想法→triage→自动展开 | "把一句话变成规格化任务" |
+
+**CEO+小组 = P1 fan-out + P2 pipeline 组合。**
+
+## 飞书 → CEO → 结果回飞书（原生支持）
+
+从 gateway 创建的任务，**自动订阅回原聊天**：
+- 飞书里 `/kanban create "..."` 或自然语言让CEO建任务
+- 任务完成/blocked/crashed 时，**结果自动推回那个飞书会话**
+- 无需轮询、无需记task_id
+- 订阅会跨 done→reopen 周期存活
+
+## 现成的第三方方案（评估结论：不需要）
+
+- **PolyBrain** (mosesman831, 23⭐)：专为Hermes的多模型编排，orchestrator→并行researchers→synthesizer→verifier，带引用强制+源验证。**适用多模型路由场景**，本项目用不上。
+- **a-team** (22⭐)：26专家agent+19工作流技能+首席编排官
+- **claude-plugins** (2389-research, 97⭐)：28插件含多agent编排
+- Hermes 官方文档内置的 9 模式 = 最权威，且已内建，优先用官方。
+
 ## 架构（已验证跑通）
 
 ```
