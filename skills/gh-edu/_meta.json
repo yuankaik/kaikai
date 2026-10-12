@@ -1,0 +1,27 @@
+[
+ {
+  "repo": "GarethManning/education-agent-skills",
+  "alias": "165-evidence-grounded-edu-skills",
+  "files": 208
+ },
+ {
+  "repo": "flysheep-ai/education-skills",
+  "alias": "china-k12-tutor-skills",
+  "files": 18
+ },
+ {
+  "repo": "Li-Evan/Bloom",
+  "alias": "bloom-ai-tutor",
+  "files": 70
+ },
+ {
+  "repo": "DreambigOu/ELI5",
+  "alias": "eli5-audience-explainer",
+  "files": 7
+ },
+ {
+  "repo": "Polaris-Aeterna/loom-notes",
+  "alias": "loom-notes-active-recall",
+  "files": 8
+ }
+]

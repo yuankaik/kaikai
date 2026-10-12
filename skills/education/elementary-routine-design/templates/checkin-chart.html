@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<!--
+  TEMPLATE: Elementary Daily Check-in Chart
+  A4 portrait, gamified fishing theme (王牌钓手 style).
+  Customize: header colors, task blocks (up to 5), evening flow, rewards text.
+  Output: WeasyPrint PDF with embedded Noto CJK fonts.
+  Usage: python3 -c "import weasyprint; pdf = weasyprint.HTML(filename='chart.html').write_pdf(); open('chart.pdf','wb').write(pdf)"
+-->
+<style>
+  @page { size: A4 portrait; margin: 1cm 1.3cm; }
+  body {
+    font-family: "Noto Sans CJK SC", "Noto Serif CJK SC", sans-serif;
+    margin: 0; padding: 0; background: #fff; color: #222;
+  }
+
+  /* === HEADER === */
+  .header {
+    background: linear-gradient(135deg, #0b3d5c, #1a6b96);
+    color: #fff;
+    border-radius: 10px 10px 0 0;
+    padding: 14px 18px 10px 18px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .header-left h1 { margin: 0; font-size: 18pt; letter-spacing: 2px; }
+  .header-left .sub { font-size: 8pt; opacity: 0.8; margin-top: 2px; }
+  .header-right { text-align: right; font-size: 9pt; line-height: 1.6; }
+  .header-right .week { background: rgba(255,255,255,0.2); padding: 2px 10px; border-radius: 10px; font-size: 8pt; }
+
+  /* === REWARD RULE BANNER === */
+  .switch-rule {
+    background: #fff3cd; border-left: 4px solid #f9a825;
+    padding: 6px 12px; font-size: 8pt; color: #856404;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .switch-rule .highlight { font-weight: bold; color: #e65100; }
+
+  /* === TASK CARDS === */
+  .tasks { background: #fafafa; padding: 8px 12px; }
+  .task-row {
+    display: flex; align-items: center; gap: 8px;
+    padding: 9px 10px; margin: 5px 0;
+    border-radius: 8px; border: 2px solid #e0e0e0; background: #fff;
+  }
+  /* Color themes — customize per block */
+  .task-row.m1 { border-color: #f9a825; background: #fffde7; }  /* yellow */
+  .task-row.m2 { border-color: #42a5f5; background: #e3f2fd; }  /* blue */
+  .task-row.m3 { border-color: #ab47bc; background: #f3e5f5; }  /* purple */
+  .task-row.m4 { border-color: #26a69a; background: #e0f2f1; }  /* teal */
+  .task-row.m5 { border-color: #ef5350; background: #ffebee; }  /* red */
+
+  .task-icon { font-size: 26px; min-width: 36px; text-align: center; }
+  .task-info { flex: 1; }
+  .task-time { font-size: 7.5pt; color: #888; margin-bottom: 1px; }
+  .task-name { font-size: 11pt; font-weight: bold; color: #222; }
+  .task-detail { font-size: 7.5pt; color: #555; line-height: 1.4; }
+  .task-check { min-width: 50px; text-align: center; }
+  .cb { width: 40px; height: 40px; border: 3px solid #bbb; border-radius: 6px; display: inline-block; background: #fff; }
+  .task-row.m1 .cb { border-color: #f9a825; }
+  .task-row.m2 .cb { border-color: #42a5f5; }
+  .task-row.m3 .cb { border-color: #ab47bc; }
+  .task-row.m4 .cb { border-color: #26a69a; }
+  .task-row.m5 .cb { border-color: #ef5350; }
+  .cb-label { font-size: 6.5pt; color: #aaa; display: block; }
+
+  /* === EVENING FLOW === */
+  .evening {
+    background: #fff; padding: 8px 14px;
+    border-top: 1px dashed #ddd; border-bottom: 1px dashed #ddd;
+  }
+  .evening-title { font-size: 9pt; font-weight: bold; color: #555; margin-bottom: 6px; }
+  .evening-row { display: flex; gap: 12px; font-size: 8pt; color: #666; line-height: 1.6; }
+  .evening-col { flex: 1; }
+
+  /* === FOOTER === */
+  .footer {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 14px 6px 14px; background: #fff; border-radius: 0 0 10px 10px;
+  }
+  .stars { font-size: 22px; letter-spacing: 4px; color: #ddd; }
+  .stars-label { font-size: 7.5pt; color: #888; margin-bottom: 3px; }
+  .sign-box { text-align: right; font-size: 8pt; color: #999; }
+  .sign-line { border-bottom: 1.5px solid #bbb; padding: 0 24px 3px 24px; margin-bottom: 2px; }
+
+  /* === WEEKEND REFERENCE === */
+  .weekend-ref {
+    background: #f5f5f5; border-radius: 8px; padding: 8px 12px;
+    margin: 6px 0; font-size: 7pt; color: #777; display: flex; gap: 10px;
+  }
+  .weekend-ref .day-label { font-weight: bold; color: #555; min-width: 36px; }
+
+  .page-note { text-align: center; font-size: 6.5pt; color: #ccc; padding: 4px; }
+</style>
+</head>
+<body>
+
+<!-- === CUSTOMIZE BELOW === -->
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <h1>🎣 王牌钓手 · 每日任务卡</h1>
+    <div class="sub">坚持一天一小钓，暑假大丰收</div>
+  </div>
+  <div class="header-right">
+    <div class="week">第____周</div>
+    <div style="margin-top:4px">日期：____月____日</div>
+    <div>星期____</div>
+  </div>
+</div>
+
+<!-- REWARD RULE -->
+<div class="switch-rule">
+  <span style="font-size:16px">🎮</span>
+  <span><span class="highlight">今天的勾 → 明天的 Switch</span> | 完成 ≥3 块解锁明天 45 分钟 | 4 块全满解锁 90 分钟</span>
+</div>
+
+<!-- TASK BLOCKS — customize per child -->
+<div class="tasks">
+
+  <div class="task-row m1">
+    <div class="task-icon">🌅</div>
+    <div class="task-info">
+      <div class="task-time">⏰ 7:30 — 8:45</div>
+      <div class="task-name">第一钓 · 晨起出发</div>
+      <div class="task-detail">起床 · 洗漱 · 早餐 · <b>口算 15分钟</b></div>
+    </div>
+    <div class="task-check"><div class="cb"></div><span class="cb-label">✓ 完成打勾</span></div>
+  </div>
+
+  <div class="task-row m2">
+    <div class="task-icon">📖</div>
+    <div class="task-info">
+      <div class="task-time">⏰ 9:30 — 10:30（60分钟）</div>
+      <div class="task-name">第二钓 · 上午语文</div>
+      <div class="task-detail">轻阅读 30min → 练字 15min → <b>好段积累 15min</b></div>
+    </div>
+    <div class="task-check"><div class="cb"></div><span class="cb-label">✓ 完成打勾</span></div>
+  </div>
+
+  <div class="task-row m3">
+    <div class="task-icon">🔢</div>
+    <div class="task-info">
+      <div class="task-time">⏰ 11:00 — 11:35（35分钟）</div>
+      <div class="task-name">第三钓 · AI 数学</div>
+      <div class="task-detail">AI 数学学习 35 分钟</div>
+    </div>
+    <div class="task-check"><div class="cb"></div><span class="cb-label">✓ 完成打勾</span></div>
+  </div>
+
+  <div class="task-row m4">
+    <div class="task-icon">🇬🇧</div>
+    <div class="task-info">
+      <div class="task-time">⏰ 14:00 — 15:00（60分钟）</div>
+      <div class="task-name">第四钓 · 下午英语</div>
+      <div class="task-detail">单词 10个（10min）→ 阅读（25min）→ 专项轮换（25min）</div>
+    </div>
+    <div class="task-check"><div class="cb"></div><span class="cb-label">✓ 完成打勾</span></div>
+  </div>
+
+</div>
+
+<!-- EVENING -->
+<div class="evening">
+  <div class="evening-title">🌙 晚间流程（不打勾，跟着做就行）</div>
+  <div class="evening-row">
+    <div class="evening-col">🍚 17:30-18:30 晚饭<br>🛋️ 18:30-19:30 自由</div>
+    <div class="evening-col">🏀 19:30-20:30 运动<br>🚿 20:30-20:50 洗澡</div>
+    <div class="evening-col">🎧 20:50-21:05 听力<br>⚡ 21:05-21:15 复盘+签字</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div>
+    <div class="stars-label">⭐ 今日战绩（完成几块涂几颗）</div>
+    <div class="stars" style="font-size:26px">☆ ☆ ☆ ☆</div>
+    <div style="font-size:7pt; color:#aaa; margin-top:2px">明天 Switch：3☆=45min | 4☆=90min</div>
+  </div>
+  <div class="sign-box">
+    <div class="sign-line">家长签字</div>
+    <div style="margin-top:2px">___________</div>
+  </div>
+</div>
+
+<!-- WEEKEND REFERENCE -->
+<div class="weekend-ref">
+  <div>
+    <span class="day-label">📅 周六（轻触日）</span><br>
+    上午 1h 轻量接触（阅读+闯关模式）<br>
+    下午完全自由 · 当天 Switch 自由
+  </div>
+  <div style="border-left:1px solid #ddd; margin:0 6px"></div>
+  <div>
+    <span class="day-label">📅 周日（放空日）</span><br>
+    彻底休息 · Switch 自由<br>
+    （可选：翻5分钟错题本）
+  </div>
+</div>
+
+<div class="page-note">王牌钓手 · 暑假每日任务卡 | 今天打勾 = 明天收获</div>
+
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  @page { size: A4 portrait; margin: 1.0cm 1.4cm; }
+  body {
+    font-family: "Noto Sans CJK SC", "Noto Serif CJK SC", sans-serif;
+    margin: 0; padding: 0;
+    background: #f0f7ff;
+  }
+
+  /* ========== HEADER ========== */
+  .header {
+    background: linear-gradient(135deg, #0a3d62, #1e6fa0);
+    color: #fff;
+    border-radius: 12px 12px 0 0;
+    padding: 14px 22px 10px 22px;
+    text-align: center;
+    position: relative;
+  }
+  .header::before { content: "🎣"; position: absolute; left: 16px; top: 12px; font-size: 32px; opacity: 0.85; }
+  .header::after  { content: "🐟"; position: absolute; right: 16px; top: 12px; font-size: 28px; opacity: 0.85; }
+  .header h1 { margin: 0; font-size: 20pt; letter-spacing: 3px; text-shadow: 1px 1px 3px rgba(0,0,0,0.4); }
+  .header .subtitle { font-size: 9pt; opacity: 0.85; margin-top: 3px; }
+  .header .date-line { font-size: 8pt; opacity: 0.7; margin-top: 2px; }
+
+  /* ========== RULES BAR ========== */
+  .rules-bar {
+    background: #fff3cd; border-left: 4px solid #ffc107;
+    padding: 6px 12px; font-size: 8pt; color: #856404;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  /* ========== TASK CARDS ========== */
+  .tasks-container { background: #fff; padding: 4px 10px 8px 10px; }
+
+  .task-card {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 10px; margin: 4px 0;
+    border-radius: 8px; border: 2px solid #e0e0e0;
+  }
+  .task-card.must   { border-color: #f9a825; background: #fffde7; }  /* 晨起 */
+  .task-card.chinese{ border-color: #42a5f5; background: #e3f2fd; }  /* 语文 */
+  .task-card.math   { border-color: #ef5350; background: #ffebee; }  /* 数学 */
+  .task-card.english{ border-color: #7e57c2; background: #ede7f6; }  /* 英语 */
+  .task-card.night  { border-color: #26a69a; background: #e0f2f1; }  /* 晚间 */
+  .task-card.elastic{ border-color: #ccc;    background: #fafafa;
+                      border-style: dashed; opacity: 0.75; }          /* 弹性 */
+
+  .task-icon { font-size: 26px; min-width: 38px; text-align: center; }
+  .task-info { flex: 1; }
+  .task-time { font-size: 8pt; color: #666; margin-bottom: 1px; }
+  .task-name { font-size: 11pt; font-weight: bold; color: #222; }
+  .task-detail { font-size: 7.5pt; color: #555; margin-top: 1px; line-height: 1.4; }
+  .task-badge {
+    display: inline-block; font-size: 7pt; padding: 1px 6px;
+    border-radius: 10px; margin-left: 4px; vertical-align: middle;
+  }
+  .badge-must { background: #fff3cd; color: #856404; border: 1px solid #ffc107; }
+  .badge-elastic { background: #eee; color: #999; border: 1px solid #ccc; }
+
+  .task-check { min-width: 44px; text-align: center; }
+  .checkbox-box {
+    width: 38px; height: 38px; border: 3px solid #888;
+    border-radius: 6px; display: inline-block; background: #fff;
+  }
+  .task-check-label { font-size: 6.5pt; color: #999; display: block; margin-top: 1px; }
+
+  /* ========== ANCHOR (自由/午饭标注) ========== */
+  .anchor-row {
+    display: flex; align-items: center; gap: 8px;
+    padding: 3px 10px; font-size: 7.5pt; color: #999;
+  }
+  .anchor-dot { width: 6px; height: 6px; border-radius: 50%; background: #ccc; }
+
+  /* ========== SWITCH REWARD CARD ========== */
+  .reward-card {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 10px; margin: 4px 0;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    border: 2px solid #4caf50;
+  }
+  .reward-icon { font-size: 28px; }
+  .reward-info { flex: 1; }
+  .reward-title { font-size: 10pt; font-weight: bold; color: #2e7d32; }
+  .reward-detail { font-size: 7.5pt; color: #388e3c; margin-top: 1px; }
+
+  /* ========== FOOTER ========== */
+  .footer {
+    background: #fff; border-radius: 0 0 12px 12px;
+    padding: 10px 14px 14px 14px;
+    border-top: 2px dashed #ddd;
+    display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;
+  }
+  .stars-section { flex: 1; }
+  .stars-section .label { font-size: 9pt; font-weight: bold; color: #333; margin-bottom: 4px; }
+  .stars-row { font-size: 28px; letter-spacing: 5px; color: #ddd; }
+  .reward-hint { font-size: 7pt; color: #888; margin-top: 3px; }
+  .sign-section { text-align: right; min-width: 120px; }
+  .sign-line { border-bottom: 1.5px solid #999; padding: 0 24px 3px 24px; font-size: 7pt; color: #888; }
+  .sign-label { font-size: 7pt; color: #999; margin-top: 3px; }
+
+  .waves {
+    height: 4px;
+    background: repeating-linear-gradient(90deg, #1e88e5 0px, #1e88e5 16px, #42a5f5 16px, #42a5f5 32px);
+    border-radius: 0 0 4px 4px;
+  }
+  .bottom-decor { text-align: center; font-size: 8pt; color: #1e6fa0; padding: 6px; letter-spacing: 2px; opacity: 0.6; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🎣 王牌钓手 · 每日打卡表</h1>
+  <div class="subtitle">4个必须块 + 1个弹性块 | 保底3块即解锁Switch</div>
+  <div class="date-line">日期：____月____日  星期____  天气：________</div>
+</div>
+
+<div class="rules-bar">
+  <span>📋</span>
+  <span><b>规则：</b>每天只需打4个勾（运动不算）。完成任意3块→Switch保底45min；4块全满→加时45min+1⭐积分。</span>
+</div>
+
+<div class="tasks-container">
+
+  <!-- 晨起 -->
+  <div class="task-card must">
+    <div class="task-icon">🌅</div>
+    <div class="task-info">
+      <div class="task-time">⏰ 7:30 — 8:45</div>
+      <div class="task-name">第一钓 · 晨起出发 <span class="task-badge badge-must">必须</span></div>
+      <div class="task-detail">起床 → 洗漱 → 早餐 → <b>口算15分钟</b>（计时器倒计时）</div>
+    </div>
+    <div class="task-check"><div class="checkbox-box"></div><span class="task-check-label">✓</span></div>
+  </div>
+
+  <!-- 自由时间 -->
+  <div class="anchor-row"><span class="anchor-dot"></span> 8:45-9:30 自由时间</div>
+
+  <!-- 语文 -->
+  <div class="task-card chinese">
+    <div class="task-icon">📖</div>
+    <div class="task-info">
+      <div class="task-time">⏰ 9:30 — 10:45</div>
+      <div class="task-name">第二钓 · 上午出海 <span class="task-badge badge-must">必须</span></div>
+      <div class="task-detail"><b>轻阅读</b> → <b>练字15分钟</b>（丁迪蒙法，只练一个零件）→ <b>好段积累</b></div>
+    </div>
+    <div class="task-check"><div class="checkbox-box"></div><span class="task-check-label">✓</span></div>
+  </div>
+
+  <!-- 自由时间 -->
+  <div class="anchor-row"><span class="anchor-dot"></span> 10:45-11:00 自由缓冲</div>
+
+  <!-- AI数学 -->
+  <div class="task-card math">
+    <div class="task-icon">🔢</div>
+    <div class="task-info">
+      <div class="task-time">⏰ 11:00 — 11:35</div>
+      <div class="task-name">第三钓 · AI数学 <span class="task-badge badge-must">必须</span></div>
+      <div class="task-detail"><b>AI数学 35分钟</b>（电脑/iPad，算法推送）</div>
+    </div>
+    <div class="task-check"><div class="checkbox-box"></div><span class="task-check-label">✓</span></div>
+  </div>
+
+  <!-- 午饭锚点 -->
+  <div class="anchor-row"><span class="anchor-dot"></span> 🍚 11:30-12:30 午饭+午休</div>
+  <div class="anchor-row"><span class="anchor-dot"></span> 12:30-14:00 自由时间（Switch窗口未到，不可碰）</div>
+
+  <!-- 英语 -->
+  <div class="task-card english">
+    <div class="task-icon">🇬🇧</div>
+    <div class="task-info">
+      <div class="task-time">⏰ 14:00 — 15:15</div>
+      <div class="task-name">第四钓 · 下午英语 <span class="task-badge badge-must">必须</span></div>
+      <div class="task-detail"><b>单词10个</b> → <b>My Weird School 阅读</b> → <b>专项轮换</b>（语法/阅读/作文，每天轮一样）</div>
+    </div>
+    <div class="task-check"><div class="checkbox-box"></div><span class="task-check-label">✓</span></div>
+  </div>
+
+  <!-- Switch 奖励 -->
+  <div class="reward-card">
+    <div class="reward-icon">🎮</div>
+    <div class="reward-info">
+      <div class="reward-title">Switch 游戏时间 15:30-17:00</div>
+      <div class="reward-detail">完成≥3块 → 解锁保底45分钟 | 完成4块 → 追加45分钟 + 今日⭐+1</div>
+    </div>
+  </div>
+
+  <!-- 自由 -->
+  <div class="anchor-row"><span class="anchor-dot"></span> 17:00-18:00 自由时间</div>
+
+  <!-- 运动（弹性） -->
+  <div class="task-card elastic">
+    <div class="task-icon">🏀</div>
+    <div class="task-info">
+      <div class="task-time">⏰ 18:00 — 19:00</div>
+      <div class="task-name">傍晚冒险 · 运动 <span class="task-badge badge-elastic">弹性</span></div>
+      <div class="task-detail">篮球 / 运动60分钟 + 投篮记录（不打勾，享受就好）</div>
+    </div>
+    <div class="task-check"><div class="checkbox-box" style="border-style:dashed;opacity:0.4;"></div><span class="task-check-label" style="color:#ccc;">可选</span></div>
+  </div>
+
+  <!-- 晚饭锚点 -->
+  <div class="anchor-row"><span class="anchor-dot"></span> 🍚 19:00-20:00 晚饭+自由</div>
+
+  <!-- 晚间 -->
+  <div class="task-card night">
+    <div class="task-icon">🌙</div>
+    <div class="task-info">
+      <div class="task-time">⏰ 20:00 — 20:40</div>
+      <div class="task-name">第五钓 · 晚上回港 <span class="task-badge badge-must">必须</span></div>
+      <div class="task-detail"><b>英语听力15分钟</b> → <b>错题复盘</b>（5分钟，家长陪同）</div>
+    </div>
+    <div class="task-check"><div class="checkbox-box"></div><span class="task-check-label">✓</span></div>
+  </div>
+
+  <div class="anchor-row"><span class="anchor-dot"></span> 20:40-21:30 自由放松 → 😴 21:30 睡觉</div>
+
+</div>
+
+<div class="footer">
+  <div class="stars-section">
+    <div class="label">⭐ 今日战绩（完成几块涂几颗星）</div>
+    <div class="stars-row">☆ ☆ ☆ ☆</div>
+    <div class="reward-hint">🎁 满4星=今日⭐+1 | 累计5⭐=周末奖励 | 20⭐=大奖励</div>
+  </div>
+  <div class="sign-section">
+    <div class="sign-line">家长签名</div>
+    <div class="sign-label">日期：________</div>
+  </div>
+</div>
+
+<div class="waves"></div>
+<div class="bottom-decor">🐟 每天一小钓，暑假大丰收！🐟</div>
+
+</body>
+</html>

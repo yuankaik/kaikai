@@ -29,8 +29,8 @@ Use this workflow when:
 
 #### Skills to Invoke
 - `libreoffice-writer` - LibreOffice Writer
-- `docx-official` - Microsoft Word
-- `pdf-official` - PDF handling
+- `docx-authoring` - Microsoft Word
+- `pdf-authoring` - PDF handling
 
 #### Actions
 1. Design document template
@@ -45,14 +45,14 @@ Use @libreoffice-writer to create ODT documents
 ```
 
 ```
-Use @docx-official to create Word documents
+Use @docx-authoring to create Word documents
 ```
 
 ### Phase 2: Spreadsheet Automation
 
 #### Skills to Invoke
 - `libreoffice-calc` - LibreOffice Calc
-- `xlsx-official` - Excel spreadsheets
+- `xlsx-authoring` - Excel spreadsheets
 - `googlesheets-automation` - Google Sheets
 
 #### Actions
@@ -68,14 +68,14 @@ Use @libreoffice-calc to create ODS spreadsheets
 ```
 
 ```
-Use @xlsx-official to create Excel reports
+Use @xlsx-authoring to create Excel reports
 ```
 
 ### Phase 3: Presentation Generation
 
 #### Skills to Invoke
 - `libreoffice-impress` - LibreOffice Impress
-- `pptx-official` - PowerPoint
+- `pptx-authoring` - PowerPoint
 - `frontend-slides` - HTML slides
 - `nanobanana-ppt-skills` - AI PPT generation
 
@@ -92,7 +92,7 @@ Use @libreoffice-impress to create ODP presentations
 ```
 
 ```
-Use @pptx-official to create PowerPoint presentations
+Use @pptx-authoring to create PowerPoint presentations
 ```
 
 ```
@@ -104,7 +104,7 @@ Use @frontend-slides to create HTML presentations
 #### Skills to Invoke
 - `libreoffice-writer` - Document conversion
 - `libreoffice-calc` - Spreadsheet conversion
-- `pdf-official` - PDF conversion
+- `pdf-authoring` - PDF conversion
 
 #### Actions
 1. Identify source format
@@ -192,7 +192,7 @@ Formats: ODT, ODS, ODP, ODG, ODB
 
 ### Microsoft Office
 ```
-Skills: docx-official, xlsx-official, pptx-official
+Skills: docx-authoring, xlsx-authoring, pptx-authoring (office/ 分类)
 Formats: DOCX, XLSX, PPTX
 ```
 

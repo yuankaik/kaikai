@@ -1,0 +1,1 @@
+See /tmp/gen_summer_v3.py — 45KB generation script. Copy with: cp /tmp/gen_summer_v3.py ~/.hermes/skills/education/jiale-summer-practice/scripts/

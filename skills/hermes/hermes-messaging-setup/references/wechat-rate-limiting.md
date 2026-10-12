@@ -54,6 +54,21 @@ Then restart the gateway:
 hermes gateway restart
 ```
 
+## ⚠️ Real-World Recovery: Cooldown Is Longer Than 15 Minutes
+
+**2026-07-01 field finding:** After the gateway gets stuck in a retry loop (multiple send_message failures → 6s retry cycle), the iLink cooldown can exceed 30 minutes, not the documented ~15 minutes. Key observations:
+
+1. **20-minute cooldown was insufficient** — gateway restart after 20 min still hit `errcode=-2` on startup notification.
+2. **Even with `WEIXIN_SEND_CHUNK_DELAY_SECONDS=2.5` already configured**, the startup "Channel directory built" notification alone can trigger rate limit if the token hasn't fully cooled.
+3. **Recovery recipe that works (validated 2026-07-01):**
+   ```bash
+   hermes gateway stop          # Must use stop, not restart
+   sleep 1800                   # 30 minutes minimum
+   hermes gateway start
+   # Then wait 10s before first send_message
+   ```
+4. **send_message tool runs in CLI process, not gateway** — it connects to iLink independently. Even if the gateway is clean, the CLI process may still be rate-limited from prior attempts. After gateway restart, wait 10+ seconds before calling send_message.
+
 ## Additional Mitigations
 
 1. **Control question frequency**: Wait for Hermes to finish replying before sending the next question. Long replies are split into multiple chunks — firing another question while chunks are still being delivered compounds the rate-limit risk.
