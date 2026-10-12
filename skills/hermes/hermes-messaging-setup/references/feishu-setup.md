@@ -75,13 +75,49 @@ Grep it with: `journalctl --user -u hermes-gateway --since "1 minute ago" | grep
 | `FEISHU_ENCRYPT_KEY` / `FEISHU_VERIFICATION_TOKEN` | Webhook-mode signature checks |
 | `FEISHU_WEBHOOK_HOST/PORT/PATH` | Webhook server bind (default 127.0.0.1:8765/feishu/webhook) |
 
-## Line ② permissions (NOT auto-granted)
+## Line ② permissions (NOT auto-granted) — scope names verified 2026-10
 
-Beyond chat scopes, add in the developer console → 权限管理:
-- `docs:doc:readonly` — read document content
-- `drive:drive:readonly` — read drive metadata/content
+The doc scope prefix is **`docx:`**, NOT `docs:` (a prior version of this file said
+`docs:doc:readonly` — that is wrong and produces "Access denied").
+
+| Capability | Correct scope |
+|------------|---------------|
+| 云盘列表 / 建文件夹 / 上传下载 | `drive:drive` (+ `space:document:retrieve`) |
+| 建文档 / 写文档 | `docx:document:create` or `docx:document` |
+| 读文档 raw_content | `docx:document:readonly` |
+| 知识库 | `wiki:wiki` / `wiki:wiki:readonly` / `wiki:space:retrieve` |
 
 And in 事件订阅 → subscribe `drive.notice.comment_add_v1`.
+
+**Probe, don't guess.** Feishu's permission error `msg` names the exact required scopes
+AND contains a one-click auth URL carrying your app_id:
+
+```python
+import re
+needed = set()
+for fn in probes:                              # e.g. POST /docx/v1/documents
+    try: fn()
+    except Exception as e:
+        needed |= set(re.findall(r"[a-z_]+:[a-z_:]+", str(e)))
+q = ",".join(sorted(needed))
+print(f"https://open.feishu.cn/app/{APP_ID}/auth?q={q}&op_from=openapi&token_type=tenant")
+```
+
+Hand the user that link; they 开通 each scope then **publish a new app version**
+(个人版 self-approves; enterprise needs admin). Scopes do NOT take effect until published.
+
+**Two upload_all endpoints — don't confuse them** (this bit us — the wrong one replies
+with a misleading `boundary not found`):
+- `POST /open-apis/drive/v1/files/upload_all` — upload a FILE to a drive folder.
+  Fields: `file_name`, `parent_type=explorer`, `parent_node=<folder_token>`, `size`, `file`.
+- `POST /open-apis/drive/v1/medias/upload_all` — upload MEDIA INTO a doc.
+  `parent_type` ∈ `docx_image`/`docx_file`/`doc_image`/`sheet_image`; `parent_node`=doc token.
+
+**Home-channel switch to Feishu** (replacing WeChat): `/sethome` in-chat is cleanest. To
+do it proactively, read the DM chat_id from `~/.hermes/sessions/sessions.json` — the key
+looks like `agent:main:feishu:dm:oc_2a3a...`, the `oc_...` is the chat_id (verify
+`origin.user_id` equals the user's open_id). Write `FEISHU_HOME_CHANNEL=oc_...` to `.env`
+and **comment out the old platform's home channel** so deliveries don't double up.
 
 Doc-comment replies are **explicit-grant only** (no implicit allow-all). Rules live in
 `~/.hermes/feishu_comment_rules.json` (pairing grants in
@@ -91,6 +127,12 @@ python -m gateway.platforms.feishu_comment_rules status
 python -m gateway.platforms.feishu_comment_rules check <fileType:fileToken> <user_open_id>
 python -m gateway.platforms.feishu_comment_rules pairing add <user_open_id>
 ```
+
+**Native tool coverage is thin.** Hermes ships only 5 Feishu tools — `feishu_doc_read`
+plus 4 comment ops (`feishu_drive_{list_comments,list_comment_replies,reply_comment,add_comment}`).
+There is NO native create-doc / write-doc / upload / download. For those, drive the API
+directly — see the separate `feishu-api` skill (`productivity/feishu-api`), which bundles a
+`FeishuClient` script. Worth telling the user this upfront so expectations are set.
 
 ## Media support (chat line)
 

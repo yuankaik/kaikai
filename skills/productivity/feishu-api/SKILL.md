@@ -70,13 +70,32 @@ python3 scripts/feishu_api.py test
 
 ## 关键坑
 
-1. **权限不是配了就有**——必须"创建版本→发布"才生效
-2. **doc_token** = 文档 URL `xxx.feishu.cn/docx/<TOKEN>` 里的 TOKEN
-3. **接口前缀**：文档 `/open-apis/docx/v1/`，云盘 `/open-apis/drive/v1/`，知识库 `/open-apis/wiki/v2/`
-4. **tenant_access_token 有效期 2 小时**——脚本已做缓存自动刷新
-5. **上传是 multipart**——不能简单 POST JSON；脚本已封装 upload_all
+1. **权限分两批，必须分别申请**
+   - 云盘/知识库: `drive:drive,drive:drive:readonly,space:document:retrieve,wiki:wiki,wiki:wiki:readonly,wiki:space:retrieve`
+   - 文档读写: `docx:document,docx:document:create`
+   两批都要"创建版本→发布"才生效（个人版自己批）
+2. **两个上传接口别混淆**（实测踩过）：
+   - 传文件到**云盘文件夹** → `POST /drive/v1/files/upload_all`（parent_type=explorer）
+   - 传素材到**文档内** → `POST /drive/v1/medias/upload_all`（parent_type=docx_image/docx_file）
+   字段必须含 file_name / parent_type / parent_node / size / file，且 boundary 格式要正确
+3. **doc_token** = 文档 URL `xxx.feishu.cn/docx/<TOKEN>` 里的 TOKEN
+4. **接口前缀**：文档 `/open-apis/docx/v1/`，云盘 `/open-apis/drive/v1/`，知识库 `/open-apis/wiki/v2/`
+5. **tenant_access_token 有效期 2 小时**——脚本已缓存自动刷新
 6. **知识库节点≠文档**——要先 get_node 拿 obj_token 再读
 7. **频控**：飞书 API 有 QPS 限制，批量操作间隔 0.5s+
+8. **写文档正文**用 blocks children 接口：`POST /docx/v1/documents/{doc_id}/blocks/{doc_id}/children`
+   block_type=2 是文本段落，elements 里放 text_run.content
+
+## 实测结果（2026-10-12 全通过）
+
+```
+✅ 列云盘 / 建文件夹 / 上传文件 / 列文件夹 / 下载文件（闭环）
+✅ 列知识库
+✅ 建文档 / 写文档 / 读文档（闭环，内容一字不差）
+```
+
+上线时的应用: `cli_aa46edd75679dbe2`（名"用户283408的智能助手"）
+测试产物: 云盘 `Hermes测试/` 文件夹 + `Hermes测试文档`
 
 ## 相关
 

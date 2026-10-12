@@ -259,6 +259,19 @@
     "use_count": 113,
     "view_count": 80
   },
+  "desktop-disk-cleanup": {
+    "archived_at": null,
+    "created_at": "2026-10-12T03:35:57.322949+00:00",
+    "created_by": null,
+    "last_patched_at": null,
+    "last_used_at": "2026-10-12T03:35:57.331934+00:00",
+    "last_viewed_at": "2026-10-12T03:35:57.322974+00:00",
+    "patch_count": 0,
+    "pinned": false,
+    "state": "active",
+    "use_count": 1,
+    "view_count": 1
+  },
   "docx-print-author": {
     "archived_at": null,
     "created_at": "2026-07-01T02:51:37.089517+00:00",
@@ -350,6 +363,19 @@
     "use_count": 35,
     "view_count": 35
   },
+  "feishu-api": {
+    "archived_at": null,
+    "created_at": "2026-10-12T03:35:12.093608+00:00",
+    "created_by": null,
+    "last_patched_at": "2026-10-12T03:37:53.363814+00:00",
+    "last_used_at": "2026-10-12T03:35:12.098814+00:00",
+    "last_viewed_at": "2026-10-12T03:35:12.093624+00:00",
+    "patch_count": 1,
+    "pinned": false,
+    "state": "active",
+    "use_count": 1,
+    "view_count": 1
+  },
   "firecrawl-web-scraping": {
     "archived_at": null,
     "created_at": "2026-06-17T14:55:17.046934+00:00",
@@ -419,27 +445,27 @@
     "archived_at": null,
     "created_at": "2026-06-14T00:17:37.264000+00:00",
     "created_by": "agent",
-    "last_patched_at": "2026-10-12T03:23:31.590533+00:00",
-    "last_used_at": "2026-10-12T03:22:48.711242+00:00",
-    "last_viewed_at": "2026-10-12T03:22:48.705271+00:00",
-    "patch_count": 72,
+    "last_patched_at": "2026-10-12T03:35:54.159121+00:00",
+    "last_used_at": "2026-10-12T03:35:42.612168+00:00",
+    "last_viewed_at": "2026-10-12T03:35:42.560274+00:00",
+    "patch_count": 75,
     "pinned": false,
     "state": "stale",
-    "use_count": 77,
-    "view_count": 77
+    "use_count": 79,
+    "view_count": 79
   },
   "hermes-upgrade": {
     "archived_at": null,
     "created_at": "2026-07-21T04:50:30.324323+00:00",
     "created_by": "agent",
     "last_patched_at": "2026-10-12T01:32:17.002778+00:00",
-    "last_used_at": "2026-10-12T01:32:14.335683+00:00",
-    "last_viewed_at": "2026-10-12T01:32:14.330091+00:00",
+    "last_used_at": "2026-10-12T03:36:07.119045+00:00",
+    "last_viewed_at": "2026-10-12T03:36:07.106588+00:00",
     "patch_count": 3,
     "pinned": false,
     "state": "stale",
-    "use_count": 3,
-    "view_count": 3
+    "use_count": 4,
+    "view_count": 4
   },
   "jiale-chinese-tracker": {
     "archived_at": null,

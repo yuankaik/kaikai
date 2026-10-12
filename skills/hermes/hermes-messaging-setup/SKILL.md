@@ -140,10 +140,61 @@ If the journal warns `Installed gateway service definition is outdated`, run
 ```
 
 ### Line ② (Docs/Drive) needs extra scopes NOT granted by scan-to-create
-The scan-created app has chat scopes only. To let Hermes read docs and reply to doc
-comments, go to the developer console and add `docs:doc:readonly` + `drive:drive:readonly`,
-subscribe the `drive.notice.comment_add_v1` event, then publish a new app version.
-Personal (个人版) Feishu can self-approve; enterprise apps need an admin.
+The scan-created app has chat scopes only. To let Hermes read/write docs and drive
+files, add scopes in the developer console (or via the one-click link below), then
+publish a new app version. Personal (个人版) Feishu can self-approve; enterprise apps
+need an admin.
+
+**⚠️ Scope names — verified 2026-10, do NOT trust memory (this skill previously said
+`docs:doc`, which is WRONG):**
+
+| Capability | Correct scope |
+|------------|---------------|
+| 云盘列表 / 建文件夹 / 上传下载 | `drive:drive` (or `drive:drive:readonly` for read-only) + `space:document:retrieve` |
+| 建文档 / 写文档 | `docx:document:create` (or `docx:document`) |
+| 读文档 raw_content | `docx:document:readonly` |
+| 知识库 | `wiki:wiki` / `wiki:wiki:readonly` / `wiki:space:retrieve` |
+| 文档评论事件 | also subscribe `drive.notice.comment_add_v1` |
+
+The document prefix is **`docx:`**, not `docs:`.
+
+**Best practice — probe for scopes, don't guess.** Hit the APIs and let Feishu tell you
+the exact scopes in its error `msg` (which also contains a ready-made one-click auth URL):
+
+```python
+import re
+needed = set()
+for label, fn in probes:                       # probes: API calls, e.g. create_doc
+    try: fn()
+    except Exception as e:
+        needed |= set(re.findall(r"[a-z_]+:[a-z_:]+", str(e)))
+q = ",".join(sorted(needed))
+print(f"https://open.feishu.cn/app/{APP_ID}/auth?q={q}&op_from=openapi&token_type=tenant")
+```
+
+Give the user that link — clicking it pre-selects the exact scopes; they click 开通 for
+each, then **must go to「版本管理与发布」→ 创建版本 → 发布** before scopes take effect.
+
+**⚠️ Env-var switching gotcha.** The one-click link always carries `token_type=tenant`,
+so scopes are granted to the app (tenant) identity, not a user. That's what the
+`tenant_access_token` scripts use — consistent. Don't mix in `user_access_token` design.
+
+### Switching home channel to Feishu (replacing WeChat)
+`/sethome` from inside the Feishu chat is the clean path. To set it proactively, get the
+chat_id from `~/.hermes/sessions/sessions.json` (look for the key
+`agent:main:feishu:dm:oc_...` — the `oc_...` is the DM chat_id):
+
+```python
+# verify it's really the user's session: origin.user_id should equal their open_id
+# then write to ~/.hermes/.env:
+FEISHU_HOME_CHANNEL=oc_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+FEISHU_HOME_CHANNEL_NAME=Home
+# and COMMENT OUT the previous platform's home channel to avoid double-delivery:
+# [已迁移到飞书] WEIXIN_HOME_CHANNEL=...
+```
+Cron/notifications then deliver to Feishu instead of WeChat. Restart gateway to apply.
+(Also: `Hermes.txt`-style files on the desktop that hold plaintext API keys should be
+moved out of the desktop — surfaced during this session.)
 
 ### Feishu group policy
 `FEISHU_GROUP_POLICY` = `allowlist` (default) | `open` | `disabled`. The bot must be
@@ -210,7 +261,8 @@ Do NOT edit `~/.hermes/config.yaml` directly — the agent's file tools are bloc
 
 ## Reference Files
 
-- `references/feishu-setup.md` — **Feishu / Lark full reference**: device-code QR onboarding (scan-to-create), websocket vs webhook modes, all `FEISHU_*` env vars, line ② (docs/drive) scopes, exact observed artifacts from a live WSL onboarding.
+- `references/feishu-setup.md` — **Feishu / Lark full reference**: device-code QR onboarding (scan-to-create), websocket vs webhook modes, all `FEISHU_*` env vars, line ② (docs/drive) **correct scope names + scope-probing technique**, the two `upload_all` endpoints, home-channel switch, exact observed artifacts from a live WSL onboarding.
+- Related skill: `productivity/feishu-api` — a `FeishuClient` script for the doc/drive/wiki operations Hermes has no native tool for (create/write doc, upload/download drive files, wiki).
 - `scripts/feishu_qr_register.py` — Reusable Feishu onboarding script: `begin` (QR→desktop PNG + URL) / `poll` (long-lived, up to 600s) / `probe` (verify bot name). Bypasses the setup TUI.
 - `references/wechat-docs.md` — Full extracted WeChat (Weixin) documentation from hermes-agent.nousresearch.com, including all env vars, config options, CDN encryption details, and troubleshooting table.
 - `references/wechat-rate-limiting.md` — iLink Bot server-side rate limiting: symptom (15-min block), root cause (errcode=-2), adapter internals, env var fix (WEIXIN_SEND_CHUNK_DELAY_SECONDS), and investigation commands.
