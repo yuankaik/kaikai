@@ -167,6 +167,11 @@ class FeishuClient:
             f.write(data)
         return dest_path
 
+    def delete_file(self, file_token, file_type="file"):
+        """删除云盘文件/文件夹。file_type: file | folder"""
+        return self._req("DELETE", f"/drive/v1/files/{file_token}",
+                         params={"type": file_type})
+
     # ---- docx (文档) ----
     def read_doc(self, doc_token):
         """读文档纯文本正文"""
