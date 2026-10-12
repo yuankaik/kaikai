@@ -92,34 +92,72 @@ class FeishuClient:
                          data={"name": name, "folder_token": parent_token})
 
     def upload_file(self, local_path, parent_token="", name=None):
-        """上传文件到云盘（multipart，需 drive:drive 写权限）"""
-        import mimetypes, uuid
+        """上传文件到云盘文件夹（drive/v1/files/upload_all）
+
+        parent_token: 目标文件夹 token（空 = 应用云空间根目录）
+        """
+        import uuid, mimetypes
         name = name or os.path.basename(local_path)
         size = os.path.getsize(local_path)
-        boundary = uuid.uuid4().hex
+        ext = os.path.splitext(name)[1].lstrip(".").lower()
+        boundary = "----HermesBoundary" + uuid.uuid4().hex
         with open(local_path, "rb") as f:
             content = f.read()
-        parts = []
-        def field(n, v):
-            parts.append(f"--{boundary}\r\nContent-Disposition: form-data; name=\"{n}\"\r\n\r\n{v}\r\n".encode())
-        field("file_name", name)
-        field("parent_type", "explorer")
-        field("parent_node", parent_token or self._root_token())
-        field("size", str(size))
-        parts.append(
-            f"--{boundary}\r\nContent-Disposition: form-data; name=\"file\"; filename=\"{name}\"\r\n"
-            f"Content-Type: {mimetypes.guess_type(name)[0] or 'application/octet-stream'}\r\n\r\n".encode()
-            + content + b"\r\n")
-        parts.append(f"--{boundary}--\r\n".encode())
-        body = b"".join(parts)
-        req = urllib.request.Request(f"{BASE}/drive/v1/medias/upload_all", data=body,
-            headers={"Authorization": f"Bearer {self.token()}",
-                     "Content-Type": f"multipart/form-data; boundary={boundary}"}, method="POST")
-        return json.loads(urllib.request.urlopen(req, timeout=120).read())
 
-    def _root_token(self):
-        r = self.list_files()
-        return r.get("data", {}).get("files", [{}])[0].get("parent_token", "") if False else ""
+        def field(n, v):
+            return (f"--{boundary}\r\n"
+                    f"Content-Disposition: form-data; name=\"{n}\"\r\n\r\n{v}\r\n").encode()
+
+        body = b"".join([
+            field("file_name", name),
+            field("parent_type", "explorer"),
+            field("parent_node", parent_token),
+            field("size", str(size)),
+            (f"--{boundary}\r\n"
+             f"Content-Disposition: form-data; name=\"file\"; filename=\"{name}\"\r\n"
+             f"Content-Type: {mimetypes.guess_type(name)[0] or 'application/octet-stream'}\r\n\r\n").encode(),
+            content,
+            b"\r\n",
+            f"--{boundary}--\r\n".encode(),
+        ])
+        req = urllib.request.Request(
+            f"{BASE}/drive/v1/files/upload_all", data=body,
+            headers={"Authorization": f"Bearer {self.token()}",
+                     "Content-Type": f"multipart/form-data; boundary={boundary}"},
+            method="POST")
+        return json.loads(urllib.request.urlopen(req, timeout=180).read())
+
+    def upload_media_to_doc(self, local_path, parent_type, parent_node, name=None):
+        """上传素材到文档（docx_image / docx_file 等）"""
+        import uuid, mimetypes
+        name = name or os.path.basename(local_path)
+        size = os.path.getsize(local_path)
+        boundary = "----HermesBoundary" + uuid.uuid4().hex
+        with open(local_path, "rb") as f:
+            content = f.read()
+
+        def field(n, v):
+            return (f"--{boundary}\r\n"
+                    f"Content-Disposition: form-data; name=\"{n}\"\r\n\r\n{v}\r\n").encode()
+
+        body = b"".join([
+            field("file_name", name),
+            field("parent_type", parent_type),
+            field("parent_node", parent_node),
+            field("size", str(size)),
+            (f"--{boundary}\r\n"
+             f"Content-Disposition: form-data; name=\"file\"; filename=\"{name}\"\r\n"
+             f"Content-Type: {mimetypes.guess_type(name)[0] or 'application/octet-stream'}\r\n\r\n").encode(),
+            content,
+            b"\r\n",
+            f"--{boundary}--\r\n".encode(),
+        ])
+        req = urllib.request.Request(
+            f"{BASE}/drive/v1/medias/upload_all", data=body,
+            headers={"Authorization": f"Bearer {self.token()}",
+                     "Content-Type": f"multipart/form-data; boundary={boundary}"},
+            method="POST")
+        return json.loads(urllib.request.urlopen(req, timeout=180).read())
 
     def download_file(self, file_token, dest_path):
         """下载云盘文件（二进制）"""
